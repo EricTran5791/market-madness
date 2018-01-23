@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`adds a card to the CardStack 1`] = `
+Object {
+  "cards": Array [
+    Object {
+      "category": "Action",
+      "cost": 1,
+      "description": "",
+      "name": "Apple",
+    },
+    Object {
+      "category": "Action",
+      "cost": 2,
+      "description": "",
+      "name": "Bananas",
+    },
+  ],
+}
+`;
+
+exports[`creates a Card 1`] = `
+Object {
+  "category": "Action",
+  "cost": 1,
+  "description": "",
+  "name": "Apple",
+}
+`;
+
+exports[`creates a CardStack 1`] = `
+Object {
+  "cards": Array [
+    Object {
+      "category": "Action",
+      "cost": 1,
+      "description": "",
+      "name": "Apple",
+    },
+  ],
+}
+`;
+
+exports[`removes a card from the CardStack 1`] = `
+Object {
+  "cards": Array [],
+}
+`;
