@@ -5,6 +5,8 @@ export const Store = types
   .model('Store', {
     deck: CardStack,
     shopDeck: CardStack,
+    hand: CardStack,
+    discardPile: CardStack,
   })
   .actions(self => ({
     moveToDeck(card: CardModelType) {

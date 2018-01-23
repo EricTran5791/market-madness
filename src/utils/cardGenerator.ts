@@ -7,6 +7,10 @@ import {
 } from '../models/Card';
 import * as cards from './cardLibrary';
 
+export function generateEmptyDeck(): CardStackModelType {
+  return CardStack.create({ cards: [] });
+}
+
 function printDuplicateCards(
   card: CardModelSnapshotType,
   qty: number

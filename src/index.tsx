@@ -6,11 +6,17 @@ import './index.css';
 import { Provider } from 'mobx-react';
 import PlayingField from './containers/PlayingField';
 import { StoreType, Store } from './models/Store';
-import { generateStartingDeck, generateShopDeck } from './utils/cardGenerator';
+import {
+  generateStartingDeck,
+  generateShopDeck,
+  generateEmptyDeck,
+} from './utils/cardGenerator';
 
 const store: StoreType = Store.create({
   deck: generateStartingDeck(),
   shopDeck: generateShopDeck(),
+  hand: generateEmptyDeck(),
+  discardPile: generateEmptyDeck(),
 });
 
 ReactDOM.render(
