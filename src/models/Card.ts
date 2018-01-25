@@ -13,7 +13,9 @@ export const Card = types.model({
     Object.keys(CardCategory).map(key => CardCategory[key])
   ),
   description: types.optional(types.string, ''),
-  cost: types.number,
+  cost: types.optional(types.number, 0),
+  buyingPower: types.optional(types.number, 0),
+  attackValue: types.optional(types.number, 0),
 });
 
 export type CardModelType = typeof Card.Type;

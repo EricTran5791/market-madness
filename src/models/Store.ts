@@ -9,6 +9,9 @@ export const Store = types
     discardPile: CardStack,
   })
   .actions(self => ({
+    buyShopCard(card: CardModelType) {
+      self.discardPile.add(detach(card));
+    },
     moveToDeck(card: CardModelType) {
       self.deck.add(detach(card));
     },

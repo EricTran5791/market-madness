@@ -20,19 +20,29 @@ function printDuplicateCards(
 
 export function generateStartingDeck(): CardStackModelType {
   return CardStack.create({
-    cards: [
+    cards: shuffle([
       ...printDuplicateCards(cards.MoneyCards.coin, 7),
       ...printDuplicateCards(cards.AttackCards.punch, 3),
-    ],
+    ]),
   });
 }
 
 export function generateShopDeck(): CardStackModelType {
   return CardStack.create({
-    cards: [
-      Card.create(cards.ActionCards.apple),
-      Card.create(cards.ActionCards.bananas),
+    cards: shuffle([
+      ...printDuplicateCards(cards.ActionCards.apple, 3),
+      ...printDuplicateCards(cards.ActionCards.bananas, 2),
       Card.create(cards.ActionCards.couponBook),
-    ],
+      Card.create(cards.ActionCards.dragonFruit),
+    ]),
   });
+}
+
+// Durstenfeld Shuffle
+function shuffle<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }

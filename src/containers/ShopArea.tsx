@@ -37,11 +37,13 @@ class ShopArea extends React.Component<Props, State> {
     };
   }
   displayCards() {
-    return this.state.cardStack.cards.map((card, i) => {
-      return (
-        <CardView key={i} model={card} onClick={() => this.onClick(card)} />
-      );
-    });
+    return this.state.cardStack.cards
+      .filter((card, i) => i < 3)
+      .map((card, i) => {
+        return (
+          <CardView key={i} model={card} onClick={() => this.onClick(card)} />
+        );
+      });
   }
   onClick(card: CardModelType) {
     this.props.store!.moveToDeck(card);

@@ -16,6 +16,11 @@ export const ActionCards = {
     category: CardCategory.action,
     cost: 3,
   },
+  dragonFruit: {
+    name: 'Dragon Fruit',
+    category: CardCategory.action,
+    cost: 4,
+  },
 };
 
 export const AttackCards = {
@@ -23,6 +28,7 @@ export const AttackCards = {
     name: 'Punch',
     category: CardCategory.attack,
     cost: 1,
+    attackValue: 1,
   },
 };
 
@@ -31,5 +37,12 @@ export const MoneyCards = {
     name: 'Coin',
     category: CardCategory.money,
     cost: 0,
+    buyingPower: 1,
+  },
+  gem: {
+    name: 'Gem',
+    category: CardCategory.money,
+    cost: 0,
+    buyingPower: 2,
   },
 };
