@@ -8,7 +8,7 @@ import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import { withProps } from '../withProps';
 import CardDeck from '../components/CardDeck';
-import PlayerPortrait from '../components/PlayerPortrait';
+import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
 
 interface Props {
@@ -88,18 +88,6 @@ const CompGridArea = GridArea.extend`
   grid-area: comp-portrait;
 `;
 
-const HandStats = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 16px;
-`;
-
-const HandStat = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 0 16px;
-`;
-
 interface TurnButtonProps {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
@@ -124,9 +112,17 @@ class PlayingField extends React.Component<Props, object> {
     return (
       <StyledPlayingField>
         <CompGridArea>
-          <PlayerPortrait
+          <PlayerInfo
             name={this.props.store!.getPlayer(PlayerId.Computer).name}
             health={this.props.store!.getPlayer(PlayerId.Computer).health}
+            availableBuyingPower={
+              this.props.store!.getPlayer(PlayerId.Computer).hand
+                .availableBuyingPower
+            }
+            availableAttackValue={
+              this.props.store!.getPlayer(PlayerId.Computer).hand
+                .availableAttackValue
+            }
           />
         </CompGridArea>
 
@@ -141,22 +137,6 @@ class PlayingField extends React.Component<Props, object> {
         </CompDiscardPileGridArea>
 
         <CompHandGridArea>
-          <HandStats>
-            <HandStat>
-              {
-                this.props.store!.getPlayer(PlayerId.Computer).hand
-                  .availableAttackValue
-              }{' '}
-              Attack
-            </HandStat>
-            <HandStat>
-              {
-                this.props.store!.getPlayer(PlayerId.Computer).hand
-                  .availableBuyingPower
-              }{' '}
-              Buying Power
-            </HandStat>
-          </HandStats>
           <CardGrid columns={5}>
             {this.displayCards(
               this.props.store!.getPlayer(PlayerId.Computer).hand.cardStack
@@ -188,22 +168,6 @@ class PlayingField extends React.Component<Props, object> {
         </EndTurnGridArea>
 
         <P1HandGridArea>
-          <HandStats>
-            <HandStat>
-              {
-                this.props.store!.getPlayer(PlayerId.Player1).hand
-                  .availableAttackValue
-              }{' '}
-              Attack
-            </HandStat>
-            <HandStat>
-              {
-                this.props.store!.getPlayer(PlayerId.Player1).hand
-                  .availableBuyingPower
-              }{' '}
-              Buying Power
-            </HandStat>
-          </HandStats>
           <CardGrid columns={5}>
             {this.displayCards(
               this.props.store!.getPlayer(PlayerId.Player1).hand.cardStack
@@ -231,9 +195,17 @@ class PlayingField extends React.Component<Props, object> {
         </P1DeckGridArea>
 
         <P1GridArea>
-          <PlayerPortrait
+          <PlayerInfo
             name={this.props.store!.getPlayer(PlayerId.Player1).name}
             health={this.props.store!.getPlayer(PlayerId.Player1).health}
+            availableBuyingPower={
+              this.props.store!.getPlayer(PlayerId.Player1).hand
+                .availableBuyingPower
+            }
+            availableAttackValue={
+              this.props.store!.getPlayer(PlayerId.Player1).hand
+                .availableAttackValue
+            }
           />
         </P1GridArea>
       </StyledPlayingField>
