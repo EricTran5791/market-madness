@@ -116,25 +116,28 @@ class PlayingField extends React.Component<Props, object> {
           <AreaTitle>Hand</AreaTitle>
           <HandStats>
             <HandStat>
-              {this.props.store!.hand.availableAttackValue} Attack
+              {this.props.store!.currentPlayer.hand.availableAttackValue} Attack
             </HandStat>
             <HandStat>
-              {this.props.store!.hand.availableBuyingPower} Buying Power
+              {this.props.store!.currentPlayer.hand.availableBuyingPower} Buying
+              Power
             </HandStat>
           </HandStats>
           <CardGrid columns={5}>
-            {this.displayCards(this.props.store!.hand.cardStack)}
+            {this.displayCards(this.props.store!.currentPlayer.hand.cardStack)}
           </CardGrid>
         </HandGridArea>
 
         <DiscardPileGridArea>
           <AreaTitle>Discard Pile</AreaTitle>
-          <CardDeck count={this.props.store!.discardPile.totalCards} />
+          <CardDeck
+            count={this.props.store!.currentPlayer.discardPile.totalCards}
+          />
         </DiscardPileGridArea>
 
         <DeckGridArea>
           <AreaTitle>Deck</AreaTitle>
-          <CardDeck count={this.props.store!.deck.totalCards} />
+          <CardDeck count={this.props.store!.currentPlayer.deck.totalCards} />
         </DeckGridArea>
       </StyledPlayingField>
     );
