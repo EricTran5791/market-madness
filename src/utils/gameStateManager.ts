@@ -44,13 +44,13 @@ export function initializeStore(): StoreType {
 
 function setupReactions(store: StoreType) {
   onAction(store, call => {
-    store.gameState.addGameLogEntry(call.name);
-
     if (call.name === 'startGame') {
+      store.gameState.addGameLogEntry(call.name);
       store.drawFromDeck(5);
     }
 
     if (call.name === 'endTurn') {
+      store.gameState.addGameLogEntry(call.name);
       store.clearPlayerHand();
       store.changeCurrentPlayer();
       store.drawFromDeck(5);

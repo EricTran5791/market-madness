@@ -10,6 +10,7 @@ import { withProps } from '../withProps';
 import CardDeck from '../components/CardDeck';
 import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
+import { GameLog } from '../components/GameLog';
 
 interface Props {
   name: string;
@@ -19,13 +20,13 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 1fr 4fr 1fr;
   grid-template-areas:
-    '. comp-portrait .'
-    'comp-discard-pile comp-hand comp-deck'
-    '. shop end-turn'
-    'p1-discard-pile p1-hand p1-deck'
-    '. p1-portrait .';
+    '. . comp-portrait .'
+    'game-log comp-discard-pile comp-hand comp-deck'
+    'game-log . shop end-turn'
+    'game-log p1-discard-pile p1-hand p1-deck'
+    '. . p1-portrait .';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
@@ -33,7 +34,7 @@ const StyledPlayingField = styled.div`
 `;
 
 const AreaTitle = styled.div`
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 16px;
@@ -86,6 +87,10 @@ const CompDeckGridArea = GridArea.extend`
 
 const CompGridArea = GridArea.extend`
   grid-area: comp-portrait;
+`;
+
+const GameLogGridArea = GridArea.extend`
+  grid-area: game-log;
 `;
 
 interface TurnButtonProps {
@@ -152,6 +157,11 @@ class PlayingField extends React.Component<Props, object> {
             }
           />
         </CompDeckGridArea>
+
+        <GameLogGridArea>
+          <AreaTitle>Game Log</AreaTitle>
+          <GameLog entries={this.props.store!.gameState.gameLog} />
+        </GameLogGridArea>
 
         <ShopGridArea>
           <ShopArea />

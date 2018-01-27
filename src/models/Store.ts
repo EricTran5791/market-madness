@@ -25,6 +25,7 @@ export const Store = types
   .actions(self => ({
     buyShopCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
+        self.gameState.addGameLogEntry('buy', card.name);
         self.currentPlayer.discardPile.add(detach(card));
       }
     },

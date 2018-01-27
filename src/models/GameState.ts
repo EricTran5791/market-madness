@@ -16,7 +16,7 @@ export enum GamePhase {
 export const GameLogEntry = types.model('GameLogEntry', {
   playerId: types.string,
   action: types.string,
-  turnNumber: types.number,
+  message: types.string,
 });
 
 export type GameLogEntryModelType = typeof GameLogEntry.Type;
@@ -32,12 +32,17 @@ export const GameState = types
     gameLog: types.optional(types.array(GameLogEntry), []),
   })
   .actions(self => ({
-    addGameLogEntry(action: string) {
+    addGameLogEntry(action: string, target?: string) {
+      // TODO: Add utils/typings for creating log messages
+      let message = `${self.currentPlayerId} ${action}`;
+      if (action === 'buy') {
+        message = `${self.currentPlayerId} bought ${target}`;
+      }
       self.gameLog.push(
         GameLogEntry.create({
           playerId: self.currentPlayerId,
           action,
-          turnNumber: self.currentTurnNumber,
+          message,
         })
       );
     },
