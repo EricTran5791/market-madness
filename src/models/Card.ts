@@ -25,6 +25,18 @@ export const CardStack = types
   .model({
     cards: types.array(Card),
   })
+  .views(self => ({
+    get totalBuyingPower() {
+      return self.cards
+        .map(card => card.buyingPower)
+        .reduce((sum, currentValue) => sum + currentValue, 0);
+    },
+    get totalAttackValue() {
+      return self.cards
+        .map(card => card.attackValue)
+        .reduce((sum, currentValue) => sum + currentValue, 0);
+    },
+  }))
   .actions(self => ({
     add(card: CardModelType) {
       self.cards.push(card);

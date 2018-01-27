@@ -90,16 +90,6 @@ class PlayingField extends React.Component<Props, object> {
       return <CardView key={i} model={card} />;
     });
   }
-  getHandAttackValue() {
-    return this.props.store!.hand.cards
-      .map(card => card.attackValue)
-      .reduce((sum, currentValue) => sum + currentValue, 0);
-  }
-  getHandBuyingPower() {
-    return this.props.store!.hand.cards
-      .map(card => card.buyingPower)
-      .reduce((sum, currentValue) => sum + currentValue, 0);
-  }
   render() {
     return (
       <StyledPlayingField>
@@ -120,11 +110,15 @@ class PlayingField extends React.Component<Props, object> {
         <HandGridArea>
           <AreaTitle>Hand</AreaTitle>
           <HandStats>
-            <HandStat>{this.getHandAttackValue()} Attack</HandStat>
-            <HandStat>{this.getHandBuyingPower()} Buying Power</HandStat>
+            <HandStat>
+              {this.props.store!.hand.availableAttackValue} Attack
+            </HandStat>
+            <HandStat>
+              {this.props.store!.hand.availableBuyingPower} Buying Power
+            </HandStat>
           </HandStats>
           <CardGrid columns={5}>
-            {this.displayCards(this.props.store!.hand)}
+            {this.displayCards(this.props.store!.hand.cardStack)}
           </CardGrid>
         </HandGridArea>
 

@@ -15,7 +15,7 @@ import {
 const store: StoreType = Store.create({
   deck: generateStartingDeck(),
   shopDeck: generateShopDeck(),
-  hand: generateEmptyDeck(),
+  hand: { cardStack: generateEmptyDeck() },
   discardPile: generateEmptyDeck(),
 });
 

@@ -46,8 +46,7 @@ class ShopArea extends React.Component<Props, State> {
       });
   }
   onClick(card: CardModelType) {
-    this.props.store!.moveToHand(card);
-    return;
+    this.props.store!.buyShopCard(card);
   }
   render() {
     return (
