@@ -30,6 +30,18 @@ export const AttackCards = {
     cost: 1,
     attackValue: 1,
   },
+  basketball: {
+    name: 'Basketball',
+    category: CardCategory.attack,
+    cost: 2,
+    attackValue: 2,
+  },
+  tennisRacket: {
+    name: 'Tennis Racket',
+    category: CardCategory.attack,
+    cost: 3,
+    attackValue: 3,
+  },
 };
 
 export const MoneyCards = {
@@ -42,7 +54,7 @@ export const MoneyCards = {
   gem: {
     name: 'Gem',
     category: CardCategory.money,
-    cost: 0,
+    cost: 3,
     buyingPower: 2,
   },
 };

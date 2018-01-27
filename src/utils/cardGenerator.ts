@@ -34,6 +34,9 @@ export function generateShopDeck(): CardStackModelType {
       ...printDuplicateCards(cards.ActionCards.bananas, 2),
       Card.create(cards.ActionCards.couponBook),
       Card.create(cards.ActionCards.dragonFruit),
+      ...printDuplicateCards(cards.AttackCards.basketball, 2),
+      Card.create(cards.AttackCards.tennisRacket),
+      ...printDuplicateCards(cards.MoneyCards.gem, 2),
     ]),
   });
 }

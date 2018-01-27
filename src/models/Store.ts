@@ -12,6 +12,9 @@ export const Store = types
     buyShopCard(card: CardModelType) {
       self.discardPile.add(detach(card));
     },
+    moveToHand(card: CardModelType) {
+      self.hand.add(detach(card));
+    },
     moveToDeck(card: CardModelType) {
       self.deck.add(detach(card));
     },

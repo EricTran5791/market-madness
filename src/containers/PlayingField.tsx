@@ -57,6 +57,18 @@ const DeckGridArea = GridArea.extend`
   grid-area: deck;
 `;
 
+const HandStats = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 16px;
+`;
+
+const HandStat = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 16px;
+`;
+
 const EndTurnButton = styled.button`
   cursor: pointer;
   width: 128px;
@@ -73,6 +85,16 @@ class PlayingField extends React.Component<Props, object> {
       return <CardView key={i} model={card} />;
     });
   }
+  getHandAttackValue() {
+    return this.props.store!.hand.cards
+      .map(card => card.attackValue)
+      .reduce((sum, currentValue) => sum + currentValue, 0);
+  }
+  getHandBuyingPower() {
+    return this.props.store!.hand.cards
+      .map(card => card.buyingPower)
+      .reduce((sum, currentValue) => sum + currentValue, 0);
+  }
   render() {
     return (
       <StyledPlayingField>
@@ -86,6 +108,10 @@ class PlayingField extends React.Component<Props, object> {
 
         <HandGridArea>
           <AreaTitle>Hand</AreaTitle>
+          <HandStats>
+            <HandStat>{this.getHandAttackValue()} Attack</HandStat>
+            <HandStat>{this.getHandBuyingPower()} Buying Power</HandStat>
+          </HandStats>
           <CardGrid columns={5}>
             {this.displayCards(this.props.store!.hand)}
           </CardGrid>
