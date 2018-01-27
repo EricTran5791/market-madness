@@ -26,6 +26,9 @@ export const CardStack = types
     cards: types.array(Card),
   })
   .views(self => ({
+    get totalCards(): number {
+      return self.cards.length;
+    },
     get totalBuyingPower() {
       return self.cards
         .map(card => card.buyingPower)

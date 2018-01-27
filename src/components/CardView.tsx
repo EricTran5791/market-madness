@@ -12,12 +12,20 @@ interface StyledCardProps {
   category: string;
 }
 
-const StyledCard = withProps<StyledCardProps>()(styled.div)`
+export const BasicCard = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  color: white;
+  width: 95px;
+  height: 125px;
+  padding: 8px;
+  border-radius: 8px;
+`;
+
+const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
       case CardCategory.attack:
@@ -28,12 +36,6 @@ const StyledCard = withProps<StyledCardProps>()(styled.div)`
         return '#222222';
     }
   }};
-  color: white;
-  width: 80px;
-  height: 110px;
-  padding: 8px;
-  border-radius: 8px;
-
   &:hover {
     animation: hover 1s infinite;
 
@@ -74,8 +76,8 @@ const CardCost = styled.div`
   font-family: serif;
   font-size: 12px;
   font-weight: bold;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 100%;
 `;
 
@@ -86,11 +88,16 @@ const CardBuyingPower = styled.div`
   background-color: #f1c40f;
   color: #212121;
   font-family: serif;
-  font-size: 22px;
+  font-size: 32px;
   font-weight: bold;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 100%;
+`;
+
+const CardDescription = styled.div`
+  font-size: 12px;
+  text-align: center;
 `;
 
 function CardView({ model, onClick }: Props) {
@@ -99,7 +106,9 @@ function CardView({ model, onClick }: Props) {
       <CardName>{model.name}</CardName>
       {model.buyingPower ? (
         <CardBuyingPower>{model.buyingPower}</CardBuyingPower>
-      ) : null}
+      ) : (
+        <CardDescription>{model.description}</CardDescription>
+      )}
       <CardFooter>
         <CardCost>{model.cost}</CardCost>
         {model.category}

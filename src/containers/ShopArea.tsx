@@ -17,7 +17,12 @@ interface State {
 const StyledShopArea = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  min-height: 200px;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.33);
 `;
 
 const Title = styled.div`
@@ -38,7 +43,7 @@ class ShopArea extends React.Component<Props, State> {
   }
   displayCards() {
     return this.state.cardStack.cards
-      .filter((card, i) => i < 3)
+      .filter((card, i) => i < 4)
       .map((card, i) => {
         return (
           <CardView key={i} model={card} onClick={() => this.onClick(card)} />
@@ -52,7 +57,7 @@ class ShopArea extends React.Component<Props, State> {
     return (
       <StyledShopArea>
         <Title>Shop</Title>
-        <CardGrid columns={3}>{this.displayCards()}</CardGrid>
+        <CardGrid columns={4}>{this.displayCards()}</CardGrid>
       </StyledShopArea>
     );
   }

@@ -7,6 +7,7 @@ import CardGrid from '../components/CardGrid';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import { withProps } from '../withProps';
+import CardDeck from '../components/CardDeck';
 
 interface Props {
   name: string;
@@ -16,10 +17,14 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-areas:
     '. shop end-turn'
     'discard-pile hand deck';
+  background-color: #e4e4e4;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 16px;
 `;
 
 const AreaTitle = styled.div`
@@ -124,16 +129,12 @@ class PlayingField extends React.Component<Props, object> {
 
         <DiscardPileGridArea>
           <AreaTitle>Discard Pile</AreaTitle>
-          <CardGrid columns={3}>
-            {this.displayCards(this.props.store!.discardPile)}
-          </CardGrid>
+          <CardDeck count={this.props.store!.discardPile.totalCards} />
         </DiscardPileGridArea>
 
         <DeckGridArea>
           <AreaTitle>Deck</AreaTitle>
-          <CardGrid columns={3}>
-            {this.displayCards(this.props.store!.deck)}
-          </CardGrid>
+          <CardDeck count={this.props.store!.deck.totalCards} />
         </DeckGridArea>
       </StyledPlayingField>
     );

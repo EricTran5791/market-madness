@@ -27,17 +27,20 @@ export const AttackCards = {
   punch: {
     name: 'Punch',
     category: CardCategory.attack,
+    description: 'Deal 1 damage',
     cost: 1,
     attackValue: 1,
   },
   basketball: {
     name: 'Basketball',
     category: CardCategory.attack,
+    description: 'Deal 2 damage',
     cost: 2,
     attackValue: 2,
   },
   tennisRacket: {
     name: 'Tennis Racket',
+    description: 'Deal 3 damage',
     category: CardCategory.attack,
     cost: 3,
     attackValue: 3,
