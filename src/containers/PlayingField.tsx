@@ -8,6 +8,8 @@ import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import { withProps } from '../withProps';
 import CardDeck from '../components/CardDeck';
+import PlayerPortrait from '../components/PlayerPortrait';
+import { PlayerId } from '../models/Player';
 
 interface Props {
   name: string;
@@ -19,8 +21,11 @@ const StyledPlayingField = styled.div`
   grid-gap: 16px;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-areas:
+    '. comp-portrait .'
+    'comp-discard-pile comp-hand comp-deck'
     '. shop end-turn'
-    'discard-pile hand deck';
+    'p1-discard-pile p1-hand p1-deck'
+    '. p1-portrait .';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
@@ -51,16 +56,36 @@ const EndTurnGridArea = GridArea.extend`
   align-items: center;
 `;
 
-const HandGridArea = GridArea.extend`
-  grid-area: hand;
+const P1DiscardPileGridArea = GridArea.extend`
+  grid-area: p1-discard-pile;
 `;
 
-const DiscardPileGridArea = GridArea.extend`
-  grid-area: discard-pile;
+const P1HandGridArea = GridArea.extend`
+  grid-area: p1-hand;
 `;
 
-const DeckGridArea = GridArea.extend`
-  grid-area: deck;
+const P1DeckGridArea = GridArea.extend`
+  grid-area: p1-deck;
+`;
+
+const P1GridArea = GridArea.extend`
+  grid-area: p1-portrait;
+`;
+
+const CompDiscardPileGridArea = GridArea.extend`
+  grid-area: comp-discard-pile;
+`;
+
+const CompHandGridArea = GridArea.extend`
+  grid-area: comp-hand;
+`;
+
+const CompDeckGridArea = GridArea.extend`
+  grid-area: comp-deck;
+`;
+
+const CompGridArea = GridArea.extend`
+  grid-area: comp-portrait;
 `;
 
 const HandStats = styled.div`
@@ -75,11 +100,11 @@ const HandStat = styled.div`
   margin: 0 16px;
 `;
 
-interface EndTurnButtonProps {
+interface TurnButtonProps {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const EndTurnButton = withProps<EndTurnButtonProps>()(styled.button)`
+const TurnButton = withProps<TurnButtonProps>()(styled.button)`
   cursor: pointer;
   width: 128px;
   height: 64px;
@@ -98,47 +123,119 @@ class PlayingField extends React.Component<Props, object> {
   render() {
     return (
       <StyledPlayingField>
+        <CompGridArea>
+          <PlayerPortrait
+            name={this.props.store!.getPlayer(PlayerId.Computer).name}
+            health={this.props.store!.getPlayer(PlayerId.Computer).health}
+          />
+        </CompGridArea>
+
+        <CompDiscardPileGridArea>
+          <AreaTitle>Discard Pile</AreaTitle>
+          <CardDeck
+            count={
+              this.props.store!.getPlayer(PlayerId.Computer).discardPile
+                .totalCards
+            }
+          />
+        </CompDiscardPileGridArea>
+
+        <CompHandGridArea>
+          <HandStats>
+            <HandStat>
+              {
+                this.props.store!.getPlayer(PlayerId.Computer).hand
+                  .availableAttackValue
+              }{' '}
+              Attack
+            </HandStat>
+            <HandStat>
+              {
+                this.props.store!.getPlayer(PlayerId.Computer).hand
+                  .availableBuyingPower
+              }{' '}
+              Buying Power
+            </HandStat>
+          </HandStats>
+          <CardGrid columns={5}>
+            {this.displayCards(
+              this.props.store!.getPlayer(PlayerId.Computer).hand.cardStack
+            )}
+          </CardGrid>
+        </CompHandGridArea>
+
+        <CompDeckGridArea>
+          <AreaTitle>Deck</AreaTitle>
+          <CardDeck
+            count={
+              this.props.store!.getPlayer(PlayerId.Computer).deck.totalCards
+            }
+          />
+        </CompDeckGridArea>
+
         <ShopGridArea>
           <ShopArea />
         </ShopGridArea>
 
         <EndTurnGridArea>
-          <EndTurnButton
+          <TurnButton
             onClick={(e: React.MouseEvent<HTMLElement>) =>
               this.props.store!.endTurn()
             }
           >
             End Turn
-          </EndTurnButton>
+          </TurnButton>
         </EndTurnGridArea>
 
-        <HandGridArea>
-          <AreaTitle>Hand</AreaTitle>
+        <P1HandGridArea>
           <HandStats>
             <HandStat>
-              {this.props.store!.currentPlayer.hand.availableAttackValue} Attack
+              {
+                this.props.store!.getPlayer(PlayerId.Player1).hand
+                  .availableAttackValue
+              }{' '}
+              Attack
             </HandStat>
             <HandStat>
-              {this.props.store!.currentPlayer.hand.availableBuyingPower} Buying
-              Power
+              {
+                this.props.store!.getPlayer(PlayerId.Player1).hand
+                  .availableBuyingPower
+              }{' '}
+              Buying Power
             </HandStat>
           </HandStats>
           <CardGrid columns={5}>
-            {this.displayCards(this.props.store!.currentPlayer.hand.cardStack)}
+            {this.displayCards(
+              this.props.store!.getPlayer(PlayerId.Player1).hand.cardStack
+            )}
           </CardGrid>
-        </HandGridArea>
+        </P1HandGridArea>
 
-        <DiscardPileGridArea>
+        <P1DiscardPileGridArea>
           <AreaTitle>Discard Pile</AreaTitle>
           <CardDeck
-            count={this.props.store!.currentPlayer.discardPile.totalCards}
+            count={
+              this.props.store!.getPlayer(PlayerId.Player1).discardPile
+                .totalCards
+            }
           />
-        </DiscardPileGridArea>
+        </P1DiscardPileGridArea>
 
-        <DeckGridArea>
+        <P1DeckGridArea>
           <AreaTitle>Deck</AreaTitle>
-          <CardDeck count={this.props.store!.currentPlayer.deck.totalCards} />
-        </DeckGridArea>
+          <CardDeck
+            count={
+              this.props.store!.getPlayer(PlayerId.Player1).deck.totalCards
+            }
+          />
+        </P1DeckGridArea>
+
+        <P1GridArea>
+          <PlayerPortrait
+            name={this.props.store!.getPlayer(PlayerId.Player1).name}
+            health={this.props.store!.getPlayer(PlayerId.Player1).health}
+          />
+        </P1GridArea>
       </StyledPlayingField>
     );
   }
