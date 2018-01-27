@@ -6,6 +6,7 @@ import ShopArea from './ShopArea';
 import CardGrid from '../components/CardGrid';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
+import { withProps } from '../withProps';
 
 interface Props {
   name: string;
@@ -69,7 +70,11 @@ const HandStat = styled.div`
   margin: 0 16px;
 `;
 
-const EndTurnButton = styled.button`
+interface EndTurnButtonProps {
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+}
+
+const EndTurnButton = withProps<EndTurnButtonProps>()(styled.button)`
   cursor: pointer;
   width: 128px;
   height: 64px;
@@ -103,7 +108,13 @@ class PlayingField extends React.Component<Props, object> {
         </ShopGridArea>
 
         <EndTurnGridArea>
-          <EndTurnButton>End Turn</EndTurnButton>
+          <EndTurnButton
+            onClick={(e: React.MouseEvent<HTMLElement>) =>
+              this.props.store!.endTurn()
+            }
+          >
+            End Turn
+          </EndTurnButton>
         </EndTurnGridArea>
 
         <HandGridArea>
