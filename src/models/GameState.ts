@@ -13,12 +13,34 @@ export enum GamePhase {
   attackEnd = '[Attack] End',
 }
 
-export const GameState = types.model('GameState', {
-  currentPlayerId: types.string,
-  currentGamePhase: types.enumeration(
-    'Game Phase',
-    Object.keys(GamePhase).map(key => GamePhase[key])
-  ),
+export const GameLogEntry = types.model('GameLogEntry', {
+  playerId: types.string,
+  action: types.string,
+  turnNumber: types.number,
 });
+
+export type GameLogEntryModelType = typeof GameLogEntry.Type;
+
+export const GameState = types
+  .model('GameState', {
+    currentGamePhase: types.enumeration(
+      'Game Phase',
+      Object.keys(GamePhase).map(key => GamePhase[key])
+    ),
+    currentPlayerId: types.string,
+    currentTurnNumber: types.optional(types.number, 0),
+    gameLog: types.optional(types.array(GameLogEntry), []),
+  })
+  .actions(self => ({
+    addGameLogEntry(action: string) {
+      self.gameLog.push(
+        GameLogEntry.create({
+          playerId: self.currentPlayerId,
+          action,
+          turnNumber: self.currentTurnNumber,
+        })
+      );
+    },
+  }));
 
 export type GameStateModelType = typeof GameState.Type;

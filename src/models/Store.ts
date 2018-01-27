@@ -1,6 +1,6 @@
 import { types, detach } from 'mobx-state-tree';
 import { CardStack, CardModelType } from './Card';
-import { GameState } from './GameState';
+import { GameState, GamePhase } from './GameState';
 import { Player } from './Player';
 
 export const Store = types
@@ -34,14 +34,21 @@ export const Store = types
     moveToDeck(card: CardModelType) {
       self.currentPlayer.deck.add(detach(card));
     },
-    endTurn() {
+    clearPlayerHand() {
       // Put hand into discard pile
       self.currentPlayer.hand.cardStack.cards.forEach(card => {
         self.currentPlayer.discardPile.add(detach(card));
       });
-
-      // Draw up to 5 cards from the deck
-      const numDeckDraws = Math.min(self.currentPlayer.deck.cards.length, 5);
+      // Reset hand stats
+      self.currentPlayer.hand.spentBuyingPower = 0;
+      self.currentPlayer.hand.spentAttackValue = 0;
+    },
+    drawFromDeck(numToDraw: number) {
+      // Draw up to x cards from the deck
+      const numDeckDraws = Math.min(
+        self.currentPlayer.deck.cards.length,
+        numToDraw
+      );
       for (let i = 0; i < numDeckDraws; i++) {
         self.currentPlayer.hand.cardStack.add(
           detach(self.currentPlayer.deck.cards[0])
@@ -52,7 +59,7 @@ export const Store = types
       // 1) We shuffle the discard pile
       // 2) Move the discard pile into the deck
       // 3) Draw the remaining amount
-      const remainingDeckDraws = 5 - numDeckDraws;
+      const remainingDeckDraws = numToDraw - numDeckDraws;
       if (remainingDeckDraws > 0) {
         const discardPile = self.currentPlayer.discardPile.cards;
 
@@ -74,10 +81,17 @@ export const Store = types
           detach(self.currentPlayer.deck.cards[0])
         );
       }
-
-      // Reset hand stats
-      self.currentPlayer.hand.spentBuyingPower = 0;
-      self.currentPlayer.hand.spentAttackValue = 0;
+    },
+    changeCurrentPlayer() {
+      self.gameState.currentPlayerId = self.players.find(
+        player => player.id !== self.gameState.currentPlayerId
+      ).id;
+    },
+    startGame() {
+      self.gameState.currentGamePhase = GamePhase.turnStart;
+    },
+    endTurn() {
+      self.gameState.currentGamePhase = GamePhase.turnEnd;
     },
   }));
 
