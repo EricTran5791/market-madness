@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  name: string;
+  id: string;
   health: number;
   availableBuyingPower: number;
   availableAttackValue: number;
@@ -40,7 +40,7 @@ const HandStat = styled.div`
 `;
 
 function PlayerInfo({
-  name,
+  id,
   health,
   availableBuyingPower,
   availableAttackValue,
@@ -56,7 +56,7 @@ function PlayerInfo({
           👊 {availableAttackValue}
         </HandStat>
       </StatsContainer>
-      <PlayerName>{name}</PlayerName>
+      <PlayerName>{id}</PlayerName>
     </StyledPlayerInfo>
   );
 }

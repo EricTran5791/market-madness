@@ -12,14 +12,12 @@ export function initializeStore(): StoreType {
   const players = [
     Player.create({
       id: PlayerId.Player1,
-      name: 'Player 1',
       discardPile: generateEmptyDeck(),
       hand: { cardStack: generateEmptyDeck() },
       deck: generateStartingDeck(),
     }),
     Player.create({
       id: PlayerId.Computer,
-      name: 'Computer',
       discardPile: generateEmptyDeck(),
       hand: { cardStack: generateEmptyDeck() },
       deck: generateStartingDeck(),

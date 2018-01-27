@@ -118,7 +118,7 @@ class PlayingField extends React.Component<Props, object> {
       <StyledPlayingField>
         <CompGridArea>
           <PlayerInfo
-            name={this.props.store!.getPlayer(PlayerId.Computer).name}
+            id={this.props.store!.getPlayer(PlayerId.Computer).id}
             health={this.props.store!.getPlayer(PlayerId.Computer).health}
             availableBuyingPower={
               this.props.store!.getPlayer(PlayerId.Computer).hand
@@ -206,7 +206,7 @@ class PlayingField extends React.Component<Props, object> {
 
         <P1GridArea>
           <PlayerInfo
-            name={this.props.store!.getPlayer(PlayerId.Player1).name}
+            id={this.props.store!.getPlayer(PlayerId.Player1).id}
             health={this.props.store!.getPlayer(PlayerId.Player1).health}
             availableBuyingPower={
               this.props.store!.getPlayer(PlayerId.Player1).hand

@@ -8,8 +8,7 @@ export enum PlayerId {
 }
 
 export const Player = types.model('Player', {
-  id: types.string,
-  name: types.string,
+  id: types.identifier(types.string),
   health: types.optional(types.number, 15),
   discardPile: CardStack,
   hand: Hand,

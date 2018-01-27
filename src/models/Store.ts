@@ -18,9 +18,6 @@ export const Store = types
         player => player.id === self.gameState.currentPlayerId
       );
     },
-    get currentGamePhase() {
-      return self.gameState.currentGamePhase;
-    },
   }))
   .actions(self => ({
     buyShopCard(card: CardModelType) {
@@ -28,12 +25,6 @@ export const Store = types
         self.gameState.addGameLogEntry('buy', card.name);
         self.currentPlayer.discardPile.add(detach(card));
       }
-    },
-    moveToHand(card: CardModelType) {
-      self.currentPlayer.hand.cardStack.add(detach(card));
-    },
-    moveToDeck(card: CardModelType) {
-      self.currentPlayer.deck.add(detach(card));
     },
     clearPlayerHand() {
       // Put hand into discard pile
