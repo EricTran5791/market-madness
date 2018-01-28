@@ -23,12 +23,19 @@ export const Store = types
     buyShopCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
         self.gameState.addGameLogEntry('buy', card.name);
-        self.currentPlayer.discardPile.add(detach(card));
+        self.currentPlayer.hand.gainedCardStack.add(detach(card));
       }
+    },
+    playCard(card: CardModelType) {
+      return;
     },
     clearPlayerHand() {
       // Put hand into discard pile
       self.currentPlayer.hand.cardStack.cards.forEach(card => {
+        self.currentPlayer.discardPile.add(detach(card));
+      });
+      // Put gained cards into discard pile
+      self.currentPlayer.hand.gainedCardStack.cards.forEach(card => {
         self.currentPlayer.discardPile.add(detach(card));
       });
       // Reset hand stats

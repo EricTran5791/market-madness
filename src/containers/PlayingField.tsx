@@ -3,7 +3,6 @@ import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import CardView from '../components/CardView';
 import ShopArea from './ShopArea';
-import CardGrid from '../components/CardGrid';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import { withProps } from '../withProps';
@@ -11,6 +10,7 @@ import CardDeck from '../components/CardDeck';
 import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
 import { GameLog } from '../components/GameLog';
+import HandArea from './HandArea';
 
 interface Props {
   name: string;
@@ -142,11 +142,9 @@ class PlayingField extends React.Component<Props, object> {
         </CompDiscardPileGridArea>
 
         <CompHandGridArea>
-          <CardGrid columns={5}>
-            {this.displayCards(
-              this.props.store!.getPlayer(PlayerId.Computer).hand.cardStack
-            )}
-          </CardGrid>
+          <HandArea
+            playerId={this.props.store!.getPlayer(PlayerId.Computer).id}
+          />
         </CompHandGridArea>
 
         <CompDeckGridArea>
@@ -178,11 +176,9 @@ class PlayingField extends React.Component<Props, object> {
         </EndTurnGridArea>
 
         <P1HandGridArea>
-          <CardGrid columns={5}>
-            {this.displayCards(
-              this.props.store!.getPlayer(PlayerId.Player1).hand.cardStack
-            )}
-          </CardGrid>
+          <HandArea
+            playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
+          />
         </P1HandGridArea>
 
         <P1DiscardPileGridArea>

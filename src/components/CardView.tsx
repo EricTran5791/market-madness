@@ -10,6 +10,7 @@ interface Props {
 
 interface StyledCardProps {
   category: string;
+  showHoverAnimation: boolean;
 }
 
 export const BasicCard = styled.div`
@@ -37,7 +38,8 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     }
   }};
   &:hover {
-    animation: hover 1s infinite;
+    animation: ${({ showHoverAnimation }: StyledCardProps): string =>
+      showHoverAnimation ? 'hover 1s infinite' : ''};
 
     @keyframes hover {
       0% {
@@ -102,7 +104,11 @@ const CardDescription = styled.div`
 
 function CardView({ model, onClick }: Props) {
   return (
-    <StyledCard onClick={onClick} category={model.category}>
+    <StyledCard
+      onClick={onClick}
+      category={model.category}
+      showHoverAnimation={onClick !== undefined}
+    >
       <CardName>{model.name}</CardName>
       {model.buyingPower ? (
         <CardBuyingPower>{model.buyingPower}</CardBuyingPower>

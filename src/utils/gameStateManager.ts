@@ -13,13 +13,19 @@ export function initializeStore(): StoreType {
     Player.create({
       id: PlayerId.Player1,
       discardPile: generateEmptyDeck(),
-      hand: { cardStack: generateEmptyDeck() },
+      hand: {
+        cardStack: generateEmptyDeck(),
+        gainedCardStack: generateEmptyDeck(),
+      },
       deck: generateStartingDeck(),
     }),
     Player.create({
       id: PlayerId.Computer,
       discardPile: generateEmptyDeck(),
-      hand: { cardStack: generateEmptyDeck() },
+      hand: {
+        cardStack: generateEmptyDeck(),
+        gainedCardStack: generateEmptyDeck(),
+      },
       deck: generateStartingDeck(),
     }),
   ];
