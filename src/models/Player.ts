@@ -11,11 +11,27 @@ export const Player = types
   .model('Player', {
     id: types.identifier(types.string),
     health: types.optional(types.number, 15),
+    maxHealth: types.optional(types.number, 15),
     discardPile: CardStack,
     hand: Hand,
     deck: CardStack,
   })
   .actions(self => ({
+    heal(healValue: number): number {
+      const healthDiff = self.maxHealth - self.health;
+      const amtHealed = healValue <= healthDiff ? healValue : healthDiff;
+      if (amtHealed === 0) {
+        // This is a hack to force a render of the entry log since the player model doesn't change on a 0 heal
+        self.health -= 1;
+        self.health += 1;
+      } else {
+        self.health += amtHealed;
+      }
+      return amtHealed;
+    },
+    increaseMaxHealth(value: number) {
+      self.maxHealth += value;
+    },
     clearHand() {
       // Put hand into discard pile
       self.hand.cardStack.cards.forEach(card => {

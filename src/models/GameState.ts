@@ -19,6 +19,7 @@ export enum GameLogEntryCategory {
   Buy = 'Buy',
   Draw = 'Draw',
   Heal = 'Heal',
+  IncreaseMaxHealth = 'Increase Max Health',
 }
 
 export type GameLogEntryParams = {
@@ -69,6 +70,11 @@ export const GameState = types
           message = `${
             self.currentPlayerId
           } healed for ${value} with ${cardName}`;
+          break;
+        case GameLogEntryCategory.IncreaseMaxHealth:
+          message = `${
+            self.currentPlayerId
+          } increased their max health by ${value} with ${cardName}`;
           break;
         default:
           break;

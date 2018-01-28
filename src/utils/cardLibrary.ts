@@ -34,6 +34,12 @@ export const ItemCards = {
     cost: 4,
     effects: [{ category: CardEffectCategory.Heal, value: 4 }],
   },
+  multivitamins: {
+    name: 'Multivitamins',
+    category: CardCategory.Item,
+    cost: 2,
+    effects: [{ category: CardEffectCategory.IncreaseMaxHealth, value: 1 }],
+  },
 };
 
 export const AttackCards = {

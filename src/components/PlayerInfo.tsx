@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface Props {
   id: string;
   health: number;
+  maxHealth: number;
   availableBuyingPower: number;
 }
 
@@ -38,14 +39,16 @@ const HandStat = styled.div`
   margin: 0 8px;
 `;
 
-function PlayerInfo({ id, health, availableBuyingPower }: Props) {
+function PlayerInfo({ id, health, maxHealth, availableBuyingPower }: Props) {
   return (
     <StyledPlayerInfo>
       <StatsContainer>
         <HandStat title="Available buying power">
           💵 {availableBuyingPower}
         </HandStat>
-        <PlayerHealth title="Health">❤️ {health}</PlayerHealth>
+        <PlayerHealth title="Health">
+          ❤️ {health}/{maxHealth}
+        </PlayerHealth>
       </StatsContainer>
       <PlayerName>{id}</PlayerName>
     </StyledPlayerInfo>

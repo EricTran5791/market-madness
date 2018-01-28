@@ -38,6 +38,7 @@ export const Store = types
       // TODO: Move this logic to utils
       card.effects.forEach(effect => {
         const { category, value } = effect;
+        const currentPlayer = self.currentPlayer;
         switch (category) {
           case CardEffectCategory.Damage:
             self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
@@ -48,18 +49,28 @@ export const Store = types
             self.otherPlayer.health -= value;
             break;
           case CardEffectCategory.Draw:
-            const cardsDrawn = self.currentPlayer.drawFromDeck(value);
+            const cardsDrawn = currentPlayer.drawFromDeck(value);
             self.gameState.addGameLogEntry(GameLogEntryCategory.Draw, {
               cardName: card.name,
               value: cardsDrawn,
             });
             break;
           case CardEffectCategory.Heal:
+            const amtHealed = currentPlayer.heal(value);
             self.gameState.addGameLogEntry(GameLogEntryCategory.Heal, {
               cardName: card.name,
-              value: value,
+              value: amtHealed,
             });
-            self.currentPlayer.health += value;
+            break;
+          case CardEffectCategory.IncreaseMaxHealth:
+            currentPlayer.increaseMaxHealth(value);
+            self.gameState.addGameLogEntry(
+              GameLogEntryCategory.IncreaseMaxHealth,
+              {
+                cardName: card.name,
+                value: value,
+              }
+            );
             break;
           default:
             break;
@@ -68,9 +79,7 @@ export const Store = types
       card.isPlayed = true;
     },
     changeCurrentPlayer() {
-      self.gameState.currentPlayerId = self.players.find(
-        player => player.id !== self.gameState.currentPlayerId
-      ).id;
+      self.gameState.currentPlayerId = self.otherPlayer.id;
     },
     startGame() {
       self.gameState.currentGamePhase = GamePhase.turnStart;

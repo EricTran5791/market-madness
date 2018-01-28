@@ -5,6 +5,7 @@ export enum CardEffectCategory {
   Discount = 'Discount',
   Draw = 'Draw',
   Heal = 'Heal',
+  IncreaseMaxHealth = 'Increase Max Health',
 }
 
 export const CardEffect = types.model('CardEffect', {

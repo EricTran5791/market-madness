@@ -30,7 +30,7 @@ export function generateStartingDeck(): CardStackModelType {
 export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards(cards.ItemCards.apple, 3),
+      ...printDuplicateCards(cards.ItemCards.apple, 2),
       ...printDuplicateCards(cards.ItemCards.bananas, 2),
       Card.create(cards.ItemCards.couponBook),
       Card.create(cards.ItemCards.dragonFruit),
@@ -38,6 +38,7 @@ export function generateMarketDeck(): CardStackModelType {
       Card.create(cards.AttackCards.tennisRacket),
       ...printDuplicateCards(cards.MoneyCards.gem, 2),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
+      ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
     ]),
   });
 }

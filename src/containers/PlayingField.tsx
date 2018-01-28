@@ -119,6 +119,7 @@ class PlayingField extends React.Component<Props, object> {
           <PlayerInfo
             id={this.props.store!.getPlayer(PlayerId.Computer).id}
             health={this.props.store!.getPlayer(PlayerId.Computer).health}
+            maxHealth={this.props.store!.getPlayer(PlayerId.Computer).maxHealth}
             availableBuyingPower={
               this.props.store!.getPlayer(PlayerId.Computer).hand
                 .availableBuyingPower
@@ -199,6 +200,7 @@ class PlayingField extends React.Component<Props, object> {
           <PlayerInfo
             id={this.props.store!.getPlayer(PlayerId.Player1).id}
             health={this.props.store!.getPlayer(PlayerId.Player1).health}
+            maxHealth={this.props.store!.getPlayer(PlayerId.Player1).maxHealth}
             availableBuyingPower={
               this.props.store!.getPlayer(PlayerId.Player1).hand
                 .availableBuyingPower
