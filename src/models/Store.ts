@@ -6,7 +6,7 @@ import { CardEffectCategory } from './CardEffect';
 
 export const Store = types
   .model('Store', {
-    shopDeck: CardStack,
+    marketDeck: CardStack,
     players: types.array(Player),
     gameState: GameState,
   })
@@ -26,7 +26,7 @@ export const Store = types
     },
   }))
   .actions(self => ({
-    buyShopCard(card: CardModelType) {
+    buyMarketCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,

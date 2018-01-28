@@ -3,7 +3,7 @@ import { Player, PlayerId } from '../models/Player';
 import { GameState, GamePhase } from '../models/GameState';
 import { onAction } from 'mobx-state-tree';
 import {
-  generateShopDeck,
+  generateMarketDeck,
   generateStartingDeck,
   generateEmptyDeck,
 } from './cardGenerator';
@@ -36,7 +36,7 @@ export function initializeStore(): StoreType {
   });
 
   const store = Store.create({
-    shopDeck: generateShopDeck(),
+    marketDeck: generateMarketDeck(),
     players,
     gameState,
   });

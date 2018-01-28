@@ -27,7 +27,7 @@ export function generateStartingDeck(): CardStackModelType {
   });
 }
 
-export function generateShopDeck(): CardStackModelType {
+export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
       ...printDuplicateCards(cards.ItemCards.apple, 3),

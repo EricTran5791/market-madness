@@ -14,7 +14,7 @@ interface State {
   cardStack: CardStackModelType;
 }
 
-const StyledShopArea = styled.div`
+const StyledMarketArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,11 +34,11 @@ const Title = styled.div`
 
 @inject('store')
 @observer
-class ShopArea extends React.Component<Props, State> {
+class MarketArea extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      cardStack: this.props.store!.shopDeck,
+      cardStack: this.props.store!.marketDeck,
     };
   }
   displayCards() {
@@ -51,16 +51,16 @@ class ShopArea extends React.Component<Props, State> {
       });
   }
   onClick(card: CardModelType) {
-    this.props.store!.buyShopCard(card);
+    this.props.store!.buyMarketCard(card);
   }
   render() {
     return (
-      <StyledShopArea>
-        <Title>Shop</Title>
+      <StyledMarketArea>
+        <Title>The Market</Title>
         <CardGrid columns={4}>{this.displayCards()}</CardGrid>
-      </StyledShopArea>
+      </StyledMarketArea>
     );
   }
 }
 
-export default ShopArea;
+export default MarketArea;

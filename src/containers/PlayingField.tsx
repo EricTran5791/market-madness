@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import CardView from '../components/CardView';
-import ShopArea from './ShopArea';
+import MarketArea from './MarketArea';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import { withProps } from '../withProps';
@@ -23,7 +23,7 @@ const StyledPlayingField = styled.div`
   grid-template-areas:
     '. . comp-portrait .'
     'game-log comp-discard-pile comp-hand comp-deck'
-    'game-log . shop end-turn'
+    'game-log . market end-turn'
     'game-log p1-discard-pile p1-hand p1-deck'
     '. . p1-portrait .';
   background-color: #e4e4e4;
@@ -45,8 +45,8 @@ const GridArea = styled.div`
   align-items: center;
 `;
 
-const ShopGridArea = GridArea.extend`
-  grid-area: shop;
+const MarketAreaGridArea = GridArea.extend`
+  grid-area: market;
 `;
 
 const EndTurnGridArea = GridArea.extend`
@@ -156,9 +156,9 @@ class PlayingField extends React.Component<Props, object> {
           <GameLog entries={this.props.store!.gameState.gameLog} />
         </GameLogGridArea>
 
-        <ShopGridArea>
-          <ShopArea />
-        </ShopGridArea>
+        <MarketAreaGridArea>
+          <MarketArea />
+        </MarketAreaGridArea>
 
         <EndTurnGridArea>
           <TurnButton
