@@ -32,11 +32,11 @@ export function initializeStore(): StoreType {
 
   const gameState = GameState.create({
     currentGamePhase: GamePhase.gameStart,
-    currentPlayerId: players[0].id,
+    currentPlayer: players[0],
   });
 
   const store = Store.create({
-    marketDeck: generateMarketDeck(),
+    market: { cardStack: generateMarketDeck() },
     players,
     gameState,
   });

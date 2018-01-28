@@ -38,7 +38,7 @@ class MarketArea extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      cardStack: this.props.store!.marketDeck,
+      cardStack: this.props.store!.market.cardStack,
     };
   }
   displayCards() {
@@ -51,7 +51,7 @@ class MarketArea extends React.Component<Props, State> {
       });
   }
   onClick(card: CardModelType) {
-    this.props.store!.buyMarketCard(card);
+    this.props.store!.market.buyMarketCard(card);
   }
   render() {
     return (

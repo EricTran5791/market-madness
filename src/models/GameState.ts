@@ -1,4 +1,5 @@
 import { types } from 'mobx-state-tree';
+import { Player } from './Player';
 
 export enum GamePhase {
   gameStart = '[Game] Start',
@@ -42,7 +43,7 @@ export const GameState = types
       'Game Phase',
       Object.keys(GamePhase).map(key => GamePhase[key])
     ),
-    currentPlayerId: types.string,
+    currentPlayer: types.reference(Player),
     currentTurnNumber: types.optional(types.number, 0),
     gameLog: types.optional(types.array(GameLogEntry), []),
   })
@@ -51,29 +52,29 @@ export const GameState = types
       category: string,
       { cardName, target, value = 0 }: GameLogEntryParams
     ) {
-      let message = `${self.currentPlayerId} ${category}`;
+      let message = `${self.currentPlayer.id} ${category}`;
       switch (category) {
         case GameLogEntryCategory.Attack:
           message = `${
-            self.currentPlayerId
+            self.currentPlayer.id
           } dealt ${value} damage to ${target} with ${cardName}`;
           break;
         case GameLogEntryCategory.Buy:
-          message = `${self.currentPlayerId} bought ${cardName}`;
+          message = `${self.currentPlayer.id} bought ${cardName}`;
           break;
         case GameLogEntryCategory.Draw:
-          message = `${self.currentPlayerId} drew ${value} card${
+          message = `${self.currentPlayer.id} drew ${value} card${
             value > 1 ? 's' : ''
           } with ${cardName}`;
           break;
         case GameLogEntryCategory.Heal:
           message = `${
-            self.currentPlayerId
+            self.currentPlayer.id
           } healed for ${value} with ${cardName}`;
           break;
         case GameLogEntryCategory.IncreaseMaxHealth:
           message = `${
-            self.currentPlayerId
+            self.currentPlayer.id
           } increased their max health by ${value} with ${cardName}`;
           break;
         default:
@@ -82,7 +83,7 @@ export const GameState = types
 
       self.gameLog.push(
         GameLogEntry.create({
-          playerId: self.currentPlayerId,
+          playerId: self.currentPlayer.id,
           category,
           message,
         })

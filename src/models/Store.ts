@@ -1,12 +1,13 @@
-import { types, detach } from 'mobx-state-tree';
-import { CardStack, CardModelType } from './Card';
+import { types } from 'mobx-state-tree';
+import { CardModelType } from './Card';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player } from './Player';
 import { CardEffectCategory } from './CardEffect';
+import { Market } from './Market';
 
 export const Store = types
   .model('Store', {
-    marketDeck: CardStack,
+    market: Market,
     players: types.array(Player),
     gameState: GameState,
   })
@@ -15,25 +16,15 @@ export const Store = types
       return self.players.find(player => player.id === id);
     },
     get currentPlayer() {
-      return self.players.find(
-        player => player.id === self.gameState.currentPlayerId
-      );
+      return self.gameState.currentPlayer;
     },
     get otherPlayer() {
       return self.players.find(
-        player => player.id !== self.gameState.currentPlayerId
+        player => player.id !== self.gameState.currentPlayer.id
       );
     },
   }))
   .actions(self => ({
-    buyMarketCard(card: CardModelType) {
-      if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
-        self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
-          cardName: card.name,
-        });
-        self.currentPlayer.hand.gainedCardStack.add(detach(card));
-      }
-    },
     playCard(card: CardModelType) {
       // TODO: Move this logic to utils
       card.effects.forEach(effect => {
@@ -79,7 +70,7 @@ export const Store = types
       card.isPlayed = true;
     },
     changeCurrentPlayer() {
-      self.gameState.currentPlayerId = self.otherPlayer.id;
+      self.gameState.currentPlayer = self.otherPlayer;
     },
     startGame() {
       self.gameState.currentGamePhase = GamePhase.turnStart;
