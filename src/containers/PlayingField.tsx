@@ -5,12 +5,12 @@ import CardView from '../components/CardView';
 import MarketArea from './MarketArea';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
-import { withProps } from '../withProps';
 import CardDeck from '../components/CardDeck';
 import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
 import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
+import { GameControls } from './GameControls';
 
 interface Props {
   store?: StoreType;
@@ -49,7 +49,7 @@ const MarketAreaGridArea = GridArea.extend`
   grid-area: market;
 `;
 
-const EndTurnGridArea = GridArea.extend`
+const GameInfoGridArea = GridArea.extend`
   grid-area: end-turn;
   display: flex;
   justify-content: center;
@@ -90,18 +90,6 @@ const CompGridArea = GridArea.extend`
 
 const GameLogGridArea = GridArea.extend`
   grid-area: game-log;
-`;
-
-interface TurnButtonProps {
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
-}
-
-const TurnButton = withProps<TurnButtonProps>()(styled.button)`
-  cursor: pointer;
-  width: 128px;
-  height: 64px;
-  font-size: 16px;
-  font-weight: bold;
 `;
 
 @inject('store')
@@ -161,15 +149,9 @@ class PlayingField extends React.Component<Props, object> {
           <MarketArea />
         </MarketAreaGridArea>
 
-        <EndTurnGridArea>
-          <TurnButton
-            onClick={(e: React.MouseEvent<HTMLElement>) =>
-              this.props.store!.endTurn()
-            }
-          >
-            End Turn
-          </TurnButton>
-        </EndTurnGridArea>
+        <GameInfoGridArea>
+          <GameControls />
+        </GameInfoGridArea>
 
         <P1HandGridArea>
           <HandArea

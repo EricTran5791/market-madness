@@ -2,16 +2,9 @@ import { types } from 'mobx-state-tree';
 import { Player } from './Player';
 
 export enum GamePhase {
-  gameStart = '[Game] Start',
-  gameEnd = '[Game] End',
-  turnStart = '[Turn] Start',
-  turnEnd = '[Turn] End',
-  actionStart = '[Action] Start',
-  actionEnd = '[Action] End',
-  buyStart = '[Buy] Start',
-  buyEnd = '[Buy] End',
-  attackStart = '[Attack] Start',
-  attackEnd = '[Attack] End',
+  GameOver = 'Game Over',
+  PlayersTurn = 'Your turn',
+  ComputersTurn = "Computer's turn",
 }
 
 export enum GameLogEntryCategory {

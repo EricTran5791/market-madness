@@ -1,6 +1,7 @@
 import { types, detach } from 'mobx-state-tree';
 import { Hand } from './Hand';
 import { CardStack } from './Card';
+import { shuffleCardStackModel } from '../utils/cardGenerator';
 
 export enum PlayerId {
   Player1 = 'Player 1',
@@ -60,13 +61,7 @@ export const Player = types
       // 3) Draw the remaining amount
       const remainingDeckDraws = numToDraw - numDeckDraws;
       if (remainingDeckDraws > 0) {
-        const discardPile = self.discardPile.cards;
-
-        // Shuffle the discard pile
-        for (let i = discardPile.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          discardPile.move(i, j);
-        }
+        shuffleCardStackModel(self.discardPile);
 
         // Move the discard pile to the deck
         self.discardPile.cards.forEach(card => {

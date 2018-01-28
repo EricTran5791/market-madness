@@ -1,11 +1,12 @@
 import { StoreType, Store } from '../models/Store';
 import { Player, PlayerId } from '../models/Player';
 import { GameState, GamePhase } from '../models/GameState';
-import { onAction } from 'mobx-state-tree';
+import { onAction, onPatch, getSnapshot, applySnapshot } from 'mobx-state-tree';
 import {
   generateMarketDeck,
   generateStartingDeck,
   generateEmptyDeck,
+  shuffleCardStackModel,
 } from './cardGenerator';
 
 export function initializeStore(): StoreType {
@@ -31,7 +32,7 @@ export function initializeStore(): StoreType {
   ];
 
   const gameState = GameState.create({
-    currentGamePhase: GamePhase.gameStart,
+    currentGamePhase: GamePhase.PlayersTurn,
     currentPlayer: players[0],
   });
 
@@ -42,13 +43,19 @@ export function initializeStore(): StoreType {
   });
 
   setupReactions(store);
-  store.startGame();
+  store.createNewGame();
   return store;
 }
 
 function setupReactions(store: StoreType) {
+  const initialSnapshot = getSnapshot(store);
+
   onAction(store, call => {
-    if (call.name === 'startGame') {
+    if (call.name === 'createNewGame') {
+      applySnapshot(store, initialSnapshot);
+      shuffleCardStackModel(store.market.cardStack);
+      shuffleCardStackModel(store.currentPlayer.deck);
+      shuffleCardStackModel(store.otherPlayer.deck);
       store.currentPlayer.drawFromDeck(5);
     }
 
@@ -56,6 +63,20 @@ function setupReactions(store: StoreType) {
       store.currentPlayer.clearHand();
       store.changeCurrentPlayer();
       store.currentPlayer.drawFromDeck(5);
+    }
+  });
+
+  // End the game whenever either player reaches 0 health or below
+  onPatch(store.players[0], call => {
+    if (call.op === 'replace' && call.path === '/health' && call.value <= 0) {
+      console.log('game over');
+      store.gameState.currentGamePhase = GamePhase.GameOver;
+    }
+  });
+  onPatch(store.players[1], call => {
+    if (call.op === 'replace' && call.path === '/health' && call.value <= 0) {
+      console.log('game over');
+      store.gameState.currentGamePhase = GamePhase.GameOver;
     }
   });
 }

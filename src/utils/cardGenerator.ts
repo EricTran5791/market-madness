@@ -51,3 +51,13 @@ function shuffle<T>(array: T[]): T[] {
   }
   return array;
 }
+
+export function shuffleCardStackModel(
+  cardStack: CardStackModelType
+): CardStackModelType {
+  for (let i = cardStack.cards.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    cardStack.cards.move(i, j);
+  }
+  return cardStack;
+}

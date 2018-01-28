@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 import { CardModelType } from './Card';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
-import { Player } from './Player';
+import { Player, PlayerId } from './Player';
 import { CardEffectCategory } from './CardEffect';
 import { Market } from './Market';
 
@@ -12,6 +12,9 @@ export const Store = types
     gameState: GameState,
   })
   .views(self => ({
+    get currentGamePhase() {
+      return self.gameState.currentGamePhase;
+    },
     getPlayer(id: string) {
       return self.players.find(player => player.id === id);
     },
@@ -72,11 +75,14 @@ export const Store = types
     changeCurrentPlayer() {
       self.gameState.currentPlayer = self.otherPlayer;
     },
-    startGame() {
-      self.gameState.currentGamePhase = GamePhase.turnStart;
+    createNewGame() {
+      self.gameState.currentGamePhase = GamePhase.PlayersTurn;
     },
     endTurn() {
-      self.gameState.currentGamePhase = GamePhase.turnEnd;
+      self.gameState.currentGamePhase =
+        self.otherPlayer.id === PlayerId.Player1
+          ? GamePhase.ComputersTurn
+          : GamePhase.PlayersTurn;
     },
   }));
 
