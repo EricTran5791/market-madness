@@ -14,7 +14,7 @@ const StyledGameLog = styled.div`
 `;
 
 const GameLogEntry = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   margin: 8px 0;
 `;
 

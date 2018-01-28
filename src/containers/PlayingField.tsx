@@ -5,12 +5,12 @@ import CardView from '../components/CardView';
 import MarketArea from './MarketArea';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
-import CardDeck from '../components/CardDeck';
 import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
 import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 import { GameControls } from './GameControls';
+import DeckInfo from '../components/DeckInfo';
 
 interface Props {
   store?: StoreType;
@@ -19,24 +19,17 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 1fr 1fr 4fr 1fr;
+  grid-template-columns: 150px 0 6fr 1fr;
   grid-template-areas:
     '. . comp-portrait .'
-    'game-log comp-discard-pile comp-hand comp-deck'
+    'game-log . comp-hand comp-deck-info'
     'game-log . market end-turn'
-    'game-log p1-discard-pile p1-hand p1-deck'
+    'game-log . p1-hand p1-deck-info'
     '. . p1-portrait .';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
   padding: 16px;
-`;
-
-const AreaTitle = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 16px;
 `;
 
 const GridArea = styled.div`
@@ -56,32 +49,24 @@ const GameInfoGridArea = GridArea.extend`
   align-items: center;
 `;
 
-const P1DiscardPileGridArea = GridArea.extend`
-  grid-area: p1-discard-pile;
-`;
-
 const P1HandGridArea = GridArea.extend`
   grid-area: p1-hand;
 `;
 
-const P1DeckGridArea = GridArea.extend`
-  grid-area: p1-deck;
+const P1DeckInfoGridArea = GridArea.extend`
+  grid-area: p1-deck-info;
 `;
 
 const P1GridArea = GridArea.extend`
   grid-area: p1-portrait;
 `;
 
-const CompDiscardPileGridArea = GridArea.extend`
-  grid-area: comp-discard-pile;
-`;
-
 const CompHandGridArea = GridArea.extend`
   grid-area: comp-hand;
 `;
 
-const CompDeckGridArea = GridArea.extend`
-  grid-area: comp-deck;
+const CompDeckInfoGridArea = GridArea.extend`
+  grid-area: comp-deck-info;
 `;
 
 const CompGridArea = GridArea.extend`
@@ -112,18 +97,9 @@ class PlayingField extends React.Component<Props, object> {
               this.props.store!.getPlayer(PlayerId.Computer).hand
                 .availableBuyingPower
             }
+            inverseLayout={true}
           />
         </CompGridArea>
-
-        <CompDiscardPileGridArea>
-          <AreaTitle>Discard Pile</AreaTitle>
-          <CardDeck
-            count={
-              this.props.store!.getPlayer(PlayerId.Computer).discardPile
-                .totalCards
-            }
-          />
-        </CompDiscardPileGridArea>
 
         <CompHandGridArea>
           <HandArea
@@ -131,17 +107,19 @@ class PlayingField extends React.Component<Props, object> {
           />
         </CompHandGridArea>
 
-        <CompDeckGridArea>
-          <AreaTitle>Deck</AreaTitle>
-          <CardDeck
-            count={
+        <CompDeckInfoGridArea>
+          <DeckInfo
+            deckTotal={
               this.props.store!.getPlayer(PlayerId.Computer).deck.totalCards
             }
+            discardPileTotal={
+              this.props.store!.getPlayer(PlayerId.Computer).discardPile
+                .totalCards
+            }
           />
-        </CompDeckGridArea>
+        </CompDeckInfoGridArea>
 
         <GameLogGridArea>
-          <AreaTitle>Game Log</AreaTitle>
           <GameLog entries={this.props.store!.gameState.gameLog} />
         </GameLogGridArea>
 
@@ -159,24 +137,17 @@ class PlayingField extends React.Component<Props, object> {
           />
         </P1HandGridArea>
 
-        <P1DiscardPileGridArea>
-          <AreaTitle>Discard Pile</AreaTitle>
-          <CardDeck
-            count={
+        <P1DeckInfoGridArea>
+          <DeckInfo
+            deckTotal={
+              this.props.store!.getPlayer(PlayerId.Player1).deck.totalCards
+            }
+            discardPileTotal={
               this.props.store!.getPlayer(PlayerId.Player1).discardPile
                 .totalCards
             }
           />
-        </P1DiscardPileGridArea>
-
-        <P1DeckGridArea>
-          <AreaTitle>Deck</AreaTitle>
-          <CardDeck
-            count={
-              this.props.store!.getPlayer(PlayerId.Player1).deck.totalCards
-            }
-          />
-        </P1DeckGridArea>
+        </P1DeckInfoGridArea>
 
         <P1GridArea>
           <PlayerInfo

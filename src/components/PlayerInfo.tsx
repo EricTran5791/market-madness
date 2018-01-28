@@ -1,16 +1,23 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { withProps } from '../withProps';
 
 interface Props {
   id: string;
   health: number;
   maxHealth: number;
   availableBuyingPower: number;
+  inverseLayout?: boolean;
 }
 
-const StyledPlayerInfo = styled.div`
+interface StyledPlayerInfoProps {
+  inverseLayout: boolean;
+}
+
+const StyledPlayerInfo = withProps<StyledPlayerInfoProps>()(styled.div)`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ inverseLayout }: StyledPlayerInfoProps): string =>
+    inverseLayout ? 'column-reverse' : 'column'};
   justify-content: center;
   align-items: center;
 `;
@@ -20,32 +27,33 @@ const PlayerName = styled.div`
   font-weight: bold;
 `;
 
-const PlayerHealth = styled.div`
+const StatsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 150px;
+  padding: 8px;
+`;
+
+const Stat = styled.div`
   color: black;
   font-size: 16px;
+`;
+
+const PlayerHealth = Stat.extend`
   font-weight: bold;
 `;
 
-const StatsContainer = styled.div`
-  display: flex;
-  margin-bottom: 8px;
-`;
-
-const HandStat = styled.div`
-  display: flex;
-  align-items: center;
-  color: black;
-  font-size: 16px;
-  margin: 0 8px;
-`;
-
-function PlayerInfo({ id, health, maxHealth, availableBuyingPower }: Props) {
+function PlayerInfo({
+  id,
+  health,
+  maxHealth,
+  availableBuyingPower,
+  inverseLayout,
+}: Props) {
   return (
-    <StyledPlayerInfo>
+    <StyledPlayerInfo inverseLayout={inverseLayout || false}>
       <StatsContainer>
-        <HandStat title="Available buying power">
-          💵 {availableBuyingPower}
-        </HandStat>
+        <Stat title="Available buying power">💵 {availableBuyingPower}</Stat>
         <PlayerHealth title="Health">
           ❤️ {health}/{maxHealth}
         </PlayerHealth>

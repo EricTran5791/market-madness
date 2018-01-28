@@ -24,6 +24,7 @@ interface State {
 const StyledHandArea = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+  min-height: 160px;
 `;
 
 const CardPile = styled.div`
