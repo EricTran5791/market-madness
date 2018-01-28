@@ -5,6 +5,7 @@ import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
+import { withProps } from '../withProps';
 
 interface Props {
   playerId: string;
@@ -19,6 +20,25 @@ interface State {
 const StyledHandArea = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+`;
+
+const CardPile = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+interface CardPileItemProps {
+  index: number;
+}
+
+const CardPileItem = withProps<CardPileItemProps>()(styled.div)`
+  position: absolute;
+  top: ${({ index }: CardPileItemProps) => index * 32}px;
+  transform: rotate(${({ index }: CardPileItemProps) => {
+    const i = index % 3;
+    return i === 0 ? 0 : i === 1 ? 2 : -2;
+  }}deg); // Stagger the cards in the pile
 `;
 
 @inject('store')
@@ -42,7 +62,11 @@ class HandArea extends React.Component<Props, State> {
   }
   displayGainedCards() {
     return this.state.gainedCardStack.cards.map((card, i) => {
-      return <CardView key={i} model={card} />;
+      return (
+        <CardPileItem key={i} index={i}>
+          <CardView model={card} />
+        </CardPileItem>
+      );
     });
   }
   onClick(card: CardModelType) {
@@ -51,7 +75,7 @@ class HandArea extends React.Component<Props, State> {
   render() {
     return (
       <StyledHandArea>
-        <CardGrid columns={1}>{this.displayGainedCards()}</CardGrid>
+        <CardPile>{this.displayGainedCards()}</CardPile>
         <CardGrid columns={5}>{this.displayCards()}</CardGrid>
       </StyledHandArea>
     );

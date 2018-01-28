@@ -14,7 +14,6 @@ interface StyledCardProps {
 }
 
 export const BasicCard = styled.div`
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,6 +26,8 @@ export const BasicCard = styled.div`
 `;
 
 const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
+  cursor: ${({ showHoverAnimation }: StyledCardProps): string =>
+    showHoverAnimation ? 'pointer' : 'default'};
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
       case CardCategory.attack:

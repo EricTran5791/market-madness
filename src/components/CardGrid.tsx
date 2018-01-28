@@ -12,7 +12,7 @@ interface StyledCardAreaProps {
   columns: number;
 }
 
-const StyledCardArea = withProps<StyledCardAreaProps>()(styled.div)`
+const StyledCardGrid = withProps<StyledCardAreaProps>()(styled.div)`
   display: grid;
   grid-template-columns: repeat(${({ columns }: StyledCardAreaProps) =>
     columns}, 1fr);
@@ -23,9 +23,9 @@ const StyledCardArea = withProps<StyledCardAreaProps>()(styled.div)`
 class CardGrid extends React.Component<Props, object> {
   render() {
     return (
-      <StyledCardArea columns={this.props.columns}>
+      <StyledCardGrid columns={this.props.columns}>
         {this.props.children}
-      </StyledCardArea>
+      </StyledCardGrid>
     );
   }
 }
