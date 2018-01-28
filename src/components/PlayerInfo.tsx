@@ -23,8 +23,8 @@ const StyledPlayerInfo = withProps<StyledPlayerInfoProps>()(styled.div)`
 `;
 
 const PlayerName = styled.div`
-  font-size: 22px;
-  font-weight: bold;
+  font-family: 'Acme';
+  font-size: 32px;
 `;
 
 const StatsContainer = styled.div`
@@ -35,12 +35,12 @@ const StatsContainer = styled.div`
 `;
 
 const Stat = styled.div`
-  color: black;
-  font-size: 16px;
+  font-family: 'Acme';
+  font-size: 24px;
 `;
 
 const PlayerHealth = Stat.extend`
-  font-weight: bold;
+  /* TODO: Change colors when health is low */
 `;
 
 function PlayerInfo({

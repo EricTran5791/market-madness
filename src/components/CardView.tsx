@@ -62,8 +62,8 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
 `;
 
 const CardName = styled.div`
+  font-family: 'Acme';
   font-size: 14px;
-  font-weight: bold;
   text-align: center;
 `;
 

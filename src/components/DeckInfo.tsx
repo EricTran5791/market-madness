@@ -13,7 +13,8 @@ const StyledDeckInfo = styled.div`
 `;
 
 const DeckTotal = styled.div`
-  font-size: 14px;
+  font-family: 'Acme';
+  font-size: 24px;
 `;
 
 function DeckInfo({ deckTotal, discardPileTotal }: Props) {

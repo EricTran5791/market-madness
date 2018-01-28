@@ -26,8 +26,8 @@ const StyledMarketArea = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 22px;
-  font-weight: bold;
+  font-family: 'Acme';
+  font-size: 24px;
   text-align: center;
   margin-bottom: 16px;
 `;

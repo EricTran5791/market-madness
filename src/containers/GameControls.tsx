@@ -18,8 +18,8 @@ const StyledGameControls = styled.div`
 `;
 
 const CurrentGamePhase = styled.div`
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Acme';
+  font-size: 24px;
   margin-bottom: 16px;
 `;
 
@@ -31,8 +31,8 @@ const TurnButton = withProps<TurnButtonProps>()(styled.button)`
   cursor: pointer;
   width: 128px;
   height: 64px;
-  font-size: 16px;
-  font-weight: bold;
+  font-family: 'Acme';
+  font-size: 18px;
 `;
 
 @inject('store')
