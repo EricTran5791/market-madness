@@ -11,6 +11,7 @@ interface Props {
 interface StyledCardProps {
   category: string;
   showHoverAnimation: boolean;
+  isPlayed: boolean;
 }
 
 export const BasicCard = styled.div`
@@ -38,6 +39,10 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
         return '#222222';
     }
   }};
+  transform: ${({ isPlayed }: StyledCardProps): string =>
+    isPlayed ? 'translateY(-8px)' : ''};
+  opacity: ${({ isPlayed }: StyledCardProps): string =>
+    isPlayed ? '0.75' : '1'};
   &:hover {
     animation: ${({ showHoverAnimation }: StyledCardProps): string =>
       showHoverAnimation ? 'hover 1s infinite' : ''};
@@ -109,6 +114,7 @@ function CardView({ model, onClick }: Props) {
       onClick={onClick}
       category={model.category}
       showHoverAnimation={onClick !== undefined}
+      isPlayed={model.isPlayed}
     >
       <CardName>{model.name}</CardName>
       {model.buyingPower ? (

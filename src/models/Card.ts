@@ -16,6 +16,7 @@ export const Card = types.model({
   cost: types.optional(types.number, 0),
   buyingPower: types.optional(types.number, 0),
   attackValue: types.optional(types.number, 0),
+  isPlayed: types.optional(types.boolean, false),
 });
 
 export type CardModelType = typeof Card.Type;

@@ -1,7 +1,11 @@
 import * as React from 'react';
 import CardGrid from '../components/CardGrid';
 import CardView from '../components/CardView';
-import { CardStackModelType, CardModelType } from '../models/Card';
+import {
+  CardStackModelType,
+  CardModelType,
+  CardCategory,
+} from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
@@ -56,7 +60,15 @@ class HandArea extends React.Component<Props, State> {
   displayCards() {
     return this.state.cardStack.cards.map((card, i) => {
       return (
-        <CardView key={i} model={card} onClick={() => this.onClick(card)} />
+        <CardView
+          key={i}
+          model={card}
+          onClick={
+            card.isPlayed || card.category === CardCategory.money
+              ? undefined
+              : () => this.onClick(card)
+          }
+        />
       );
     });
   }

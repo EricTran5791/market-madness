@@ -1,5 +1,5 @@
 import { types, detach } from 'mobx-state-tree';
-import { CardStack, CardModelType } from './Card';
+import { CardStack, CardModelType, CardCategory } from './Card';
 import { GameState, GamePhase } from './GameState';
 import { Player } from './Player';
 
@@ -18,6 +18,11 @@ export const Store = types
         player => player.id === self.gameState.currentPlayerId
       );
     },
+    get otherPlayer() {
+      return self.players.find(
+        player => player.id !== self.gameState.currentPlayerId
+      );
+    },
   }))
   .actions(self => ({
     buyShopCard(card: CardModelType) {
@@ -27,11 +32,15 @@ export const Store = types
       }
     },
     playCard(card: CardModelType) {
-      return;
+      if (card.category === CardCategory.attack) {
+        self.otherPlayer.health -= card.attackValue;
+        card.isPlayed = true;
+      }
     },
     clearPlayerHand() {
       // Put hand into discard pile
       self.currentPlayer.hand.cardStack.cards.forEach(card => {
+        card.isPlayed = false;
         self.currentPlayer.discardPile.add(detach(card));
       });
       // Put gained cards into discard pile
@@ -40,7 +49,6 @@ export const Store = types
       });
       // Reset hand stats
       self.currentPlayer.hand.spentBuyingPower = 0;
-      self.currentPlayer.hand.spentAttackValue = 0;
     },
     drawFromDeck(numToDraw: number) {
       // Draw up to x cards from the deck
