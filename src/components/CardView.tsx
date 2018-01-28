@@ -31,9 +31,9 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     showHoverAnimation ? 'pointer' : 'default'};
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
-      case CardCategory.attack:
+      case CardCategory.Attack:
         return 'tomato';
-      case CardCategory.money:
+      case CardCategory.Money:
         return '#66514A';
       default:
         return '#222222';

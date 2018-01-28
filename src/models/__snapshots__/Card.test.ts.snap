@@ -5,7 +5,7 @@ Object {
   "cards": Array [
     Object {
       "buyingPower": 0,
-      "category": "Action",
+      "category": "Item",
       "cost": 1,
       "description": "Heal 1",
       "effects": Array [
@@ -19,7 +19,7 @@ Object {
     },
     Object {
       "buyingPower": 0,
-      "category": "Action",
+      "category": "Item",
       "cost": 2,
       "description": "Heal 2",
       "effects": Array [
@@ -38,7 +38,7 @@ Object {
 exports[`creates a Card 1`] = `
 Object {
   "buyingPower": 0,
-  "category": "Action",
+  "category": "Item",
   "cost": 1,
   "description": "Heal 1",
   "effects": Array [
@@ -57,7 +57,7 @@ Object {
   "cards": Array [
     Object {
       "buyingPower": 0,
-      "category": "Action",
+      "category": "Item",
       "cost": 1,
       "description": "Heal 1",
       "effects": Array [

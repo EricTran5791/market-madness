@@ -30,13 +30,14 @@ export function generateStartingDeck(): CardStackModelType {
 export function generateShopDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards(cards.ActionCards.apple, 3),
-      ...printDuplicateCards(cards.ActionCards.bananas, 2),
-      Card.create(cards.ActionCards.couponBook),
-      Card.create(cards.ActionCards.dragonFruit),
+      ...printDuplicateCards(cards.ItemCards.apple, 3),
+      ...printDuplicateCards(cards.ItemCards.bananas, 2),
+      Card.create(cards.ItemCards.couponBook),
+      Card.create(cards.ItemCards.dragonFruit),
       ...printDuplicateCards(cards.AttackCards.basketball, 2),
       Card.create(cards.AttackCards.tennisRacket),
       ...printDuplicateCards(cards.MoneyCards.gem, 2),
+      ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
     ]),
   });
 }

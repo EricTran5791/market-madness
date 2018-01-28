@@ -64,7 +64,7 @@ class HandArea extends React.Component<Props, State> {
           key={i}
           model={card}
           onClick={
-            card.isPlayed || card.category === CardCategory.money
+            card.isPlayed || card.category === CardCategory.Money
               ? undefined
               : () => this.onClick(card)
           }

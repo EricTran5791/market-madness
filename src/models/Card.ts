@@ -1,9 +1,10 @@
 import { types } from 'mobx-state-tree';
 import { CardEffect, CardEffectCategory } from './CardEffect';
 export enum CardCategory {
-  action = 'Action',
-  attack = 'Attack',
-  money = 'Money',
+  Action = 'Action',
+  Attack = 'Attack',
+  Item = 'Item',
+  Money = 'Money',
 }
 
 export const Card = types

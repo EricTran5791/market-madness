@@ -49,13 +49,13 @@ export function initializeStore(): StoreType {
 function setupReactions(store: StoreType) {
   onAction(store, call => {
     if (call.name === 'startGame') {
-      store.drawFromDeck(5);
+      store.currentPlayer.drawFromDeck(5);
     }
 
     if (call.name === 'endTurn') {
-      store.clearPlayerHand();
+      store.currentPlayer.clearHand();
       store.changeCurrentPlayer();
-      store.drawFromDeck(5);
+      store.currentPlayer.drawFromDeck(5);
     }
   });
 }
