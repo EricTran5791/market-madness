@@ -16,12 +16,13 @@ export enum GamePhase {
 export enum GameLogEntryCategory {
   Buy = 'Buy',
   Attack = 'Attack',
+  Heal = 'Heal',
 }
 
 export type GameLogEntryParams = {
   cardName?: string;
   target?: string;
-  attackValue?: number;
+  value?: number;
 };
 
 export const GameLogEntry = types.model('GameLogEntry', {
@@ -45,7 +46,7 @@ export const GameState = types
   .actions(self => ({
     addGameLogEntry(
       category: string,
-      { cardName, target, attackValue }: GameLogEntryParams
+      { cardName, target, value }: GameLogEntryParams
     ) {
       let message = `${self.currentPlayerId} ${category}`;
       switch (category) {
@@ -55,7 +56,12 @@ export const GameState = types
         case GameLogEntryCategory.Attack:
           message = `${
             self.currentPlayerId
-          } dealt ${attackValue} damage to ${target} with ${cardName}`;
+          } dealt ${value} damage to ${target} with ${cardName}`;
+          break;
+        case GameLogEntryCategory.Heal:
+          message = `${
+            self.currentPlayerId
+          } healed for ${value} with ${cardName}`;
           break;
         default:
           break;

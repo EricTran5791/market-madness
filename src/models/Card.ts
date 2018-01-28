@@ -1,23 +1,47 @@
 import { types } from 'mobx-state-tree';
-
+import { CardEffect, CardEffectCategory } from './CardEffect';
 export enum CardCategory {
   action = 'Action',
   attack = 'Attack',
   money = 'Money',
 }
 
-export const Card = types.model({
-  name: types.string,
-  category: types.enumeration(
-    'Category',
-    Object.keys(CardCategory).map(key => CardCategory[key])
-  ),
-  description: types.optional(types.string, ''),
-  cost: types.optional(types.number, 0),
-  buyingPower: types.optional(types.number, 0),
-  attackValue: types.optional(types.number, 0),
-  isPlayed: types.optional(types.boolean, false),
-});
+export const Card = types
+  .model({
+    name: types.string,
+    category: types.enumeration(
+      'Category',
+      Object.keys(CardCategory).map(key => CardCategory[key])
+    ),
+    description: types.optional(types.string, ''),
+    cost: types.optional(types.number, 0),
+    buyingPower: types.optional(types.number, 0),
+    isPlayed: types.optional(types.boolean, false),
+    effects: types.optional(types.array(CardEffect), []),
+  })
+  .actions(self => ({
+    afterCreate() {
+      // Auto generate descriptions
+      if (self.description === '' && self.effects.length > 0) {
+        self.description = self.effects
+          .map(effect => {
+            switch (effect.category) {
+              case CardEffectCategory.Damage:
+                return `Deal ${effect.value} damage`;
+              case CardEffectCategory.Draw:
+                return `Draw ${effect.value} card${
+                  effect.value > 1 ? 's' : ''
+                }`;
+              case CardEffectCategory.Heal:
+                return `Heal ${effect.value}`;
+              default:
+                return '';
+            }
+          })
+          .join(', ');
+      }
+    },
+  }));
 
 export type CardModelType = typeof Card.Type;
 export type CardModelSnapshotType = typeof Card.SnapshotType;
@@ -33,11 +57,6 @@ export const CardStack = types
     get totalBuyingPower() {
       return self.cards
         .map(card => card.buyingPower)
-        .reduce((sum, currentValue) => sum + currentValue, 0);
-    },
-    get totalAttackValue() {
-      return self.cards
-        .map(card => card.attackValue)
         .reduce((sum, currentValue) => sum + currentValue, 0);
     },
   }))

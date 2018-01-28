@@ -123,10 +123,6 @@ class PlayingField extends React.Component<Props, object> {
               this.props.store!.getPlayer(PlayerId.Computer).hand
                 .availableBuyingPower
             }
-            availableAttackValue={
-              this.props.store!.getPlayer(PlayerId.Computer).hand
-                .availableAttackValue
-            }
           />
         </CompGridArea>
 
@@ -206,10 +202,6 @@ class PlayingField extends React.Component<Props, object> {
             availableBuyingPower={
               this.props.store!.getPlayer(PlayerId.Player1).hand
                 .availableBuyingPower
-            }
-            availableAttackValue={
-              this.props.store!.getPlayer(PlayerId.Player1).hand
-                .availableAttackValue
             }
           />
         </P1GridArea>

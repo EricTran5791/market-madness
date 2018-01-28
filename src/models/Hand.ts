@@ -11,13 +11,6 @@ export const Hand = types
     get availableBuyingPower() {
       return self.cardStack.totalBuyingPower - self.spentBuyingPower;
     },
-    get availableAttackValue() {
-      const spentAttackValue = self.cardStack.cards
-        .filter(card => card.attackValue > 0 && card.isPlayed)
-        .map(card => card.attackValue)
-        .reduce((sum, currentValue) => sum + currentValue, 0);
-      return self.cardStack.totalAttackValue - spentAttackValue;
-    },
   }))
   .actions(self => ({
     spendBuyingPower(num: number): boolean {

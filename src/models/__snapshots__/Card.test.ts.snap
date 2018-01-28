@@ -4,15 +4,31 @@ exports[`adds a card to the CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
+      "buyingPower": 0,
       "category": "Action",
       "cost": 1,
-      "description": "",
+      "description": "Heal 1",
+      "effects": Array [
+        Object {
+          "category": "Heal",
+          "value": 1,
+        },
+      ],
+      "isPlayed": false,
       "name": "Apple",
     },
     Object {
+      "buyingPower": 0,
       "category": "Action",
       "cost": 2,
-      "description": "",
+      "description": "Heal 2",
+      "effects": Array [
+        Object {
+          "category": "Heal",
+          "value": 2,
+        },
+      ],
+      "isPlayed": false,
       "name": "Bananas",
     },
   ],
@@ -21,9 +37,17 @@ Object {
 
 exports[`creates a Card 1`] = `
 Object {
+  "buyingPower": 0,
   "category": "Action",
   "cost": 1,
-  "description": "",
+  "description": "Heal 1",
+  "effects": Array [
+    Object {
+      "category": "Heal",
+      "value": 1,
+    },
+  ],
+  "isPlayed": false,
   "name": "Apple",
 }
 `;
@@ -32,9 +56,17 @@ exports[`creates a CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
+      "buyingPower": 0,
       "category": "Action",
       "cost": 1,
-      "description": "",
+      "description": "Heal 1",
+      "effects": Array [
+        Object {
+          "category": "Heal",
+          "value": 1,
+        },
+      ],
+      "isPlayed": false,
       "name": "Apple",
     },
   ],

@@ -1,7 +1,8 @@
 import { types, detach } from 'mobx-state-tree';
-import { CardStack, CardModelType, CardCategory } from './Card';
+import { CardStack, CardModelType } from './Card';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player } from './Player';
+import { CardEffectCategory } from './CardEffect';
 
 export const Store = types
   .model('Store', {
@@ -35,15 +36,32 @@ export const Store = types
     },
     playCard(card: CardModelType) {
       // TODO: Move this logic to utils
-      if (card.category === CardCategory.attack) {
-        self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
-          cardName: card.name,
-          target: self.otherPlayer.id,
-          attackValue: card.attackValue,
-        });
-        self.otherPlayer.health -= card.attackValue;
-        card.isPlayed = true;
-      }
+      card.effects.forEach(effect => {
+        const { category, value } = effect;
+        switch (category) {
+          case CardEffectCategory.Damage:
+            self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
+              cardName: card.name,
+              target: self.otherPlayer.id,
+              value: value,
+            });
+            self.otherPlayer.health -= value;
+            card.isPlayed = true;
+            break;
+          case CardEffectCategory.Draw:
+            break;
+          case CardEffectCategory.Heal:
+            self.gameState.addGameLogEntry(GameLogEntryCategory.Heal, {
+              cardName: card.name,
+              value: value,
+            });
+            self.currentPlayer.health += value;
+            card.isPlayed = true;
+            break;
+          default:
+            break;
+        }
+      });
     },
     clearPlayerHand() {
       // Put hand into discard pile

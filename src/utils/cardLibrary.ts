@@ -1,15 +1,18 @@
 import { CardCategory } from '../models/Card';
+import { CardEffectCategory } from '../models/CardEffect';
 
 export const ActionCards = {
   apple: {
     name: 'Apple',
     category: CardCategory.action,
     cost: 1,
+    effects: [{ category: CardEffectCategory.Heal, value: 1 }],
   },
   bananas: {
     name: 'Bananas',
     category: CardCategory.action,
     cost: 2,
+    effects: [{ category: CardEffectCategory.Heal, value: 2 }],
   },
   couponBook: {
     name: 'Coupon Book',
@@ -20,6 +23,7 @@ export const ActionCards = {
     name: 'Dragon Fruit',
     category: CardCategory.action,
     cost: 4,
+    effects: [{ category: CardEffectCategory.Heal, value: 4 }],
   },
 };
 
@@ -27,23 +31,20 @@ export const AttackCards = {
   slap: {
     name: 'Slap',
     category: CardCategory.attack,
-    description: 'Deal 1 damage',
     cost: 1,
-    attackValue: 1,
+    effects: [{ category: CardEffectCategory.Damage, value: 1 }],
   },
   basketball: {
     name: 'Basketball',
     category: CardCategory.attack,
-    description: 'Deal 2 damage',
     cost: 2,
-    attackValue: 2,
+    effects: [{ category: CardEffectCategory.Damage, value: 2 }],
   },
   tennisRacket: {
     name: 'Tennis Racket',
-    description: 'Deal 3 damage',
     category: CardCategory.attack,
     cost: 3,
-    attackValue: 3,
+    effects: [{ category: CardEffectCategory.Damage, value: 3 }],
   },
 };
 

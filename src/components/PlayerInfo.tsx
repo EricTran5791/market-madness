@@ -5,7 +5,6 @@ interface Props {
   id: string;
   health: number;
   availableBuyingPower: number;
-  availableAttackValue: number;
 }
 
 const StyledPlayerInfo = styled.div`
@@ -39,12 +38,7 @@ const HandStat = styled.div`
   margin: 0 8px;
 `;
 
-function PlayerInfo({
-  id,
-  health,
-  availableBuyingPower,
-  availableAttackValue,
-}: Props) {
+function PlayerInfo({ id, health, availableBuyingPower }: Props) {
   return (
     <StyledPlayerInfo>
       <StatsContainer>
@@ -52,9 +46,6 @@ function PlayerInfo({
           💵 {availableBuyingPower}
         </HandStat>
         <PlayerHealth title="Health">❤️ {health}</PlayerHealth>
-        <HandStat title="Available attack value">
-          👊 {availableAttackValue}
-        </HandStat>
       </StatsContainer>
       <PlayerName>{id}</PlayerName>
     </StyledPlayerInfo>
