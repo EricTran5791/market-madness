@@ -1,6 +1,6 @@
 import { types, detach } from 'mobx-state-tree';
 import { CardStack, CardModelType, CardCategory } from './Card';
-import { GameState, GamePhase } from './GameState';
+import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player } from './Player';
 
 export const Store = types
@@ -27,12 +27,20 @@ export const Store = types
   .actions(self => ({
     buyShopCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
-        self.gameState.addGameLogEntry('buy', card.name);
+        self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
+          cardName: card.name,
+        });
         self.currentPlayer.hand.gainedCardStack.add(detach(card));
       }
     },
     playCard(card: CardModelType) {
+      // TODO: Move this logic to utils
       if (card.category === CardCategory.attack) {
+        self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
+          cardName: card.name,
+          target: self.otherPlayer.id,
+          attackValue: card.attackValue,
+        });
         self.otherPlayer.health -= card.attackValue;
         card.isPlayed = true;
       }

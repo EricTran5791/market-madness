@@ -24,8 +24,8 @@ export const ActionCards = {
 };
 
 export const AttackCards = {
-  punch: {
-    name: 'Punch',
+  slap: {
+    name: 'Slap',
     category: CardCategory.attack,
     description: 'Deal 1 damage',
     cost: 1,

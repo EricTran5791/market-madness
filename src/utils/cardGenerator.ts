@@ -22,7 +22,7 @@ export function generateStartingDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
       ...printDuplicateCards(cards.MoneyCards.coin, 7),
-      ...printDuplicateCards(cards.AttackCards.punch, 3),
+      ...printDuplicateCards(cards.AttackCards.slap, 3),
     ]),
   });
 }

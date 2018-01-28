@@ -9,7 +9,7 @@ import { initializeStore } from './utils/gameStateManager';
 
 ReactDOM.render(
   <Provider store={initializeStore()}>
-    <PlayingField name="Deck Builder" />
+    <PlayingField />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

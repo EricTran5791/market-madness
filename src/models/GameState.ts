@@ -13,9 +13,20 @@ export enum GamePhase {
   attackEnd = '[Attack] End',
 }
 
+export enum GameLogEntryCategory {
+  Buy = 'Buy',
+  Attack = 'Attack',
+}
+
+export type GameLogEntryParams = {
+  cardName?: string;
+  target?: string;
+  attackValue?: number;
+};
+
 export const GameLogEntry = types.model('GameLogEntry', {
   playerId: types.string,
-  action: types.string,
+  category: types.string,
   message: types.string,
 });
 
@@ -32,16 +43,28 @@ export const GameState = types
     gameLog: types.optional(types.array(GameLogEntry), []),
   })
   .actions(self => ({
-    addGameLogEntry(action: string, target?: string) {
-      // TODO: Add utils/typings for creating log messages
-      let message = `${self.currentPlayerId} ${action}`;
-      if (action === 'buy') {
-        message = `${self.currentPlayerId} bought ${target}`;
+    addGameLogEntry(
+      category: string,
+      { cardName, target, attackValue }: GameLogEntryParams
+    ) {
+      let message = `${self.currentPlayerId} ${category}`;
+      switch (category) {
+        case GameLogEntryCategory.Buy:
+          message = `${self.currentPlayerId} bought ${cardName}`;
+          break;
+        case GameLogEntryCategory.Attack:
+          message = `${
+            self.currentPlayerId
+          } dealt ${attackValue} damage to ${target} with ${cardName}`;
+          break;
+        default:
+          break;
       }
+
       self.gameLog.push(
         GameLogEntry.create({
           playerId: self.currentPlayerId,
-          action,
+          category,
           message,
         })
       );

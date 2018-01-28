@@ -13,7 +13,6 @@ import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 
 interface Props {
-  name: string;
   store?: StoreType;
 }
 
