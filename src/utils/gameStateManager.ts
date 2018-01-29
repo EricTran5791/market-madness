@@ -7,6 +7,7 @@ import {
   generateStartingDeck,
   generateEmptyDeck,
   shuffleCardStackModel,
+  generateBankDeck,
 } from './cardGenerator';
 
 export function initializeStore(): StoreType {
@@ -38,6 +39,7 @@ export function initializeStore(): StoreType {
 
   const store = Store.create({
     market: { cardStack: generateMarketDeck() },
+    bank: { cardStack: generateBankDeck() },
     players,
     gameState,
   });

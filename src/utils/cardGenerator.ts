@@ -32,17 +32,25 @@ export function generateMarketDeck(): CardStackModelType {
     cards: shuffle([
       ...printDuplicateCards(cards.ItemCards.apple, 2),
       ...printDuplicateCards(cards.ItemCards.bananas, 2),
-      Card.create(cards.ItemCards.couponBook),
-      Card.create(cards.ItemCards.dragonFruit),
+      // Card.create(cards.ItemCards.couponBook),
+      ...printDuplicateCards(cards.ItemCards.durian, 2),
       ...printDuplicateCards(cards.AttackCards.basketball, 2),
       Card.create(cards.AttackCards.tennisRacket),
-      ...printDuplicateCards(cards.MoneyCards.gem, 2),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
     ]),
   });
 }
 
+export function generateBankDeck(): CardStackModelType {
+  return CardStack.create({
+    cards: [
+      Card.create(cards.MoneyCards.coin),
+      Card.create(cards.MoneyCards.gem),
+      Card.create(cards.AttackCards.slap),
+    ],
+  });
+}
 // Durstenfeld Shuffle
 function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {

@@ -4,10 +4,12 @@ import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { CardEffectCategory } from './CardEffect';
 import { Market } from './Market';
+import { Bank } from './Bank';
 
 export const Store = types
   .model('Store', {
     market: Market,
+    bank: Bank,
     players: types.array(Player),
     gameState: GameState,
   })

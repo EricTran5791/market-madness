@@ -28,11 +28,14 @@ export const ItemCards = {
     category: CardCategory.Item,
     cost: 3,
   },
-  dragonFruit: {
-    name: 'Dragon Fruit',
+  durian: {
+    name: 'Durian',
     category: CardCategory.Item,
     cost: 4,
-    effects: [{ category: CardEffectCategory.Heal, value: 4 }],
+    effects: [
+      { category: CardEffectCategory.Heal, value: 1 },
+      { category: CardEffectCategory.Damage, value: 3 },
+    ],
   },
   multivitamins: {
     name: 'Multivitamins',
@@ -67,7 +70,7 @@ export const MoneyCards = {
   coin: {
     name: 'Coin',
     category: CardCategory.Money,
-    cost: 0,
+    cost: 1,
     buyingPower: 1,
   },
   gem: {
