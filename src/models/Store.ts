@@ -5,9 +5,11 @@ import { Player, PlayerId } from './Player';
 import { CardEffectCategory } from './CardEffect';
 import { Market } from './Market';
 import { Bank } from './Bank';
+import { Trash } from './Trash';
 
 export const Store = types
   .model('Store', {
+    trash: Trash,
     market: Market,
     bank: Bank,
     players: types.array(Player),

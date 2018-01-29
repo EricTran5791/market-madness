@@ -35,6 +35,8 @@ export const Card = types
                 }`;
               case CardEffectCategory.Heal:
                 return `Heal ${effect.value}`;
+              case CardEffectCategory.IncreaseMaxHealth:
+                return `Increase max health by ${effect.value}`;
               default:
                 return '';
             }

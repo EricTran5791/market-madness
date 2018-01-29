@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import CardView from '../components/CardView';
+import TrashArea from './TrashArea';
 import MarketArea from './MarketArea';
 import BankArea from './BankArea';
 import { StoreType } from '../models/Store';
@@ -20,12 +21,12 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 150px 0 6fr 1fr;
+  grid-template-columns: 150px 1fr 3fr 2fr 150px;
   grid-template-areas:
     '. comp-portrait comp-portrait comp-portrait .'
-    'game-log . comp-hand comp-hand comp-deck-info'
-    'game-log . market bank end-turn'
-    'game-log . p1-hand p1-hand p1-deck-info'
+    'game-log comp-hand comp-hand comp-hand comp-deck-info'
+    'game-log trash market bank end-turn'
+    'game-log p1-hand p1-hand p1-hand p1-deck-info'
     '. p1-portrait p1-portrait p1-portrait .';
   background-color: #e4e4e4;
   min-height: 100vh;
@@ -37,6 +38,10 @@ const GridArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const TrashGridArea = GridArea.extend`
+  grid-area: trash;
 `;
 
 const MarketGridArea = GridArea.extend`
@@ -127,6 +132,10 @@ class PlayingField extends React.Component<Props, object> {
         <GameLogGridArea>
           <GameLog entries={this.props.store!.gameState.gameLog} />
         </GameLogGridArea>
+
+        <TrashGridArea>
+          <TrashArea />
+        </TrashGridArea>
 
         <MarketGridArea>
           <MarketArea />

@@ -37,6 +37,11 @@ export const ItemCards = {
       { category: CardEffectCategory.Damage, value: 3 },
     ],
   },
+  fishBones: {
+    name: 'Fish Bones',
+    category: CardCategory.Item,
+    cost: 0,
+  },
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Item,

@@ -27,6 +27,12 @@ export function generateStartingDeck(): CardStackModelType {
   });
 }
 
+export function generateTrashDeck(): CardStackModelType {
+  return CardStack.create({
+    cards: [Card.create(cards.ItemCards.fishBones)],
+  });
+}
+
 export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
