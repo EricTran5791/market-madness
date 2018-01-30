@@ -1,6 +1,7 @@
-import { types, getParent, clone } from 'mobx-state-tree';
+import { types, getParent, getSnapshot } from 'mobx-state-tree';
 import { CardStack, CardModelType } from './Card';
 import { GameLogEntryCategory } from './GameState';
+import { printCard } from '../utils/cardGenerator';
 
 export const Bank = types
   .model('Bank', {
@@ -12,7 +13,9 @@ export const Bank = types
         getParent(self).gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
-        getParent(self).currentPlayer.hand.gainedCardStack.add(clone(card));
+        getParent(self).currentPlayer.hand.gainedCardStack.add(
+          printCard(getSnapshot(card))
+        );
       }
     },
   }));

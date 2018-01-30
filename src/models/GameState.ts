@@ -19,7 +19,7 @@ export enum GameLogEntryCategory {
 
 export type GameLogEntryParams = {
   cardName?: string;
-  target?: string;
+  targets?: string[];
   value?: number;
 };
 
@@ -37,21 +37,24 @@ export const GameState = types
       'Game Phase',
       Object.keys(GamePhase).map(key => GamePhase[key])
     ),
-    currentPlayer: types.reference(Player),
+    currentPlayer: types.reference(types.late(() => Player)),
     currentTurnNumber: types.optional(types.number, 0),
     gameLog: types.optional(types.array(GameLogEntry), []),
   })
   .actions(self => ({
+    changeGamePhase(phase: GamePhase) {
+      self.currentGamePhase = phase;
+    },
     addGameLogEntry(
       category: string,
-      { cardName, target, value = 0 }: GameLogEntryParams
+      { cardName, targets, value = 0 }: GameLogEntryParams
     ) {
       let message = `${self.currentPlayer.id} ${category}`;
       switch (category) {
         case GameLogEntryCategory.Attack:
           message = `${
             self.currentPlayer.id
-          } dealt ${value} damage to ${target} with ${cardName}`;
+          } dealt ${value} damage to ${targets!.join(', ')} with ${cardName}`;
           break;
         case GameLogEntryCategory.Buy:
           message = `${self.currentPlayer.id} bought ${cardName}`;
@@ -72,7 +75,9 @@ export const GameState = types
           } increased their max health by ${value} with ${cardName}`;
           break;
         case GameLogEntryCategory.Trash:
-          message = `${self.currentPlayer.id} trashed ${cardName}`;
+          message = `${self.currentPlayer.id} trashed ${targets!.join(
+            ', '
+          )} with ${cardName}`;
           break;
         default:
           break;

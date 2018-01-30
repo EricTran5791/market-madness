@@ -9,6 +9,7 @@ export enum CardCategory {
 
 export const Card = types
   .model({
+    id: types.identifier(types.string),
     name: types.string,
     category: types.enumeration(
       'Category',
@@ -37,6 +38,10 @@ export const Card = types
                 return `Heal ${effect.value}`;
               case CardEffectCategory.IncreaseMaxHealth:
                 return `Increase max health by ${effect.value}`;
+              case CardEffectCategory.Trash:
+                return `Trash ${effect.value} card${
+                  effect.value > 1 ? 's' : ''
+                } from your hand`;
               default:
                 return '';
             }

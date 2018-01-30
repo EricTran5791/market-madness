@@ -42,6 +42,12 @@ export const ItemCards = {
     category: CardCategory.Item,
     cost: 0,
   },
+  garbageBag: {
+    name: 'Garbage Bag',
+    category: CardCategory.Item,
+    cost: 2,
+    effects: [{ category: CardEffectCategory.Trash, value: 2 }],
+  },
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Item,

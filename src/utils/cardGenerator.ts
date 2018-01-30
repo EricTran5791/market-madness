@@ -6,16 +6,21 @@ import {
   CardModelSnapshotType,
 } from '../models/Card';
 import * as cards from './cardLibrary';
+import * as uniqid from 'uniqid';
 
 export function generateEmptyDeck(): CardStackModelType {
   return CardStack.create({ cards: [] });
+}
+
+export function printCard(card: CardModelSnapshotType): CardModelType {
+  return Card.create({ id: uniqid(), ...card });
 }
 
 function printDuplicateCards(
   card: CardModelSnapshotType,
   qty: number
 ): CardModelType[] {
-  return new Array(qty).fill(undefined).map(_ => Card.create(card));
+  return new Array(qty).fill(undefined).map(_ => printCard(card));
 }
 
 export function generateStartingDeck(): CardStackModelType {
@@ -29,7 +34,7 @@ export function generateStartingDeck(): CardStackModelType {
 
 export function generateTrashDeck(): CardStackModelType {
   return CardStack.create({
-    cards: [Card.create(cards.ItemCards.fishBones)],
+    cards: [printCard(cards.ItemCards.fishBones)],
   });
 }
 
@@ -38,12 +43,13 @@ export function generateMarketDeck(): CardStackModelType {
     cards: shuffle([
       ...printDuplicateCards(cards.ItemCards.apple, 2),
       ...printDuplicateCards(cards.ItemCards.bananas, 2),
-      // Card.create(cards.ItemCards.couponBook),
+      // printCard(cards.ItemCards.couponBook),
       ...printDuplicateCards(cards.ItemCards.durian, 2),
       ...printDuplicateCards(cards.AttackCards.basketball, 2),
-      Card.create(cards.AttackCards.tennisRacket),
+      printCard(cards.AttackCards.tennisRacket),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
+      ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
     ]),
   });
 }
@@ -51,12 +57,13 @@ export function generateMarketDeck(): CardStackModelType {
 export function generateBankDeck(): CardStackModelType {
   return CardStack.create({
     cards: [
-      Card.create(cards.MoneyCards.coin),
-      Card.create(cards.MoneyCards.gem),
-      Card.create(cards.AttackCards.slap),
+      printCard(cards.MoneyCards.coin),
+      printCard(cards.MoneyCards.gem),
+      printCard(cards.AttackCards.slap),
     ],
   });
 }
+
 // Durstenfeld Shuffle
 function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
