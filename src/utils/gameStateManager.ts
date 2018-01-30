@@ -1,13 +1,18 @@
 import { StoreType, Store } from '../models/Store';
 import { Player, PlayerId } from '../models/Player';
 import { GameState, GamePhase } from '../models/GameState';
-import { onAction, onPatch, getSnapshot, applySnapshot } from 'mobx-state-tree';
+import {
+  onAction,
+  onPatch,
+  getSnapshot,
+  applySnapshot,
+  IJsonPatch,
+} from 'mobx-state-tree';
 import {
   generateMarketDeck,
   generateStartingDeck,
   generateEmptyDeck,
   shuffleCardStackModel,
-  generateBankDeck,
   generateTrashDeck,
 } from './cardGenerator';
 
@@ -41,7 +46,6 @@ export function initializeStore(): StoreType {
   const store = Store.create({
     trash: { cardStack: generateTrashDeck() },
     market: { cardStack: generateMarketDeck() },
-    bank: { cardStack: generateBankDeck() },
     players,
     gameState,
   });
@@ -55,32 +59,40 @@ function setupReactions(store: StoreType) {
   const initialSnapshot = getSnapshot(store);
 
   onAction(store, call => {
-    if (call.name === 'createNewGame') {
-      applySnapshot(store, initialSnapshot);
-      shuffleCardStackModel(store.market.cardStack);
-      shuffleCardStackModel(store.currentPlayer.deck);
-      shuffleCardStackModel(store.otherPlayer.deck);
-      store.currentPlayer.drawFromDeck(5);
-    }
-
-    if (call.name === 'endTurn') {
-      store.currentPlayer.clearHand();
-      store.changeCurrentPlayer();
-      store.currentPlayer.drawFromDeck(5);
+    switch (call.name) {
+      case 'createNewGame': {
+        applySnapshot(store, initialSnapshot);
+        shuffleCardStackModel(store.market.cardStack);
+        shuffleCardStackModel(store.currentPlayer.deck);
+        shuffleCardStackModel(store.otherPlayer.deck);
+        store.currentPlayer.drawFromDeck(5);
+        return;
+      }
+      case 'endTurn': {
+        store.currentPlayer.clearHand();
+        store.changeCurrentPlayer();
+        store.currentPlayer.drawFromDeck(5);
+        return;
+      }
+      default:
+        return;
     }
   });
 
-  // End the game whenever either player reaches 0 health or below
   onPatch(store.players[0], call => {
-    if (call.op === 'replace' && call.path === '/health' && call.value <= 0) {
-      console.log('game over');
-      store.gameState.currentGamePhase = GamePhase.GameOver;
-    }
+    commonChecks(store, call);
   });
   onPatch(store.players[1], call => {
-    if (call.op === 'replace' && call.path === '/health' && call.value <= 0) {
-      console.log('game over');
-      store.gameState.currentGamePhase = GamePhase.GameOver;
-    }
+    commonChecks(store, call);
   });
+}
+
+/**
+ * Checks the same things for both players
+ */
+function commonChecks(store: StoreType, call: IJsonPatch) {
+  // End the game whenever a player reaches 0 health or below
+  if (call.op === 'replace' && call.path === '/health' && call.value <= 0) {
+    store.gameState.changeGamePhase(GamePhase.GameOver);
+  }
 }

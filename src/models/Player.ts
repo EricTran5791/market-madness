@@ -33,6 +33,9 @@ export const Player = types
     increaseMaxHealth(value: number) {
       self.maxHealth += value;
     },
+    takeDamage(value: number) {
+      self.health -= value;
+    },
     clearHand() {
       // Put hand into discard pile
       self.hand.cardStack.cards.forEach(card => {

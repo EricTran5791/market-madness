@@ -51,7 +51,7 @@ class MarketArea extends React.Component<Props, State> {
       });
   }
   onClick(card: CardModelType) {
-    this.props.store!.market.buyMarketCard(card);
+    this.props.store!.buyMarketCard(card);
   }
   render() {
     return (

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import CardView from '../components/CardView';
 import TrashArea from './TrashArea';
 import MarketArea from './MarketArea';
-import BankArea from './BankArea';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
 import PlayerInfo from '../components/PlayerInfo';
@@ -21,11 +20,11 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 150px 1fr 3fr 2fr 150px;
+  grid-template-columns: 150px 1fr 3fr 1fr 150px;
   grid-template-areas:
     '. comp-portrait comp-portrait comp-portrait .'
     'game-log comp-hand comp-hand comp-hand comp-deck-info'
-    'game-log trash market bank end-turn'
+    'game-log trash market . end-turn'
     'game-log p1-hand p1-hand p1-hand p1-deck-info'
     '. p1-portrait p1-portrait p1-portrait .';
   background-color: #e4e4e4;
@@ -46,10 +45,6 @@ const TrashGridArea = GridArea.extend`
 
 const MarketGridArea = GridArea.extend`
   grid-area: market;
-`;
-
-const BankGridArea = GridArea.extend`
-  grid-area: bank;
 `;
 
 const GameInfoGridArea = GridArea.extend`
@@ -140,10 +135,6 @@ class PlayingField extends React.Component<Props, object> {
         <MarketGridArea>
           <MarketArea />
         </MarketGridArea>
-
-        <BankGridArea>
-          <BankArea />
-        </BankGridArea>
 
         <GameInfoGridArea>
           <GameControls />

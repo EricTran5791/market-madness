@@ -54,16 +54,6 @@ export function generateMarketDeck(): CardStackModelType {
   });
 }
 
-export function generateBankDeck(): CardStackModelType {
-  return CardStack.create({
-    cards: [
-      printCard(cards.MoneyCards.coin),
-      printCard(cards.MoneyCards.gem),
-      printCard(cards.AttackCards.slap),
-    ],
-  });
-}
-
 // Durstenfeld Shuffle
 function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {

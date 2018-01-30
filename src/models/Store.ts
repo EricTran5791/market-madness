@@ -1,17 +1,15 @@
-import { types } from 'mobx-state-tree';
-import { CardModelType } from './Card';
+import { types, detach } from 'mobx-state-tree';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
-import { CardEffectCategory } from './CardEffect';
 import { Market } from './Market';
-import { Bank } from './Bank';
 import { Trash } from './Trash';
+import { CardEffectCategory } from '../models/CardEffect';
+import { CardModelType } from '../models/Card';
 
 export const Store = types
   .model('Store', {
     trash: Trash,
     market: Market,
-    bank: Bank,
     players: types.array(Player),
     gameState: GameState,
   })
@@ -32,8 +30,33 @@ export const Store = types
     },
   }))
   .actions(self => ({
+    changeCurrentPlayer() {
+      self.gameState.currentPlayer = self.otherPlayer;
+    },
+    createNewGame() {
+      self.gameState.currentGamePhase = GamePhase.PlayersTurn;
+    },
+    endTurn() {
+      self.gameState.currentGamePhase =
+        self.otherPlayer.id === PlayerId.Player1
+          ? GamePhase.ComputersTurn
+          : GamePhase.PlayersTurn;
+    },
+    buyMarketCard(card: CardModelType) {
+      if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
+        self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
+          cardName: card.name,
+        });
+        self.currentPlayer.hand.gainedCardStack.add(detach(card));
+      }
+    },
+    trashCard(card: CardModelType) {
+      self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
+        cardName: card.name,
+      });
+      self.trash.cardStack.add(detach(card));
+    },
     playCard(card: CardModelType) {
-      // TODO: Move this logic to utils
       card.effects.forEach(effect => {
         const { category, value } = effect;
         const currentPlayer = self.currentPlayer;
@@ -41,10 +64,10 @@ export const Store = types
           case CardEffectCategory.Damage:
             self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
               cardName: card.name,
-              target: self.otherPlayer.id,
+              targets: [self.otherPlayer.id],
               value: value,
             });
-            self.otherPlayer.health -= value;
+            self.otherPlayer.takeDamage(value);
             break;
           case CardEffectCategory.Draw:
             const cardsDrawn = currentPlayer.drawFromDeck(value);
@@ -75,18 +98,7 @@ export const Store = types
         }
       });
       card.isPlayed = true;
-    },
-    changeCurrentPlayer() {
-      self.gameState.currentPlayer = self.otherPlayer;
-    },
-    createNewGame() {
-      self.gameState.currentGamePhase = GamePhase.PlayersTurn;
-    },
-    endTurn() {
-      self.gameState.currentGamePhase =
-        self.otherPlayer.id === PlayerId.Player1
-          ? GamePhase.ComputersTurn
-          : GamePhase.PlayersTurn;
+      return;
     },
   }));
 
