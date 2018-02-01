@@ -48,8 +48,9 @@ export function generateMarketDeck(): CardStackModelType {
       ...printDuplicateCards(cards.AttackCards.basketball, 2),
       printCard(cards.AttackCards.tennisRacket),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
-      ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
-      ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
+      // ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
+      // ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
+      ...printDuplicateCards(cards.MoneyCards.gem, 2),
     ]),
   });
 }

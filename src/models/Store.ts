@@ -34,13 +34,13 @@ export const Store = types
       self.gameState.currentPlayer = self.otherPlayer;
     },
     createNewGame() {
-      self.gameState.currentGamePhase = GamePhase.PlayersTurn;
+      self.gameState.currentGamePhase = GamePhase.Player1Turn;
     },
     endTurn() {
       self.gameState.currentGamePhase =
         self.otherPlayer.id === PlayerId.Player1
-          ? GamePhase.ComputersTurn
-          : GamePhase.PlayersTurn;
+          ? GamePhase.Player2Turn
+          : GamePhase.Player1Turn;
     },
     buyMarketCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {

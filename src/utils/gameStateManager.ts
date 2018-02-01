@@ -28,7 +28,7 @@ export function initializeStore(): StoreType {
       deck: generateStartingDeck(),
     }),
     Player.create({
-      id: PlayerId.Computer,
+      id: PlayerId.Player2,
       discardPile: generateEmptyDeck(),
       hand: {
         cardStack: generateEmptyDeck(),
@@ -39,7 +39,7 @@ export function initializeStore(): StoreType {
   ];
 
   const gameState = GameState.create({
-    currentGamePhase: GamePhase.PlayersTurn,
+    currentGamePhase: GamePhase.Player1Turn,
     currentPlayer: players[0],
   });
 

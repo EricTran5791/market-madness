@@ -3,8 +3,8 @@ import { Player } from './Player';
 
 export enum GamePhase {
   GameOver = 'Game Over',
-  PlayersTurn = 'Your turn',
-  ComputersTurn = "Computer's turn",
+  Player1Turn = "Player 1's turn",
+  Player2Turn = "Player 2's turn",
 }
 
 export enum GameLogEntryCategory {

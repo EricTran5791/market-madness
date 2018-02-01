@@ -5,7 +5,7 @@ import { shuffleCardStackModel } from '../utils/cardGenerator';
 
 export enum PlayerId {
   Player1 = 'Player 1',
-  Computer = 'Computer',
+  Player2 = 'Player 2',
 }
 
 export const Player = types

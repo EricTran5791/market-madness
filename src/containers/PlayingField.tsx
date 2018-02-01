@@ -95,11 +95,11 @@ class PlayingField extends React.Component<Props, object> {
       <StyledPlayingField>
         <CompGridArea>
           <PlayerInfo
-            id={this.props.store!.getPlayer(PlayerId.Computer).id}
-            health={this.props.store!.getPlayer(PlayerId.Computer).health}
-            maxHealth={this.props.store!.getPlayer(PlayerId.Computer).maxHealth}
+            id={this.props.store!.getPlayer(PlayerId.Player2).id}
+            health={this.props.store!.getPlayer(PlayerId.Player2).health}
+            maxHealth={this.props.store!.getPlayer(PlayerId.Player2).maxHealth}
             availableBuyingPower={
-              this.props.store!.getPlayer(PlayerId.Computer).hand
+              this.props.store!.getPlayer(PlayerId.Player2).hand
                 .availableBuyingPower
             }
             inverseLayout={true}
@@ -108,17 +108,17 @@ class PlayingField extends React.Component<Props, object> {
 
         <CompHandGridArea>
           <HandArea
-            playerId={this.props.store!.getPlayer(PlayerId.Computer).id}
+            playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
           />
         </CompHandGridArea>
 
         <CompDeckInfoGridArea>
           <DeckInfo
             deckTotal={
-              this.props.store!.getPlayer(PlayerId.Computer).deck.totalCards
+              this.props.store!.getPlayer(PlayerId.Player2).deck.totalCards
             }
             discardPileTotal={
-              this.props.store!.getPlayer(PlayerId.Computer).discardPile
+              this.props.store!.getPlayer(PlayerId.Player2).discardPile
                 .totalCards
             }
           />
