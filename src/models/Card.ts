@@ -1,5 +1,10 @@
 import { types } from 'mobx-state-tree';
-import { CardEffect, CardEffectCategory } from './CardEffect';
+import {
+  CardEffect,
+  CardEffectCategory,
+  InteractiveCardEffect,
+  InteractiveCardEffectCategory,
+} from './CardEffect';
 export enum CardCategory {
   Action = 'Action',
   Attack = 'Attack',
@@ -20,34 +25,48 @@ export const Card = types
     buyingPower: types.optional(types.number, 0),
     isPlayed: types.optional(types.boolean, false),
     effects: types.optional(types.array(CardEffect), []),
+    interactiveEffects: types.optional(types.array(InteractiveCardEffect), []),
   })
   .actions(self => ({
     afterCreate() {
+      if (self.description.length > 0) {
+        return;
+      }
       // Auto generate descriptions
-      if (self.description === '' && self.effects.length > 0) {
-        self.description = self.effects
-          .map(effect => {
+      self.description = self.effects
+        .map(effect => {
+          switch (effect.category) {
+            case CardEffectCategory.Damage:
+              return `Deal ${effect.value} damage`;
+            case CardEffectCategory.Draw:
+              return `Draw ${effect.value} card${effect.value > 1 ? 's' : ''}`;
+            case CardEffectCategory.Heal:
+              return `Heal ${effect.value}`;
+            case CardEffectCategory.IncreaseMaxHealth:
+              return `Increase max health by ${effect.value}`;
+            case CardEffectCategory.TrashSelf:
+              return `Trash this card`;
+            default:
+              return '';
+          }
+        })
+        .concat(
+          self.interactiveEffects.map(effect => {
             switch (effect.category) {
-              case CardEffectCategory.Damage:
-                return `Deal ${effect.value} damage`;
-              case CardEffectCategory.Draw:
-                return `Draw ${effect.value} card${
-                  effect.value > 1 ? 's' : ''
-                }`;
-              case CardEffectCategory.Heal:
-                return `Heal ${effect.value}`;
-              case CardEffectCategory.IncreaseMaxHealth:
-                return `Increase max health by ${effect.value}`;
-              case CardEffectCategory.Trash:
-                return `Trash ${effect.value} card${
-                  effect.value > 1 ? 's' : ''
+              case InteractiveCardEffectCategory.Trash:
+                return `Trash ${effect.numCardsToResolve} card${
+                  effect.numCardsToResolve > 1 ? 's' : ''
                 } from your hand`;
               default:
                 return '';
             }
           })
-          .join(', ');
-      }
+        )
+        .join(', ');
+    },
+    /** Resets isPlayed every time a card is detached from its direct parent. */
+    beforeDetach() {
+      self.isPlayed = false;
     },
   }));
 

@@ -1,5 +1,8 @@
 import { CardCategory } from '../models/Card';
-import { CardEffectCategory } from '../models/CardEffect';
+import {
+  CardEffectCategory,
+  InteractiveCardEffectCategory,
+} from '../models/CardEffect';
 
 export const ActionCards = {
   expressShipping: {
@@ -46,7 +49,10 @@ export const ItemCards = {
     name: 'Garbage Bag',
     category: CardCategory.Item,
     cost: 2,
-    effects: [{ category: CardEffectCategory.Trash, value: 2 }],
+    effects: [{ category: CardEffectCategory.TrashSelf }],
+    interactiveEffects: [
+      { category: InteractiveCardEffectCategory.Trash, numCardsToResolve: 2 },
+    ],
   },
   multivitamins: {
     name: 'Multivitamins',

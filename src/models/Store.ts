@@ -50,13 +50,8 @@ export const Store = types
         self.currentPlayer.hand.gainedCardStack.add(detach(card));
       }
     },
-    trashCard(card: CardModelType) {
-      self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
-        cardName: card.name,
-      });
-      self.trash.cardStack.add(detach(card));
-    },
     playCard(card: CardModelType) {
+      card.isPlayed = true;
       card.effects.forEach(effect => {
         const { category, value } = effect;
         const currentPlayer = self.currentPlayer;
@@ -93,11 +88,17 @@ export const Store = types
               }
             );
             break;
+          case CardEffectCategory.TrashSelf:
+            self.trash.trashCard(card);
+            self.gameState.addGameLogEntry(GameLogEntryCategory.Trash, {
+              cardName: card.name,
+              targets: [card.name],
+            });
+            break;
           default:
             break;
         }
       });
-      card.isPlayed = true;
       return;
     },
   }));

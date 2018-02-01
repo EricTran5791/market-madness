@@ -39,7 +39,6 @@ export const Player = types
     clearHand() {
       // Put hand into discard pile
       self.hand.cardStack.cards.forEach(card => {
-        card.isPlayed = false;
         self.discardPile.add(detach(card));
       });
       // Put gained cards into discard pile

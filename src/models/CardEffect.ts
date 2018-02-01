@@ -6,7 +6,7 @@ export enum CardEffectCategory {
   Draw = 'Draw',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
-  Trash = 'Trash',
+  TrashSelf = 'Trash Self',
 }
 
 export const CardEffect = types.model('CardEffect', {
@@ -18,3 +18,19 @@ export const CardEffect = types.model('CardEffect', {
 });
 
 export type CardEffectModelType = typeof CardEffect.Type;
+
+export enum InteractiveCardEffectCategory {
+  Trash = 'Trash',
+}
+
+/** A card effect that requires further interaction from the player. Ex: Choosing cards from the player's hand. */
+export const InteractiveCardEffect = types.model('InteractiveCardEffect', {
+  category: types.enumeration(
+    'InteractiveCardEffectCategory',
+    Object.keys(InteractiveCardEffectCategory).map(
+      key => InteractiveCardEffectCategory[key]
+    )
+  ),
+  /** The number of cards that should be played to resolve the card effect. */
+  numCardsToResolve: types.optional(types.number, 0),
+});
