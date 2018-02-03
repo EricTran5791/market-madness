@@ -23,6 +23,7 @@
     "@types/jest": "^22.0.1",
     "@types/node": "^9.3.0",
     "@types/react": "^16.0.34",
-    "@types/react-dom": "^16.0.3"
+    "@types/react-dom": "^16.0.3",
+    "mobx-react-devtools": "^4.2.15"
   }
 }
