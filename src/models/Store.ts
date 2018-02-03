@@ -3,7 +3,11 @@ import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { Market } from './Market';
 import { Trash } from './Trash';
-import { CardEffectCategory } from '../models/CardEffect';
+import {
+  CardEffectCategory,
+  CardEffectKind,
+  BasicCardEffectSnapshotType,
+} from '../models/CardEffect';
 import { CardModelType } from '../models/Card';
 
 export const Store = types
@@ -53,50 +57,52 @@ export const Store = types
     playCard(card: CardModelType) {
       card.isPlayed = true;
       card.effects.forEach(effect => {
-        const { category, value } = effect;
         const currentPlayer = self.currentPlayer;
-        switch (category) {
-          case CardEffectCategory.Damage:
-            self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
-              cardName: card.name,
-              targets: [self.otherPlayer.id],
-              value: value,
-            });
-            self.otherPlayer.takeDamage(value);
-            break;
-          case CardEffectCategory.Draw:
-            const cardsDrawn = currentPlayer.drawFromDeck(value);
-            self.gameState.addGameLogEntry(GameLogEntryCategory.Draw, {
-              cardName: card.name,
-              value: cardsDrawn,
-            });
-            break;
-          case CardEffectCategory.Heal:
-            const amtHealed = currentPlayer.heal(value);
-            self.gameState.addGameLogEntry(GameLogEntryCategory.Heal, {
-              cardName: card.name,
-              value: amtHealed,
-            });
-            break;
-          case CardEffectCategory.IncreaseMaxHealth:
-            currentPlayer.increaseMaxHealth(value);
-            self.gameState.addGameLogEntry(
-              GameLogEntryCategory.IncreaseMaxHealth,
-              {
+        if (effect.kind === CardEffectKind.Basic) {
+          const { category, value }: BasicCardEffectSnapshotType = effect;
+          switch (category) {
+            case CardEffectCategory.Damage:
+              self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
                 cardName: card.name,
+                targets: [self.otherPlayer.id],
                 value: value,
-              }
-            );
-            break;
-          case CardEffectCategory.TrashSelf:
-            self.trash.trashCard(card);
-            self.gameState.addGameLogEntry(GameLogEntryCategory.Trash, {
-              cardName: card.name,
-              targets: [card.name],
-            });
-            break;
-          default:
-            break;
+              });
+              self.otherPlayer.takeDamage(value);
+              break;
+            case CardEffectCategory.Draw:
+              const cardsDrawn = currentPlayer.drawFromDeck(value);
+              self.gameState.addGameLogEntry(GameLogEntryCategory.Draw, {
+                cardName: card.name,
+                value: cardsDrawn,
+              });
+              break;
+            case CardEffectCategory.Heal:
+              const amtHealed = currentPlayer.heal(value);
+              self.gameState.addGameLogEntry(GameLogEntryCategory.Heal, {
+                cardName: card.name,
+                value: amtHealed,
+              });
+              break;
+            case CardEffectCategory.IncreaseMaxHealth:
+              currentPlayer.increaseMaxHealth(value);
+              self.gameState.addGameLogEntry(
+                GameLogEntryCategory.IncreaseMaxHealth,
+                {
+                  cardName: card.name,
+                  value: value,
+                }
+              );
+              break;
+            case CardEffectCategory.TrashSelf:
+              self.trash.trashCard(card);
+              self.gameState.addGameLogEntry(GameLogEntryCategory.Trash, {
+                cardName: card.name,
+                targets: [card.name],
+              });
+              break;
+            default:
+              break;
+          }
         }
       });
       return;

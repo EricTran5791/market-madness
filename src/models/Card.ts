@@ -1,8 +1,10 @@
 import { types } from 'mobx-state-tree';
 import {
-  CardEffect,
+  CardEffectUnion,
+  CardEffectKind,
+  BasicCardEffectSnapshotType,
   CardEffectCategory,
-  InteractiveCardEffect,
+  InteractiveCardEffectSnapshotType,
   InteractiveCardEffectCategory,
 } from './CardEffect';
 export enum CardCategory {
@@ -24,8 +26,7 @@ export const Card = types
     cost: types.optional(types.number, 0),
     buyingPower: types.optional(types.number, 0),
     isPlayed: types.optional(types.boolean, false),
-    effects: types.optional(types.array(CardEffect), []),
-    interactiveEffects: types.optional(types.array(InteractiveCardEffect), []),
+    effects: types.optional(types.array(CardEffectUnion), []),
   })
   .actions(self => ({
     afterCreate() {
@@ -35,36 +36,40 @@ export const Card = types
       // Auto generate descriptions
       self.description = self.effects
         .map(effect => {
-          switch (effect.category) {
-            case CardEffectCategory.Damage:
-              return `Deal ${effect.value} damage`;
-            case CardEffectCategory.Draw:
-              return `Draw ${effect.value} card${effect.value > 1 ? 's' : ''}`;
-            case CardEffectCategory.Heal:
-              return `Heal ${effect.value}`;
-            case CardEffectCategory.IncreaseMaxHealth:
-              return `Increase max health by ${effect.value}`;
-            case CardEffectCategory.TrashSelf:
-              return `Trash this card`;
-            default:
-              return '';
-          }
-        })
-        .concat(
-          self.interactiveEffects.map(effect => {
-            switch (effect.category) {
-              case InteractiveCardEffectCategory.Trash:
-                return `Trash ${effect.numCardsToResolve} card${
-                  effect.numCardsToResolve > 1 ? 's' : ''
-                } from your hand`;
+          if (effect.kind === CardEffectKind.Basic) {
+            const { category, value }: BasicCardEffectSnapshotType = effect;
+            switch (category) {
+              case CardEffectCategory.Damage:
+                return `Deal ${value} damage`;
+              case CardEffectCategory.Draw:
+                return `Draw ${value} card${value > 1 ? 's' : ''}`;
+              case CardEffectCategory.Heal:
+                return `Heal ${value}`;
+              case CardEffectCategory.IncreaseMaxHealth:
+                return `Increase max health by ${value}`;
+              case CardEffectCategory.TrashSelf:
+                return `Trash this card`;
               default:
                 return '';
             }
-          })
-        )
+          }
+          if (effect.kind === CardEffectKind.Interactive) {
+            const {
+              category,
+              numCardsToResolve,
+            }: InteractiveCardEffectSnapshotType = effect;
+            switch (category) {
+              case InteractiveCardEffectCategory.Trash:
+                return `Trash ${numCardsToResolve} cards from your hand`;
+              default:
+                return '';
+            }
+          }
+          return '';
+        })
         .join(', ');
     },
-    /** Resets isPlayed every time a card is detached from its direct parent. */
+    /** Reset a card's isPlayed status every time it is detached from its direct parent. */
     beforeDetach() {
       self.isPlayed = false;
     },

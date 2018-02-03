@@ -11,6 +11,7 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
+          "kind": "Basic",
           "value": 1,
         },
       ],
@@ -26,6 +27,7 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
+          "kind": "Basic",
           "value": 2,
         },
       ],
@@ -46,6 +48,7 @@ Object {
   "effects": Array [
     Object {
       "category": "Heal",
+      "kind": "Basic",
       "value": 1,
     },
   ],
@@ -66,6 +69,7 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
+          "kind": "Basic",
           "value": 1,
         },
       ],
