@@ -1,4 +1,4 @@
-import { types, detach } from 'mobx-state-tree';
+import { types, detach, flow } from 'mobx-state-tree';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { Market } from './Market';
@@ -33,30 +33,46 @@ export const Store = types
       );
     },
   }))
-  .actions(self => ({
-    changeCurrentPlayer() {
+  .actions(self => {
+    function changeCurrentPlayer() {
       self.gameState.currentPlayer = self.otherPlayer;
-    },
-    createNewGame() {
+    }
+
+    function createNewGame() {
       self.gameState.currentGamePhase = GamePhase.Player1Turn;
-    },
-    endTurn() {
+    }
+
+    function endTurn() {
       self.gameState.currentGamePhase =
         self.otherPlayer.id === PlayerId.Player1
           ? GamePhase.Player2Turn
           : GamePhase.Player1Turn;
-    },
-    buyMarketCard(card: CardModelType) {
+    }
+
+    function buyMarketCard(card: CardModelType) {
       if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
         self.currentPlayer.hand.gainedCardStack.add(detach(card));
       }
-    },
-    playCard(card: CardModelType) {
-      card.isPlayed = true;
-      card.effects.forEach(effect => {
+    }
+
+    const processEffects = flow(function*(
+      card: CardModelType,
+      effects: BasicCardEffectSnapshotType[]
+    ) {
+      if (effects.length > 0) {
+        yield processEffect(card, effects[0]);
+        processEffects(card, effects.slice(1));
+      }
+    });
+
+    function processEffect(
+      card: CardModelType,
+      effect: BasicCardEffectSnapshotType
+    ): Promise<void> {
+      const promise = new Promise<void>((resolve, reject) => {
         const currentPlayer = self.currentPlayer;
         if (effect.kind === CardEffectKind.Basic) {
           const { category, value }: BasicCardEffectSnapshotType = effect;
@@ -104,9 +120,26 @@ export const Store = types
               break;
           }
         }
+        resolve();
       });
+      return promise;
+    }
+
+    function playCard(card: CardModelType) {
+      card.isPlayed = true;
+      processEffects(card, card.effects);
       return;
-    },
-  }));
+    }
+
+    return {
+      changeCurrentPlayer,
+      createNewGame,
+      endTurn,
+      buyMarketCard,
+      processEffects,
+      processEffect,
+      playCard,
+    };
+  });
 
 export type StoreType = typeof Store.Type;
