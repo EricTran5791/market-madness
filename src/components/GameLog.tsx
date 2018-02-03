@@ -1,9 +1,15 @@
 import * as React from 'react';
-import { GameLogEntryModelType } from '../models/GameState';
 import styled from 'styled-components';
+import { StoreType } from '../models/Store';
+import { observer, inject } from 'mobx-react';
+import { GameLogEntryModelType } from '../models/GameState';
 
 interface Props {
-  entries: GameLogEntryModelType[];
+  store?: StoreType;
+}
+
+interface State {
+  gameLog: GameLogEntryModelType[];
 }
 
 const StyledGameLog = styled.div`
@@ -18,10 +24,18 @@ const GameLogEntry = styled.div`
   margin: 8px 0;
 `;
 
-export class GameLog extends React.Component<Props, object> {
+@inject('store')
+@observer
+export class GameLog extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      gameLog: this.props.store!.gameState.gameLog,
+    };
+  }
   displayEntries() {
-    return this.props.entries
-      .slice(Math.max(this.props.entries.length - 11, 0))
+    return this.state.gameLog
+      .slice(Math.max(this.state.gameLog.length - 12, 0)) // Take the 12 most recent entries
       .map((entry, index) => {
         return <GameLogEntry key={index}>{entry.message}</GameLogEntry>;
       });

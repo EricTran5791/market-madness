@@ -21,13 +21,7 @@ export const Player = types
     heal(healValue: number): number {
       const healthDiff = self.maxHealth - self.health;
       const amtHealed = healValue <= healthDiff ? healValue : healthDiff;
-      if (amtHealed === 0) {
-        // This is a hack to force a render of the entry log since the player model doesn't change on a 0 heal
-        self.health -= 1;
-        self.health += 1;
-      } else {
-        self.health += amtHealed;
-      }
+      self.health += amtHealed;
       return amtHealed;
     },
     increaseMaxHealth(value: number) {
