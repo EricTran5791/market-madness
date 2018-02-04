@@ -60,6 +60,10 @@ export const Player = types
       if (remainingDeckDraws > 0) {
         shuffleCardStackModel(self.discardPile);
 
+        // Move gained cards to the discard pile... TODO: Gained cards should always be in the discard pile
+        self.hand.gainedCardStack.cards.forEach(card => {
+          self.discardPile.add(detach(card));
+        });
         // Move the discard pile to the deck
         self.discardPile.cards.forEach(card => {
           self.deck.add(detach(card));
