@@ -33,6 +33,8 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     switch (category) {
       case CardCategory.Attack:
         return 'tomato';
+      case CardCategory.Consumable:
+        return 'seagreen';
       case CardCategory.Money:
         return '#66514A';
       default:

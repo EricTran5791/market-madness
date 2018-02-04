@@ -2,7 +2,6 @@ import { types } from 'mobx-state-tree';
 
 export enum CardEffectCategory {
   Damage = 'Damage',
-  Discount = 'Discount',
   Draw = 'Draw',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',

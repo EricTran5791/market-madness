@@ -10,6 +10,7 @@ import {
 export enum CardCategory {
   Action = 'Action',
   Attack = 'Attack',
+  Consumable = 'Consumable',
   Item = 'Item',
   Money = 'Money',
 }

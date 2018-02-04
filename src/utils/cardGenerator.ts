@@ -41,14 +41,13 @@ export function generateTrashDeck(): CardStackModelType {
 export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards(cards.ItemCards.apple, 2),
-      ...printDuplicateCards(cards.ItemCards.bananas, 2),
-      // printCard(cards.ItemCards.couponBook),
-      printCard(cards.ItemCards.durian),
-      ...printDuplicateCards(cards.AttackCards.basketball, 2),
-      printCard(cards.AttackCards.tennisRacket),
+      ...printDuplicateCards(cards.ConsumableCards.apple, 2),
+      ...printDuplicateCards(cards.ConsumableCards.bananas, 2),
+      ...printDuplicateCards(cards.ItemCards.basketball, 2),
+      printCard(cards.ItemCards.wetMop),
+      printCard(cards.ItemCards.coatRack),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
-      // ...printDuplicateCards(cards.ItemCards.multivitamins, 2),
+      printCard(cards.ConsumableCards.multivitamins),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
       ...printDuplicateCards(cards.MoneyCards.gem, 2),
     ]),

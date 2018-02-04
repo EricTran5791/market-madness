@@ -20,10 +20,10 @@ export const ActionCards = {
   },
 };
 
-export const ItemCards = {
+export const ConsumableCards = {
   apple: {
     name: 'Apple',
-    category: CardCategory.Item,
+    category: CardCategory.Consumable,
     cost: 1,
     effects: [
       {
@@ -31,11 +31,12 @@ export const ItemCards = {
         kind: CardEffectKind.Basic,
         value: 1,
       },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
   bananas: {
     name: 'Bananas',
-    category: CardCategory.Item,
+    category: CardCategory.Consumable,
     cost: 2,
     effects: [
       {
@@ -43,27 +44,34 @@ export const ItemCards = {
         kind: CardEffectKind.Basic,
         value: 2,
       },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
-  couponBook: {
-    name: 'Coupon Book',
-    category: CardCategory.Item,
-    cost: 3,
-  },
-  durian: {
-    name: 'Durian',
-    category: CardCategory.Item,
-    cost: 4,
+  multivitamins: {
+    name: 'Multivitamins',
+    category: CardCategory.Consumable,
+    cost: 2,
     effects: [
       {
-        category: CardEffectCategory.Heal,
+        category: CardEffectCategory.IncreaseMaxHealth,
         kind: CardEffectKind.Basic,
         value: 1,
       },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
+    ],
+  },
+};
+
+export const ItemCards = {
+  basketball: {
+    name: 'Basketball',
+    category: CardCategory.Item,
+    cost: 2,
+    effects: [
       {
         category: CardEffectCategory.Damage,
         kind: CardEffectKind.Basic,
-        value: 3,
+        value: 2,
       },
     ],
   },
@@ -85,15 +93,27 @@ export const ItemCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
-  multivitamins: {
-    name: 'Multivitamins',
+  wetMop: {
+    name: 'Wet Mop',
     category: CardCategory.Item,
-    cost: 2,
+    cost: 3,
     effects: [
       {
-        category: CardEffectCategory.IncreaseMaxHealth,
+        category: CardEffectCategory.Damage,
         kind: CardEffectKind.Basic,
-        value: 1,
+        value: 3,
+      },
+    ],
+  },
+  coatRack: {
+    name: 'Coat Rack',
+    category: CardCategory.Item,
+    cost: 5,
+    effects: [
+      {
+        category: CardEffectCategory.Damage,
+        kind: CardEffectKind.Basic,
+        value: 5,
       },
     ],
   },
@@ -101,7 +121,7 @@ export const ItemCards = {
 
 export const AttackCards = {
   slap: {
-    name: 'Slap',
+    name: 'Drop Shipment',
     category: CardCategory.Attack,
     cost: 1,
     effects: [
@@ -110,29 +130,10 @@ export const AttackCards = {
         kind: CardEffectKind.Basic,
         value: 1,
       },
-    ],
-  },
-  basketball: {
-    name: 'Basketball',
-    category: CardCategory.Attack,
-    cost: 2,
-    effects: [
       {
-        category: CardEffectCategory.Damage,
+        category: CardEffectCategory.Draw,
         kind: CardEffectKind.Basic,
-        value: 2,
-      },
-    ],
-  },
-  tennisRacket: {
-    name: 'Tennis Racket',
-    category: CardCategory.Attack,
-    cost: 3,
-    effects: [
-      {
-        category: CardEffectCategory.Damage,
-        kind: CardEffectKind.Basic,
-        value: 3,
+        value: 1,
       },
     ],
   },

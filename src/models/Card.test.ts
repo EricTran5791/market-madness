@@ -6,7 +6,7 @@ let mockCard: CardModelType;
 let mockCardStack: CardStackModelType;
 
 beforeEach(() => {
-  mockCard = Card.create({ id: 'mock-id', ...cards.ItemCards.apple });
+  mockCard = Card.create({ id: 'mock-id', ...cards.ConsumableCards.apple });
   mockCardStack = CardStack.create({
     cards: [mockCard],
   });
@@ -22,7 +22,7 @@ it('creates a CardStack', () => {
 
 it('adds a card to the CardStack', () => {
   mockCardStack.add(
-    Card.create({ id: 'mock-id-2', ...cards.ItemCards.bananas })
+    Card.create({ id: 'mock-id-2', ...cards.ConsumableCards.bananas })
   );
   expect(getSnapshot(mockCardStack)).toMatchSnapshot();
 });
