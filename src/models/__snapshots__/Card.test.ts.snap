@@ -5,14 +5,19 @@ Object {
   "cards": Array [
     Object {
       "buyingPower": 0,
-      "category": "Item",
+      "category": "Consumable",
       "cost": 1,
-      "description": "Heal 1",
+      "description": "Heal 1, Trash this card",
       "effects": Array [
         Object {
           "category": "Heal",
           "kind": "Basic",
           "value": 1,
+        },
+        Object {
+          "category": "Trash Self",
+          "kind": "Basic",
+          "value": 0,
         },
       ],
       "id": "mock-id",
@@ -21,14 +26,19 @@ Object {
     },
     Object {
       "buyingPower": 0,
-      "category": "Item",
+      "category": "Consumable",
       "cost": 2,
-      "description": "Heal 2",
+      "description": "Heal 2, Trash this card",
       "effects": Array [
         Object {
           "category": "Heal",
           "kind": "Basic",
           "value": 2,
+        },
+        Object {
+          "category": "Trash Self",
+          "kind": "Basic",
+          "value": 0,
         },
       ],
       "id": "mock-id-2",
@@ -42,14 +52,19 @@ Object {
 exports[`creates a Card 1`] = `
 Object {
   "buyingPower": 0,
-  "category": "Item",
+  "category": "Consumable",
   "cost": 1,
-  "description": "Heal 1",
+  "description": "Heal 1, Trash this card",
   "effects": Array [
     Object {
       "category": "Heal",
       "kind": "Basic",
       "value": 1,
+    },
+    Object {
+      "category": "Trash Self",
+      "kind": "Basic",
+      "value": 0,
     },
   ],
   "id": "mock-id",
@@ -63,14 +78,19 @@ Object {
   "cards": Array [
     Object {
       "buyingPower": 0,
-      "category": "Item",
+      "category": "Consumable",
       "cost": 1,
-      "description": "Heal 1",
+      "description": "Heal 1, Trash this card",
       "effects": Array [
         Object {
           "category": "Heal",
           "kind": "Basic",
           "value": 1,
+        },
+        Object {
+          "category": "Trash Self",
+          "kind": "Basic",
+          "value": 0,
         },
       ],
       "id": "mock-id",
