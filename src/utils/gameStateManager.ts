@@ -41,6 +41,10 @@ export function initializeStore(): StoreType {
   const gameState = GameState.create({
     currentGamePhase: GamePhase.Player1Turn,
     currentPlayer: players[0],
+    activeCardEffect: {
+      effect: null,
+      cardsToResolve: [],
+    },
   });
 
   const store = Store.create({

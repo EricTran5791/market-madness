@@ -60,15 +60,15 @@ class HandArea extends React.Component<Props, State> {
   }
   displayCards() {
     return this.state.cardStack.cards.map((card, i) => {
+      // A card is playable if it hasn't been played. Money cards are only playable if there is a card effect active.
+      const isCardPlayable = this.props.store!.gameState.isCardEffectActive
+        ? !card.isPlayed
+        : !card.isPlayed && card.category !== CardCategory.Money ? true : false;
       return (
         <CardView
           key={i}
           model={card}
-          onClick={
-            card.isPlayed || card.category === CardCategory.Money
-              ? undefined
-              : () => this.onClick(card)
-          }
+          onClick={isCardPlayable ? () => this.onClick(card) : undefined}
         />
       );
     });

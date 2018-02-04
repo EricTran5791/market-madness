@@ -44,6 +44,7 @@ export class TurnButton extends React.Component<Props, object> {
         onClick={(e: React.MouseEvent<HTMLElement>) =>
           this.turnButtonCallback()
         }
+        disabled={this.props.store!.gameState.isCardEffectActive}
       >
         {this.getTurnButtonText()}
       </StyledTurnButton>

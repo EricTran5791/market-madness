@@ -77,12 +77,12 @@ export const ItemCards = {
     category: CardCategory.Item,
     cost: 2,
     effects: [
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
       {
         category: InteractiveCardEffectCategory.Trash,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
       },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
   multivitamins: {

@@ -7,8 +7,13 @@ import {
   CardEffectCategory,
   CardEffectKind,
   BasicCardEffectSnapshotType,
+  InteractiveCardEffectSnapshotType,
+  InteractiveCardEffectCategory,
+  InteractiveCardEffectModelType,
 } from '../models/CardEffect';
 import { CardModelType } from '../models/Card';
+import { reaction } from 'mobx';
+import { ActiveCardEffectStatus } from './ActiveCardEffectState';
 
 export const Store = types
   .model('Store', {
@@ -58,17 +63,34 @@ export const Store = types
       }
     }
 
-    const processEffects = flow(function*(
+    /**
+     * Processes card effects synchronously and recursively.
+     * Processes the first effect, then processes the rest of the effects.
+     */
+    const processCardEffects = flow(function*(
       card: CardModelType,
-      effects: BasicCardEffectSnapshotType[]
+      effects:
+        | BasicCardEffectSnapshotType[]
+        | InteractiveCardEffectSnapshotType[]
     ) {
       if (effects.length > 0) {
-        yield processEffect(card, effects[0]);
-        processEffects(card, effects.slice(1));
+        // Process the first effect and wait until it completes before continuing
+        yield processCardEffect(card, effects[0]);
+
+        // Clear the active effect if applicable
+        if (effects[0].kind === CardEffectKind.Interactive) {
+          self.gameState.activeCardEffect.clearActiveEffect();
+        }
+
+        processCardEffects(card, effects.slice(1)); // Process the rest of the effects
       }
     });
 
-    function processEffect(
+    /**
+     * Processes an individual card effect.
+     * Returns a promise that is resolved once the card effect is processed.
+     */
+    function processCardEffect(
       card: CardModelType,
       effect: BasicCardEffectSnapshotType
     ): Promise<void> {
@@ -119,15 +141,72 @@ export const Store = types
             default:
               break;
           }
+          resolve();
+        } else if (effect.kind === CardEffectKind.Interactive) {
+          let {
+            category,
+            numCardsToResolve,
+          }: InteractiveCardEffectSnapshotType = effect;
+
+          // Don't process the interactive card effect if there are no unplayed cards in hand.
+          if (
+            numCardsToResolve > 0 &&
+            self.currentPlayer.hand.cardStack.unplayedCards.length === 0
+          ) {
+            resolve();
+            return;
+          }
+
+          self.gameState.activeCardEffect.setActiveEffect(
+            effect as InteractiveCardEffectModelType
+          );
+
+          switch (category) {
+            case InteractiveCardEffectCategory.Trash:
+              // Subscribe to the card refs to resolve.
+              const disposer = reaction(
+                () => self.gameState.activeCardEffect.status,
+                status => {
+                  if (status === ActiveCardEffectStatus.Completed) {
+                    const cardsToResolve =
+                      self.gameState.activeCardEffect.cardsToResolve;
+                    if (cardsToResolve.length > 0) {
+                      // Trash each card
+                      cardsToResolve.forEach(_ => {
+                        self.trash.trashCard(_);
+                      });
+                      self.gameState.addGameLogEntry(
+                        GameLogEntryCategory.Trash,
+                        {
+                          cardName: card.name,
+                          targets: cardsToResolve.map(_ => _.name),
+                        }
+                      );
+                    }
+                    disposer(); // Unsubscribe
+                    resolve();
+                  }
+                }
+              );
+              return;
+            default:
+              return;
+          }
         }
-        resolve();
       });
       return promise;
     }
 
     function playCard(card: CardModelType) {
       card.isPlayed = true;
-      processEffects(card, card.effects);
+
+      // If there isn't an active card effect, then we process the card's effects as normal.
+      if (!self.gameState.isCardEffectActive) {
+        processCardEffects(card, card.effects);
+      } else {
+        // Otherwise we add the card to the array of card refs to resolve and don't process the card's effects.
+        self.gameState.activeCardEffect.addCardToResolve(card);
+      }
       return;
     }
 
@@ -136,8 +215,8 @@ export const Store = types
       createNewGame,
       endTurn,
       buyMarketCard,
-      processEffects,
-      processEffect,
+      processCardEffects,
+      processCardEffect,
       playCard,
     };
   });

@@ -1,5 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { Player } from './Player';
+import { ActiveCardEffectState } from './ActiveCardEffectState';
 
 export enum GamePhase {
   GameOver = 'Game Over',
@@ -39,8 +40,15 @@ export const GameState = types
     ),
     currentPlayer: types.reference(types.late(() => Player)),
     currentTurnNumber: types.optional(types.number, 0),
+    activeCardEffect: ActiveCardEffectState,
     gameLog: types.optional(types.array(GameLogEntry), []),
   })
+  .views(self => ({
+    /** Whether or not a card effect is currently active. */
+    get isCardEffectActive() {
+      return self.activeCardEffect.effect !== null;
+    },
+  }))
   .actions(self => ({
     changeGamePhase(phase: GamePhase) {
       self.currentGamePhase = phase;

@@ -46,7 +46,15 @@ class MarketArea extends React.Component<Props, State> {
       .filter((card, i) => i < 4)
       .map((card, i) => {
         return (
-          <CardView key={i} model={card} onClick={() => this.onClick(card)} />
+          <CardView
+            key={i}
+            model={card}
+            onClick={
+              !this.props.store!.gameState.isCardEffectActive
+                ? () => this.onClick(card)
+                : undefined
+            }
+          />
         );
       });
   }

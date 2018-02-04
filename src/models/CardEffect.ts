@@ -51,6 +51,7 @@ export const InteractiveCardEffect = CardEffect.named(
   numCardsToResolve: types.optional(types.number, 0),
 });
 
+export type InteractiveCardEffectModelType = typeof InteractiveCardEffect.Type;
 export type InteractiveCardEffectSnapshotType = typeof InteractiveCardEffect.SnapshotType;
 
 export const CardEffectUnion = types.union(

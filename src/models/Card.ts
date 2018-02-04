@@ -60,7 +60,7 @@ export const Card = types
             }: InteractiveCardEffectSnapshotType = effect;
             switch (category) {
               case InteractiveCardEffectCategory.Trash:
-                return `Trash ${numCardsToResolve} cards from your hand`;
+                return `Trash up to ${numCardsToResolve} cards from your hand`;
               default:
                 return '';
             }
@@ -90,6 +90,9 @@ export const CardStack = types
       return self.cards
         .map(card => card.buyingPower)
         .reduce((sum, currentValue) => sum + currentValue, 0);
+    },
+    get unplayedCards() {
+      return self.cards.filter(card => !card.isPlayed);
     },
   }))
   .actions(self => ({

@@ -1,0 +1,66 @@
+import { types, destroy, clone, getParent } from 'mobx-state-tree';
+import { Card, CardModelType } from './Card';
+import {
+  InteractiveCardEffect,
+  InteractiveCardEffectModelType,
+} from './CardEffect';
+
+export enum ActiveCardEffectStatus {
+  NotActive = 'Not Active',
+  InProgress = 'In Progress',
+  Completed = 'Completed',
+}
+
+/** Tracks the active interactive card effect. */
+export const ActiveCardEffectState = types
+  .model('ActiveCardEffectState', {
+    /** A copy of the active interactive card effect. */
+    effect: types.maybe(InteractiveCardEffect),
+    /** An array of cards that will be resolved by the effect. */
+    cardsToResolve: types.optional(types.array(types.reference(Card)), []),
+    status: types.optional(
+      types.enumeration(
+        'Category',
+        Object.keys(ActiveCardEffectStatus).map(
+          key => ActiveCardEffectStatus[key]
+        )
+      ),
+      ActiveCardEffectStatus.NotActive
+    ),
+  })
+  .views(self => ({
+    /** The number of cards required to resolve the effect. */
+    get numCardsToResolve() {
+      return (self.effect && self.effect.numCardsToResolve) || -1;
+    },
+    get activeEffectCategory() {
+      return (self.effect && self.effect.category) || '';
+    },
+  }))
+  .actions(self => ({
+    setActiveEffect(effect: InteractiveCardEffectModelType) {
+      self.effect = clone(effect); // Keep a clone of the effect for reference.
+      self.cardsToResolve.clear();
+      self.status = ActiveCardEffectStatus.InProgress;
+    },
+    clearActiveEffect() {
+      if (self.effect) {
+        destroy(self.effect);
+      }
+      self.effect = null;
+      self.cardsToResolve.clear();
+      self.status = ActiveCardEffectStatus.NotActive;
+    },
+    addCardToResolve(card: CardModelType) {
+      self.cardsToResolve.push(card);
+      // Complete the effect once we reach the target number of cards to
+      // resolve or when we no longer have any playable cards in hand.
+      if (
+        self.cardsToResolve.length === self.numCardsToResolve ||
+        getParent(getParent(self)).currentPlayer.hand.cardStack.unplayedCards
+          .length === 0
+      ) {
+        self.status = ActiveCardEffectStatus.Completed;
+      }
+    },
+  }));
