@@ -1,11 +1,7 @@
 import * as React from 'react';
 import CardGrid from '../components/CardGrid';
 import CardView from '../components/CardView';
-import {
-  CardStackModelType,
-  CardModelType,
-  CardCategory,
-} from '../models/Card';
+import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
@@ -61,15 +57,11 @@ class HandArea extends React.Component<Props, State> {
   }
   displayCards() {
     return this.state.cardStack.cards.map((card, i) => {
-      // A card is playable if it hasn't been played. Money cards are only playable if there is a card effect active.
-      const isCardPlayable = this.props.store!.gameState.isCardEffectActive
-        ? !card.isPlayed
-        : !card.isPlayed && card.category !== CardCategory.Money ? true : false;
       return (
         <CardView
           key={i}
           model={card}
-          onClick={isCardPlayable ? () => this.onClick(card) : undefined}
+          onClick={!card.isPlayed ? () => this.onClick(card) : undefined}
         />
       );
     });

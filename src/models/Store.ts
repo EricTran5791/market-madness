@@ -11,7 +11,7 @@ import {
   InteractiveCardEffectCategory,
   InteractiveCardEffectModelType,
 } from '../models/CardEffect';
-import { CardModelType } from '../models/Card';
+import { CardModelType, CardCategory } from '../models/Card';
 import { reaction } from 'mobx';
 import { ActiveCardEffectStatus } from './ActiveCardEffectState';
 
@@ -200,9 +200,16 @@ export const Store = types
     function playCard(card: CardModelType) {
       card.isPlayed = true;
 
-      // If there isn't an active card effect, then we process the card's effects as normal.
+      // If there isn't an active card effect, then we process the card as normal.
       if (!self.gameState.isCardEffectActive) {
-        processCardEffects(card, card.effects);
+        switch (card.category) {
+          case CardCategory.Money:
+            self.currentPlayer.hand.increaseBuyingPower(card);
+            break;
+          default:
+            processCardEffects(card, card.effects);
+            break;
+        }
       } else {
         // Otherwise we add the card to the array of card refs to resolve and don't process the card's effects.
         self.gameState.activeCardEffect.addCardToResolve(card);

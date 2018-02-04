@@ -5,17 +5,17 @@ import { StoreType } from './Store';
 export const Hand = types
   .model('Hand', {
     cardStack: CardStack,
+    availableBuyingPower: types.optional(types.number, 0),
     spentBuyingPower: types.optional(types.number, 0),
     gainedCardStack: CardStack, // Cards that have been gained by the player on their current turn
   })
-  .views(self => ({
-    get availableBuyingPower() {
-      return self.cardStack.totalBuyingPower - self.spentBuyingPower;
-    },
-  }))
   .actions(self => ({
+    increaseBuyingPower(card: CardModelType) {
+      self.availableBuyingPower += card.buyingPower;
+    },
     spendBuyingPower(num: number): boolean {
       if (num <= self.availableBuyingPower) {
+        self.availableBuyingPower -= num;
         self.spentBuyingPower += num;
         return true;
       }

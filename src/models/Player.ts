@@ -40,6 +40,7 @@ export const Player = types
         self.discardPile.add(detach(card));
       });
       // Reset hand stats
+      self.hand.availableBuyingPower = 0;
       self.hand.spentBuyingPower = 0;
     },
     drawFromDeck(numToDraw: number): number {
