@@ -173,7 +173,7 @@ export const Store = types
                     if (cardsToResolve.length > 0) {
                       // Trash each card
                       cardsToResolve.forEach(_ => {
-                        self.trash.trashCard(_);
+                        self.currentPlayer.hand.trashCard(_);
                       });
                       self.gameState.addGameLogEntry(
                         GameLogEntryCategory.Trash,

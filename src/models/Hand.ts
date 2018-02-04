@@ -1,5 +1,6 @@
-import { types } from 'mobx-state-tree';
-import { CardStack } from './Card';
+import { types, getParent } from 'mobx-state-tree';
+import { CardStack, CardModelType } from './Card';
+import { StoreType } from './Store';
 
 export const Hand = types
   .model('Hand', {
@@ -19,5 +20,9 @@ export const Hand = types
         return true;
       }
       return false;
+    },
+    trashCard(card: CardModelType) {
+      const store: StoreType = getParent(getParent(getParent(self)));
+      store.trash.trashCard(card);
     },
   }));

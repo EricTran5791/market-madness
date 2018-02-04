@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
 import { withProps } from '../withProps';
+import { ActiveCardEffectInfo } from '../components/ActiveCardEffectInfo';
 
 interface Props {
   playerId: string;
@@ -90,6 +91,9 @@ class HandArea extends React.Component<Props, State> {
       <StyledHandArea>
         <CardPile>{this.displayGainedCards()}</CardPile>
         <CardGrid columns={5}>{this.displayCards()}</CardGrid>
+        {this.props.playerId === this.props.store!.currentPlayer.id && (
+          <ActiveCardEffectInfo />
+        )}
       </StyledHandArea>
     );
   }

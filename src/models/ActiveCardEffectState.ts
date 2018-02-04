@@ -4,6 +4,7 @@ import {
   InteractiveCardEffect,
   InteractiveCardEffectModelType,
 } from './CardEffect';
+import { StoreType } from './Store';
 
 export enum ActiveCardEffectStatus {
   NotActive = 'Not Active',
@@ -51,14 +52,17 @@ export const ActiveCardEffectState = types
       self.cardsToResolve.clear();
       self.status = ActiveCardEffectStatus.NotActive;
     },
+    completeActiveEffect() {
+      self.status = ActiveCardEffectStatus.Completed;
+    },
     addCardToResolve(card: CardModelType) {
       self.cardsToResolve.push(card);
+      const store: StoreType = getParent(getParent(self));
       // Complete the effect once we reach the target number of cards to
       // resolve or when we no longer have any playable cards in hand.
       if (
         self.cardsToResolve.length === self.numCardsToResolve ||
-        getParent(getParent(self)).currentPlayer.hand.cardStack.unplayedCards
-          .length === 0
+        store.currentPlayer.hand.cardStack.unplayedCards.length === 0
       ) {
         self.status = ActiveCardEffectStatus.Completed;
       }
