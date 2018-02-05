@@ -21,8 +21,9 @@ const StyledMarketArea = styled.div`
   align-items: center;
   width: 100%;
   min-height: 200px;
+  border-radius: 2px;
   padding: 8px;
-  background-color: rgba(255, 255, 255, 0.33);
+  background-color: whitesmoke;
 `;
 
 const Title = styled.div`

@@ -82,3 +82,5 @@ export const Player = types
       return cardsDrawn;
     },
   }));
+
+export type PlayerModelType = typeof Player.Type;

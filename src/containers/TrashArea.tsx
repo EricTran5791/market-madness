@@ -22,7 +22,6 @@ const StyledTrashArea = styled.div`
   width: 100%;
   min-height: 200px;
   padding: 8px;
-  background-color: rgba(255, 255, 255, 0.33);
 `;
 
 const Title = styled.div`

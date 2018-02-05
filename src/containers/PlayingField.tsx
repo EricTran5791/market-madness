@@ -102,7 +102,6 @@ class PlayingField extends React.Component<Props, object> {
               this.props.store!.getPlayer(PlayerId.Player2).hand
                 .availableBuyingPower
             }
-            inverseLayout={true}
           />
         </CompGridArea>
 
