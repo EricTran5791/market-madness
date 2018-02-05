@@ -100,12 +100,7 @@ export const Store = types
           const { category, value }: BasicCardEffectSnapshotType = effect;
           switch (category) {
             case CardEffectCategory.Damage:
-              self.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
-                cardName: card.name,
-                targets: [self.otherPlayer.id],
-                value: value,
-              });
-              self.otherPlayer.takeDamage(value);
+              self.currentPlayer.hand.increaseAttackValue(value);
               break;
             case CardEffectCategory.Draw:
               const cardsDrawn = currentPlayer.drawFromDeck(value);

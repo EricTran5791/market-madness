@@ -1,7 +1,9 @@
-import { types, detach } from 'mobx-state-tree';
+import { types, detach, getParent } from 'mobx-state-tree';
 import { Hand } from './Hand';
 import { CardStack } from './Card';
 import { shuffleCardStackModel } from '../utils/cardGenerator';
+import { GameLogEntryCategory } from './GameState';
+import { StoreType } from './Store';
 
 export enum PlayerId {
   Player1 = 'Player 1',
@@ -27,8 +29,25 @@ export const Player = types
     increaseMaxHealth(value: number) {
       self.maxHealth += value;
     },
+    attackOtherPlayer() {
+      const store: StoreType = getParent(getParent(self));
+      const hand = self.hand;
+      const availableAttackValue = hand.availableAttackValue;
+      if (
+        availableAttackValue > 0 &&
+        hand.spendAttackValue(availableAttackValue)
+      ) {
+        store.otherPlayer.takeDamage(availableAttackValue);
+      }
+    },
     takeDamage(value: number) {
       self.health -= value;
+
+      const store: StoreType = getParent(getParent(self));
+      store.gameState.addGameLogEntry(GameLogEntryCategory.Attack, {
+        targets: [store.otherPlayer.id],
+        value: value,
+      });
     },
     clearHand() {
       // Put hand into discard pile
@@ -42,6 +61,8 @@ export const Player = types
       // Reset hand stats
       self.hand.availableBuyingPower = 0;
       self.hand.spentBuyingPower = 0;
+      self.hand.availableAttackValue = 0;
+      self.hand.spentAttackValue = 0;
     },
     drawFromDeck(numToDraw: number): number {
       let cardsDrawn = 0;

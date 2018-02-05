@@ -7,6 +7,8 @@ export const Hand = types
     cardStack: CardStack,
     availableBuyingPower: types.optional(types.number, 0),
     spentBuyingPower: types.optional(types.number, 0),
+    availableAttackValue: types.optional(types.number, 0),
+    spentAttackValue: types.optional(types.number, 0),
     gainedCardStack: CardStack, // Cards that have been gained by the player on their current turn
   })
   .actions(self => ({
@@ -17,6 +19,17 @@ export const Hand = types
       if (num <= self.availableBuyingPower) {
         self.availableBuyingPower -= num;
         self.spentBuyingPower += num;
+        return true;
+      }
+      return false;
+    },
+    increaseAttackValue(num: number) {
+      self.availableAttackValue += num;
+    },
+    spendAttackValue(num: number): boolean {
+      if (num <= self.availableAttackValue) {
+        self.availableAttackValue -= num;
+        self.spentAttackValue += num;
         return true;
       }
       return false;

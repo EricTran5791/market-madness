@@ -95,13 +95,7 @@ class PlayingField extends React.Component<Props, object> {
       <StyledPlayingField>
         <CompGridArea>
           <PlayerInfo
-            id={this.props.store!.getPlayer(PlayerId.Player2).id}
-            health={this.props.store!.getPlayer(PlayerId.Player2).health}
-            maxHealth={this.props.store!.getPlayer(PlayerId.Player2).maxHealth}
-            availableBuyingPower={
-              this.props.store!.getPlayer(PlayerId.Player2).hand
-                .availableBuyingPower
-            }
+            playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
           />
         </CompGridArea>
 
@@ -159,13 +153,7 @@ class PlayingField extends React.Component<Props, object> {
 
         <P1GridArea>
           <PlayerInfo
-            id={this.props.store!.getPlayer(PlayerId.Player1).id}
-            health={this.props.store!.getPlayer(PlayerId.Player1).health}
-            maxHealth={this.props.store!.getPlayer(PlayerId.Player1).maxHealth}
-            availableBuyingPower={
-              this.props.store!.getPlayer(PlayerId.Player1).hand
-                .availableBuyingPower
-            }
+            playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
           />
         </P1GridArea>
       </StyledPlayingField>

@@ -41,7 +41,7 @@ export const Card = types
             const { category, value }: BasicCardEffectSnapshotType = effect;
             switch (category) {
               case CardEffectCategory.Damage:
-                return `Deal ${value} damage`;
+                return `+${value} Attack`;
               case CardEffectCategory.Draw:
                 return `Draw ${value} card${value > 1 ? 's' : ''}`;
               case CardEffectCategory.Heal:

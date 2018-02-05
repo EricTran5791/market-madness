@@ -62,7 +62,7 @@ export const GameState = types
         case GameLogEntryCategory.Attack:
           message = `${
             self.currentPlayer.id
-          } dealt ${value} damage to ${targets!.join(', ')} with ${cardName}`;
+          } dealt ${value} damage to ${targets!.join(', ')}`;
           break;
         case GameLogEntryCategory.Buy:
           message = `${self.currentPlayer.id} bought ${cardName}`;
