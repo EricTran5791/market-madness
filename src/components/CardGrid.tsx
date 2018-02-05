@@ -8,13 +8,13 @@ interface Props {
   children?: ReactNode;
 }
 
-interface StyledCardAreaProps {
+interface StyledCardGridProps {
   columns: number;
 }
 
-const StyledCardGrid = withProps<StyledCardAreaProps>()(styled.div)`
+const StyledCardGrid = withProps<StyledCardGridProps>()(styled.div)`
   display: grid;
-  grid-template-columns: repeat(${({ columns }: StyledCardAreaProps) =>
+  grid-template-columns: repeat(${({ columns }: StyledCardGridProps) =>
     columns}, 1fr);
   grid-gap: 8px;
   margin-bottom: 16px;

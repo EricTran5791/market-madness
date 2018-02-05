@@ -24,6 +24,7 @@ export const BasicCard = styled.div`
   height: 125px;
   padding: 8px;
   border-radius: 8px;
+  border: 3px solid #111;
 `;
 
 const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
