@@ -9,7 +9,6 @@ export const Hand = types
     spentBuyingPower: types.optional(types.number, 0),
     availableAttackValue: types.optional(types.number, 0),
     spentAttackValue: types.optional(types.number, 0),
-    gainedCardStack: CardStack, // Cards that have been gained by the player on their current turn
   })
   .actions(self => ({
     increaseBuyingPower(card: CardModelType) {

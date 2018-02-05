@@ -23,7 +23,6 @@ export function initializeStore(): StoreType {
       discardPile: generateEmptyDeck(),
       hand: {
         cardStack: generateEmptyDeck(),
-        gainedCardStack: generateEmptyDeck(),
       },
       deck: generateStartingDeck(),
     }),
@@ -32,7 +31,6 @@ export function initializeStore(): StoreType {
       discardPile: generateEmptyDeck(),
       hand: {
         cardStack: generateEmptyDeck(),
-        gainedCardStack: generateEmptyDeck(),
       },
       deck: generateStartingDeck(),
     }),

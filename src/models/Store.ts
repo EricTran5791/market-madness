@@ -59,7 +59,7 @@ export const Store = types
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
-        self.currentPlayer.hand.gainedCardStack.add(detach(card));
+        self.currentPlayer.discardPile.add(detach(card));
       }
     }
 

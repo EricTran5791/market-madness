@@ -54,10 +54,6 @@ export const Player = types
       self.hand.cardStack.cards.forEach(card => {
         self.discardPile.add(detach(card));
       });
-      // Put gained cards into discard pile
-      self.hand.gainedCardStack.cards.forEach(card => {
-        self.discardPile.add(detach(card));
-      });
       // Reset hand stats
       self.hand.availableBuyingPower = 0;
       self.hand.spentBuyingPower = 0;
@@ -81,10 +77,6 @@ export const Player = types
       if (remainingDeckDraws > 0) {
         shuffleCardStackModel(self.discardPile);
 
-        // Move gained cards to the discard pile... TODO: Gained cards should always be in the discard pile
-        self.hand.gainedCardStack.cards.forEach(card => {
-          self.discardPile.add(detach(card));
-        });
         // Move the discard pile to the deck
         self.discardPile.cards.forEach(card => {
           self.deck.add(detach(card));
