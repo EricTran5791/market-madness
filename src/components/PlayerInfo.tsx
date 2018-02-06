@@ -153,7 +153,7 @@ const PlayerHealth = withProps<PlayerHealthProps>()(Stat.extend)`
 @observer
 export class PlayerInfo extends React.Component<Props, State> {
   /** Holds the interceptor for disposal during unmounting. */
-  interceptor: () => void;
+  dispose: () => void;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -161,40 +161,35 @@ export class PlayerInfo extends React.Component<Props, State> {
     };
   }
   componentDidMount() {
-    this.interceptor = intercept(
+    this.dispose = intercept(
       this.getPlayer(),
       'health',
       (change: IValueWillChange<ScalarNode>) => {
+        this.setState({
+          cssAnimationHealth: '',
+        });
         const healthDiff = change.newValue.value - this.getPlayer().health;
-        if (healthDiff <= -5) {
-          this.setState({
-            cssAnimationHealth: healthBigDamageAnimation,
-          });
-        } else if (healthDiff < 0) {
-          this.setState({
-            cssAnimationHealth: healthDamageAnimation,
-          });
-        } else if (healthDiff > 0) {
-          this.setState({
-            cssAnimationHealth: healthHealAnimation,
-          });
-        }
+        window.requestAnimationFrame(() => {
+          if (healthDiff <= -5) {
+            this.setState({
+              cssAnimationHealth: healthBigDamageAnimation,
+            });
+          } else if (healthDiff < 0) {
+            this.setState({
+              cssAnimationHealth: healthDamageAnimation,
+            });
+          } else if (healthDiff > 0) {
+            this.setState({
+              cssAnimationHealth: healthHealAnimation,
+            });
+          }
+        });
         return change;
       }
     );
   }
-  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-    // If the animation was set, we unset it after a timeout so that we can re-apply the animation again afterwards
-    if (!prevState.cssAnimationHealth && this.state.cssAnimationHealth) {
-      setTimeout(() => {
-        this.setState({
-          cssAnimationHealth: '',
-        });
-      }, 1000);
-    }
-  }
   componentWillUnmount() {
-    this.interceptor();
+    this.dispose();
   }
   getPlayer() {
     return this.props.store!.getPlayer(this.props.playerId);
