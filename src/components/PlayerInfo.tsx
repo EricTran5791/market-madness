@@ -1,12 +1,19 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { StoreType } from '../models/Store';
 import { withProps } from '../withProps';
 import { observer, inject } from 'mobx-react';
+import { intercept } from 'mobx';
+import { ScalarNode } from 'mobx-state-tree/dist/internal';
+import { IValueWillChange } from 'mobx/lib/types/observablevalue';
 
 interface Props {
   playerId: string;
   store?: StoreType;
+}
+
+interface State {
+  cssAnimationHealth: string;
 }
 
 interface PlayerInfoProps {
@@ -51,6 +58,18 @@ const Stat = styled.div`
   margin: 0 8px;
 `;
 
+const inAndOut = keyframes`
+  0% {
+    transform: translate(100%, 50%);
+  }
+  50% {
+    transform: translate(108%, 50%);
+  }
+  100% {
+    transform: translate(100%, 50%);
+  }
+`;
+
 const Hint = styled.div`
   position: absolute;
   right: 0;
@@ -59,32 +78,124 @@ const Hint = styled.div`
   padding-left: 16px;
   font-family: 'Acme';
   font-size: 24px;
-  animation: side-hover 1.2s infinite;
-
-  @keyframes side-hover {
-    0% {
-      transform: translate(100%, 50%);
-    }
-    50% {
-      transform: translate(108%, 50%);
-    }
-    100% {
-      transform: translate(100%, 50%);
-    }
-  }
+  animation: ${inAndOut} 1.2s infinite;
 `;
 
 interface PlayerHealthProps {
   health: number;
+  cssAnimation: string;
 }
+
+const shake = keyframes`
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(6px, 0);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(-6px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+`;
+
+const shakeBig = keyframes`
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(9px, 0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-3px);
+  }
+  75% {
+    transform: translate(-9px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+`;
+
+const greenFade = keyframes`
+  0% {
+    color: currentColor;
+  }
+  40% {
+    color: #04b104;
+  }
+  100% {
+    color: currentColor;
+  }
+`;
+
+const healthDamageAnimation = `${shake} 0.4s`;
+const healthBigDamageAnimation = `${shakeBig} 0.2s 2`;
+const healthHealAnimation = `${greenFade} 1s`;
 
 const PlayerHealth = withProps<PlayerHealthProps>()(Stat.extend)`
   ${({ health }: PlayerHealthProps) => (health <= 5 ? 'color: red' : '')};
+  animation: ${({ cssAnimation }: PlayerHealthProps) =>
+    cssAnimation ? `${cssAnimation}` : ''};
 `;
 
 @inject('store')
 @observer
-export class PlayerInfo extends React.Component<Props, object> {
+export class PlayerInfo extends React.Component<Props, State> {
+  /** Holds the interceptor for disposal during unmounting. */
+  interceptor: () => void;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      cssAnimationHealth: '',
+    };
+  }
+  componentDidMount() {
+    this.interceptor = intercept(
+      this.getPlayer(),
+      'health',
+      (change: IValueWillChange<ScalarNode>) => {
+        const healthDiff = change.newValue.value - this.getPlayer().health;
+        if (healthDiff <= -5) {
+          this.setState({
+            cssAnimationHealth: healthBigDamageAnimation,
+          });
+        } else if (healthDiff < 0) {
+          this.setState({
+            cssAnimationHealth: healthDamageAnimation,
+          });
+        } else if (healthDiff > 0) {
+          this.setState({
+            cssAnimationHealth: healthHealAnimation,
+          });
+        }
+        return change;
+      }
+    );
+  }
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    // If the animation was set, we unset it after a timeout so that we can re-apply the animation again afterwards
+    if (!prevState.cssAnimationHealth && this.state.cssAnimationHealth) {
+      setTimeout(() => {
+        this.setState({
+          cssAnimationHealth: '',
+        });
+      }, 1000);
+    }
+  }
+  componentWillUnmount() {
+    this.interceptor();
+  }
   getPlayer() {
     return this.props.store!.getPlayer(this.props.playerId);
   }
@@ -108,7 +219,11 @@ export class PlayerInfo extends React.Component<Props, object> {
           <Stat title="Available buying power">
             💵 {this.getPlayer().hand.availableBuyingPower}
           </Stat>
-          <PlayerHealth title="Health" health={this.getPlayer().health}>
+          <PlayerHealth
+            title="Health"
+            health={this.getPlayer().health}
+            cssAnimation={this.state.cssAnimationHealth}
+          >
             ❤️ {this.getPlayer().health}/{this.getPlayer().maxHealth}
           </PlayerHealth>
           <Stat title="Available attack value">

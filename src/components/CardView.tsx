@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CardModelType, CardCategory } from '../models/Card';
 import { withProps } from '../withProps';
 
@@ -27,6 +27,18 @@ export const BasicCard = styled.div`
   border: 3px solid #111;
 `;
 
+const hover = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
 const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
   cursor: ${({ showHoverAnimation }: StyledCardProps): string =>
     showHoverAnimation ? 'pointer' : 'default'};
@@ -48,19 +60,7 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     isPlayed ? '0.75' : '1'};
   &:hover {
     animation: ${({ showHoverAnimation }: StyledCardProps): string =>
-      showHoverAnimation ? 'hover 1s infinite' : ''};
-
-    @keyframes hover {
-      0% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-4px);
-      }
-      0% {
-        transform: translateY(0);
-      }
-    }
+      showHoverAnimation ? `${hover} 1s infinite` : ''};
   }
 `;
 
