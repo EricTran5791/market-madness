@@ -9,7 +9,8 @@ export enum CardEffectCategory {
 }
 
 export enum InteractiveCardEffectCategory {
-  Trash = 'Trash',
+  MandatoryDiscard = 'Mandatory Discard',
+  OptionalTrash = 'Optional Trash',
 }
 
 export enum CardEffectKind {
@@ -35,6 +36,11 @@ export const BasicCardEffect = CardEffect.named('BasicCardEffect').props({
 
 export type BasicCardEffectSnapshotType = typeof BasicCardEffect.SnapshotType;
 
+export enum InteractiveCardEffectResolveType {
+  Mandatory = 'Mandatory',
+  Optional = 'Optional',
+}
+
 /** A card effect that requires further interaction from the player. Ex: Choosing cards from the player's hand. */
 export const InteractiveCardEffect = CardEffect.named(
   'InteractiveCardEffect'
@@ -48,6 +54,15 @@ export const InteractiveCardEffect = CardEffect.named(
   kind: types.literal(CardEffectKind.Interactive),
   /** The number of cards that should be played to resolve the card effect. */
   numCardsToResolve: types.optional(types.number, 0),
+  resolveType: types.optional(
+    types.enumeration(
+      'InteractiveCardEffectCategory',
+      Object.keys(InteractiveCardEffectResolveType).map(
+        key => InteractiveCardEffectResolveType[key]
+      )
+    ),
+    InteractiveCardEffectResolveType.Optional
+  ),
 });
 
 export type InteractiveCardEffectModelType = typeof InteractiveCardEffect.Type;

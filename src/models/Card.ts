@@ -60,8 +60,10 @@ export const Card = types
               numCardsToResolve,
             }: InteractiveCardEffectSnapshotType = effect;
             switch (category) {
-              case InteractiveCardEffectCategory.Trash:
-                return `Trash up to ${numCardsToResolve} cards from your hand`;
+              case InteractiveCardEffectCategory.OptionalTrash:
+                return `Trash up to ${numCardsToResolve} cards`;
+              case InteractiveCardEffectCategory.MandatoryDiscard:
+                return `Discard ${numCardsToResolve} cards`;
               default:
                 return '';
             }

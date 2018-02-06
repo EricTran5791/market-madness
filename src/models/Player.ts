@@ -1,6 +1,6 @@
 import { types, detach, getParent } from 'mobx-state-tree';
 import { Hand } from './Hand';
-import { CardStack } from './Card';
+import { CardStack, CardModelType } from './Card';
 import { shuffleCardStackModel } from '../utils/cardGenerator';
 import { GameLogEntryCategory } from './GameState';
 import { StoreType } from './Store';
@@ -48,6 +48,9 @@ export const Player = types
         targets: [store.otherPlayer.id],
         value: value,
       });
+    },
+    discardCard(card: CardModelType) {
+      self.discardPile.add(detach(card));
     },
     clearHand() {
       // Put hand into discard pile

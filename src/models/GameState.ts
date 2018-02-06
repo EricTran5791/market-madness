@@ -12,6 +12,7 @@ export enum GameLogEntryCategory {
   Attack = 'Attack',
 
   Buy = 'Buy',
+  Discard = 'Discard',
   Draw = 'Draw',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
@@ -66,6 +67,11 @@ export const GameState = types
           break;
         case GameLogEntryCategory.Buy:
           message = `${self.currentPlayer.id} bought ${cardName}`;
+          break;
+        case GameLogEntryCategory.Discard:
+          message = `${self.currentPlayer.id} discarded ${targets!.join(
+            ', '
+          )} with ${cardName}`;
           break;
         case GameLogEntryCategory.Draw:
           message = `${self.currentPlayer.id} drew ${value} card${

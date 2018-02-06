@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { StoreType } from '../models/Store';
 import { observer, inject } from 'mobx-react';
 import { GamePhase } from '../models/GameState';
+import { InteractiveCardEffectResolveType } from '../models/CardEffect';
 
 interface Props {
   store?: StoreType;
@@ -51,14 +52,17 @@ export class ActiveCardEffectInfo extends React.Component<Props, object> {
                   .activeEffectCategory
               }
             </Title>
-            <Button
-              onClick={() =>
-                this.props
-                  .store!.gameState.activeCardEffect.completeActiveEffect()
-              }
-            >
-              Done
-            </Button>
+            {this.props.store!.gameState.activeCardEffect.resolveType ===
+              InteractiveCardEffectResolveType.Optional && (
+              <Button
+                onClick={() =>
+                  this.props
+                    .store!.gameState.activeCardEffect.completeActiveEffect()
+                }
+              >
+                Done
+              </Button>
+            )}
           </>
         )}
       </StyledActiveCardEffectInfo>

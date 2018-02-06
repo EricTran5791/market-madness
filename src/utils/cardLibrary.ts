@@ -3,9 +3,28 @@ import {
   CardEffectCategory,
   InteractiveCardEffectCategory,
   CardEffectKind,
+  InteractiveCardEffectResolveType,
 } from '../models/CardEffect';
 
 export const ActionCards = {
+  exchangeGoods: {
+    name: 'Exchange Goods',
+    category: CardCategory.Action,
+    cost: 2,
+    effects: [
+      {
+        category: CardEffectCategory.Draw,
+        kind: CardEffectKind.Basic,
+        value: 2,
+      },
+      {
+        category: InteractiveCardEffectCategory.MandatoryDiscard,
+        kind: CardEffectKind.Interactive,
+        numCardsToResolve: 2,
+        resolveType: InteractiveCardEffectResolveType.Mandatory,
+      },
+    ],
+  },
   expressShipping: {
     name: 'Express Shipping',
     category: CardCategory.Action,
@@ -50,7 +69,7 @@ export const ConsumableCards = {
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Consumable,
-    cost: 2,
+    cost: 1,
     effects: [
       {
         category: CardEffectCategory.IncreaseMaxHealth,
@@ -86,7 +105,7 @@ export const ItemCards = {
     cost: 2,
     effects: [
       {
-        category: InteractiveCardEffectCategory.Trash,
+        category: InteractiveCardEffectCategory.OptionalTrash,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
       },
@@ -120,7 +139,7 @@ export const ItemCards = {
 };
 
 export const AttackCards = {
-  slap: {
+  dropShipment: {
     name: 'Drop Shipment',
     category: CardCategory.Attack,
     cost: 1,

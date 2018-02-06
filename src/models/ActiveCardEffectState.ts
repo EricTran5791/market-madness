@@ -34,6 +34,9 @@ export const ActiveCardEffectState = types
     get numCardsToResolve() {
       return (self.effect && self.effect.numCardsToResolve) || -1;
     },
+    get resolveType() {
+      return self.effect && self.effect.resolveType;
+    },
     get activeEffectCategory() {
       return (self.effect && self.effect.category) || '';
     },

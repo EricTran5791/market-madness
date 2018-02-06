@@ -157,7 +157,35 @@ export const Store = types
           );
 
           switch (category) {
-            case InteractiveCardEffectCategory.Trash:
+            case InteractiveCardEffectCategory.MandatoryDiscard: {
+              // Subscribe to the card refs to resolve.
+              const disposer = reaction(
+                () => self.gameState.activeCardEffect.status,
+                status => {
+                  if (status === ActiveCardEffectStatus.Completed) {
+                    const cardsToResolve =
+                      self.gameState.activeCardEffect.cardsToResolve;
+                    if (cardsToResolve.length > 0) {
+                      // Discard each card
+                      cardsToResolve.forEach(_ => {
+                        self.currentPlayer.discardCard(_);
+                      });
+                      self.gameState.addGameLogEntry(
+                        GameLogEntryCategory.Discard,
+                        {
+                          cardName: card.name,
+                          targets: cardsToResolve.map(_ => _.name),
+                        }
+                      );
+                    }
+                    disposer(); // Unsubscribe
+                    resolve();
+                  }
+                }
+              );
+              return;
+            }
+            case InteractiveCardEffectCategory.OptionalTrash: {
               // Subscribe to the card refs to resolve.
               const disposer = reaction(
                 () => self.gameState.activeCardEffect.status,
@@ -184,6 +212,7 @@ export const Store = types
                 }
               );
               return;
+            }
             default:
               return;
           }
