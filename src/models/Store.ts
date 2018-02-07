@@ -1,4 +1,4 @@
-import { types, detach, flow } from 'mobx-state-tree';
+import { types, detach, flow, destroy } from 'mobx-state-tree';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { Market } from './Market';
@@ -83,6 +83,9 @@ export const Store = types
         }
 
         processCardEffects(card, effects.slice(1)); // Process the rest of the effects
+      } else if (effects.length === 0 && card.category === CardCategory.NPC) {
+        // The NPC is defeated, we destroy the NPC card after processing its effects
+        destroy(card);
       }
     });
 
@@ -103,6 +106,10 @@ export const Store = types
               self.currentPlayer.hand.increaseAttackValue(value);
               break;
             case CardEffectCategory.GainMoney:
+              self.gameState.addGameLogEntry(GameLogEntryCategory.GainMoney, {
+                cardName: card.name,
+                value: value,
+              });
               self.currentPlayer.hand.increaseMoney(value);
               break;
             case CardEffectCategory.Draw:
@@ -231,7 +238,7 @@ export const Store = types
       if (!self.gameState.isCardEffectActive) {
         switch (card.category) {
           case CardCategory.Money:
-            self.currentPlayer.hand.increaseMoney(card);
+            self.currentPlayer.hand.increaseMoney(card.money);
             break;
           default:
             processCardEffects(card, card.effects);
@@ -244,6 +251,15 @@ export const Store = types
       return;
     }
 
+    function attackNPC(card: CardModelType) {
+      if (self.currentPlayer.hand.spendAttackValue(card.health)) {
+        self.gameState.addGameLogEntry(GameLogEntryCategory.DefeatNPC, {
+          cardName: card.name,
+        });
+        processCardEffects(card, card.effects);
+      }
+    }
+
     return {
       changeCurrentPlayer,
       createNewGame,
@@ -252,6 +268,7 @@ export const Store = types
       processCardEffects,
       processCardEffect,
       playCard,
+      attackNPC,
     };
   });
 

@@ -44,12 +44,12 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     showHoverAnimation ? 'pointer' : 'default'};
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
-      case CardCategory.Attack:
-        return 'tomato';
       case CardCategory.Consumable:
         return 'seagreen';
       case CardCategory.Money:
         return '#66514A';
+      case CardCategory.NPC:
+        return '#212F3D';
       default:
         return '#222222';
     }
@@ -87,8 +87,15 @@ const CardCost = styled.div`
   font-family: serif;
   font-size: 12px;
   font-weight: bold;
+  text-align: center;
   width: 18px;
   height: 18px;
+  border-radius: 100%;
+`;
+
+const CardHealth = CardCost.extend`
+  background-color: red;
+  color: white;
   border-radius: 100%;
 `;
 
@@ -126,7 +133,11 @@ function CardView({ model, onClick }: Props) {
         <CardDescription>{model.description}</CardDescription>
       )}
       <CardFooter>
-        <CardCost>{model.cost}</CardCost>
+        {model.health ? (
+          <CardHealth>{model.health}</CardHealth>
+        ) : (
+          <CardCost>{model.cost}</CardCost>
+        )}
         {model.category}
       </CardFooter>
     </StyledCard>

@@ -172,3 +172,18 @@ export const MoneyCards = {
     money: 2,
   },
 };
+
+export const NPCCards = {
+  businessPerson: {
+    name: 'Business Person',
+    category: CardCategory.NPC,
+    health: 4,
+    effects: [
+      {
+        category: CardEffectCategory.GainMoney,
+        kind: CardEffectKind.Basic,
+        value: 3,
+      },
+    ],
+  },
+};

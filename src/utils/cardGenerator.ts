@@ -50,6 +50,7 @@ export function generateMarketDeck(): CardStackModelType {
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
       ...printDuplicateCards(cards.MoneyCards.gem, 2),
+      ...printDuplicateCards(cards.NPCCards.businessPerson, 2),
     ]),
   });
 }

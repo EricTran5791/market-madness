@@ -13,6 +13,7 @@ export enum CardCategory {
   Consumable = 'Consumable',
   Item = 'Item',
   Money = 'Money',
+  NPC = 'NPC',
 }
 
 export const Card = types
@@ -26,16 +27,21 @@ export const Card = types
     description: types.optional(types.string, ''),
     cost: types.optional(types.number, 0),
     money: types.optional(types.number, 0),
+    health: types.optional(types.number, 0),
     isPlayed: types.optional(types.boolean, false),
     effects: types.optional(types.array(CardEffectUnion), []),
   })
   .actions(self => ({
     afterCreate() {
-      if (self.description.length > 0) {
+      if (self.description.length > 0 || self.effects.length === 0) {
         return;
       }
+
       // Auto generate descriptions
-      self.description = self.effects
+      if (self.category === CardCategory.NPC) {
+        self.description = 'Defeat: ';
+      }
+      self.description += self.effects
         .map(effect => {
           if (effect.kind === CardEffectKind.Basic) {
             const { category, value }: BasicCardEffectSnapshotType = effect;

@@ -12,6 +12,7 @@ export enum GameLogEntryCategory {
   Attack = 'Attack',
 
   Buy = 'Buy',
+  DefeatNPC = 'Defeat NPC',
   Discard = 'Discard',
   Draw = 'Draw',
   GainMoney = 'Gain Money',
@@ -68,6 +69,9 @@ export const GameState = types
           break;
         case GameLogEntryCategory.Buy:
           message = `${self.currentPlayer.id} bought ${cardName}`;
+          break;
+        case GameLogEntryCategory.DefeatNPC:
+          message = `${self.currentPlayer.id} defeated ${cardName}`;
           break;
         case GameLogEntryCategory.Discard:
           message = `${self.currentPlayer.id} discarded ${targets!.join(
