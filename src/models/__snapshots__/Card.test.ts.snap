@@ -45,7 +45,7 @@ Object {
       "id": "mock-id-2",
       "isPlayed": false,
       "money": 0,
-      "name": "Bananas",
+      "name": "Bread",
     },
   ],
 }

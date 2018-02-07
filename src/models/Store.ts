@@ -1,4 +1,4 @@
-import { types, detach, flow, destroy } from 'mobx-state-tree';
+import { types, detach, flow, destroy, getSnapshot } from 'mobx-state-tree';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { Market } from './Market';
@@ -14,6 +14,7 @@ import {
 import { CardModelType, CardCategory } from '../models/Card';
 import { reaction } from 'mobx';
 import { ActiveCardEffectStatus } from './ActiveCardEffectState';
+import { printCard } from '../utils/cardGenerator';
 
 export const Store = types
   .model('Store', {
@@ -54,12 +55,16 @@ export const Store = types
           : GamePhase.Player1Turn;
     }
 
-    function buyMarketCard(card: CardModelType) {
+    function buyCard(card: CardModelType, shouldClone?: boolean) {
       if (self.currentPlayer.hand.spendMoney(card.cost)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
-        self.currentPlayer.discardPile.add(detach(card));
+        if (!shouldClone) {
+          self.currentPlayer.discardPile.add(detach(card));
+        } else {
+          self.currentPlayer.discardPile.add(printCard(getSnapshot(card)));
+        }
       }
     }
 
@@ -264,7 +269,7 @@ export const Store = types
       changeCurrentPlayer,
       createNewGame,
       endTurn,
-      buyMarketCard,
+      buyCard,
       processCardEffects,
       processCardEffect,
       playCard,

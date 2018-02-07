@@ -14,6 +14,7 @@ import {
   generateEmptyDeck,
   shuffleCardStackModel,
   generateTrashDeck,
+  generateAlwaysAvailableDeck,
 } from './cardGenerator';
 
 export function initializeStore(): StoreType {
@@ -47,7 +48,10 @@ export function initializeStore(): StoreType {
 
   const store = Store.create({
     trash: { cardStack: generateTrashDeck() },
-    market: { cardStack: generateMarketDeck() },
+    market: {
+      cardStack: generateMarketDeck(),
+      alwaysAvailableCardStack: generateAlwaysAvailableDeck(),
+    },
     players,
     gameState,
   });

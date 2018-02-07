@@ -70,8 +70,8 @@ export const ConsumableCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
-  bananas: {
-    name: 'Bananas',
+  bread: {
+    name: 'Bread',
     category: CardCategory.Consumable,
     cost: 2,
     effects: [
@@ -111,6 +111,18 @@ export const ItemCards = {
       },
     ],
   },
+  coatRack: {
+    name: 'Coat Rack',
+    category: CardCategory.Item,
+    cost: 5,
+    effects: [
+      {
+        category: CardEffectCategory.GainAttack,
+        kind: CardEffectKind.Basic,
+        value: 5,
+      },
+    ],
+  },
   fishBones: {
     name: 'Fish Bones',
     category: CardCategory.Item,
@@ -129,6 +141,18 @@ export const ItemCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
+  shoppingBasket: {
+    name: 'Shopping Basket',
+    category: CardCategory.Item,
+    cost: 2,
+    effects: [
+      {
+        category: CardEffectCategory.GainAttack,
+        kind: CardEffectKind.Basic,
+        value: 2,
+      },
+    ],
+  },
   wetMop: {
     name: 'Wet Mop',
     category: CardCategory.Item,
@@ -138,18 +162,6 @@ export const ItemCards = {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 3,
-      },
-    ],
-  },
-  coatRack: {
-    name: 'Coat Rack',
-    category: CardCategory.Item,
-    cost: 5,
-    effects: [
-      {
-        category: CardEffectCategory.GainAttack,
-        kind: CardEffectKind.Basic,
-        value: 5,
       },
     ],
   },
@@ -180,6 +192,18 @@ export const NPCCards = {
         category: CardEffectCategory.GainMoney,
         kind: CardEffectKind.Basic,
         value: 3,
+      },
+    ],
+  },
+  postalWorker: {
+    name: 'Postal Worker',
+    category: CardCategory.NPC,
+    health: 2,
+    effects: [
+      {
+        category: CardEffectCategory.Draw,
+        kind: CardEffectKind.Basic,
+        value: 1,
       },
     ],
   },

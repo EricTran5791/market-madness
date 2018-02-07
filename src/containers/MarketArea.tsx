@@ -16,6 +16,7 @@ interface Props {
 
 interface State {
   cardStack: CardStackModelType;
+  alwaysAvailableCardStack: CardStackModelType;
 }
 
 const StyledMarketArea = styled.div`
@@ -33,7 +34,6 @@ const StyledMarketArea = styled.div`
 const Title = styled.div`
   font-family: 'Acme';
   font-size: 24px;
-  text-align: center;
   margin-bottom: 16px;
 `;
 
@@ -44,11 +44,14 @@ class MarketArea extends React.Component<Props, State> {
     super(props);
     this.state = {
       cardStack: this.props.store!.market.cardStack,
+      alwaysAvailableCardStack: this.props.store!.market
+        .alwaysAvailableCardStack,
     };
   }
   displayCards() {
-    return this.state.cardStack.cards
-      .filter((card, i) => i < 4)
+    // Show the 3 first market cards...
+    const marketCards = this.state.cardStack.cards
+      .slice(0, 3)
       .map((card, i) => {
         return (
           <CardView
@@ -56,25 +59,42 @@ class MarketArea extends React.Component<Props, State> {
             model={card}
             onClick={
               !this.props.store!.gameState.isCardEffectActive
-                ? () => this.onClick(card)
+                ? () => this.onMarketCardClick(card)
                 : undefined
             }
           />
         );
       });
+    // ...and the 2 always available cards
+    const alwaysAvailableCards = this.state.alwaysAvailableCardStack.cards.map(
+      (card, i) => {
+        return (
+          <CardView
+            key={i}
+            model={card}
+            onClick={
+              !this.props.store!.gameState.isCardEffectActive
+                ? () => this.props.store!.buyCard(card, true)
+                : undefined
+            }
+          />
+        );
+      }
+    );
+    return marketCards.concat(alwaysAvailableCards);
   }
-  onClick(card: CardModelType) {
+  onMarketCardClick(card: CardModelType) {
     if (card.category === CardCategory.NPC) {
       this.props.store!.attackNPC(card);
     } else {
-      this.props.store!.buyMarketCard(card);
+      this.props.store!.buyCard(card);
     }
   }
   render() {
     return (
       <StyledMarketArea>
         <Title>The Market</Title>
-        <CardGrid columns={4}>{this.displayCards()}</CardGrid>
+        <CardGrid columns={5}>{this.displayCards()}</CardGrid>
       </StyledMarketArea>
     );
   }

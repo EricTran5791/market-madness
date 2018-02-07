@@ -22,7 +22,7 @@ it('creates a CardStack', () => {
 
 it('adds a card to the CardStack', () => {
   mockCardStack.add(
-    Card.create({ id: 'mock-id-2', ...cards.ConsumableCards.bananas })
+    Card.create({ id: 'mock-id-2', ...cards.ConsumableCards.bread })
   );
   expect(getSnapshot(mockCardStack)).toMatchSnapshot();
 });

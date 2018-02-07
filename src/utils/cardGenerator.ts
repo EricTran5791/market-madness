@@ -42,16 +42,24 @@ export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
       ...printDuplicateCards(cards.ConsumableCards.apple, 2),
-      ...printDuplicateCards(cards.ConsumableCards.bananas, 2),
-      ...printDuplicateCards(cards.ItemCards.basketball, 2),
+      ...printDuplicateCards(cards.ConsumableCards.bread, 2),
       printCard(cards.ItemCards.wetMop),
       printCard(cards.ItemCards.coatRack),
       ...printDuplicateCards(cards.ActionCards.exchangeGoods, 2),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
-      ...printDuplicateCards(cards.MoneyCards.gem, 2),
       ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
+      ...printDuplicateCards(cards.NPCCards.postalWorker, 1),
     ]),
+  });
+}
+
+export function generateAlwaysAvailableDeck(): CardStackModelType {
+  return CardStack.create({
+    cards: [
+      printCard(cards.MoneyCards.gem),
+      printCard(cards.ItemCards.shoppingBasket),
+    ],
   });
 }
 
