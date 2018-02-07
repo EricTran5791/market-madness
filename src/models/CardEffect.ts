@@ -3,6 +3,7 @@ import { types } from 'mobx-state-tree';
 export enum CardEffectCategory {
   Draw = 'Draw',
   GainAttack = 'Gain Attack',
+  GainCardToHand = 'Gain Card to Hand',
   GainMoney = 'Gain Money',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
@@ -33,6 +34,8 @@ export const BasicCardEffect = CardEffect.named('BasicCardEffect').props({
     Object.keys(CardEffectCategory).map(key => CardEffectCategory[key])
   ),
   value: types.optional(types.number, 0),
+  /** The name of the card to be gained from the effect. */
+  gainedCardId: types.optional(types.string, ''),
 });
 
 export type BasicCardEffectSnapshotType = typeof BasicCardEffect.SnapshotType;

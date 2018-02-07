@@ -14,7 +14,7 @@ import {
 import { CardModelType, CardCategory } from '../models/Card';
 import { reaction } from 'mobx';
 import { ActiveCardEffectStatus } from './ActiveCardEffectState';
-import { printCard } from '../utils/cardGenerator';
+import { printCard, printCardById } from '../utils/cardGenerator';
 
 export const Store = types
   .model('Store', {
@@ -105,10 +105,28 @@ export const Store = types
       const promise = new Promise<void>((resolve, reject) => {
         const currentPlayer = self.currentPlayer;
         if (effect.kind === CardEffectKind.Basic) {
-          const { category, value }: BasicCardEffectSnapshotType = effect;
+          const {
+            category,
+            value,
+            gainedCardId,
+          }: BasicCardEffectSnapshotType = effect;
           switch (category) {
             case CardEffectCategory.GainAttack:
               self.currentPlayer.hand.increaseAttack(value);
+              break;
+            case CardEffectCategory.GainCardToHand:
+              self.gameState.addGameLogEntry(
+                GameLogEntryCategory.GainCardToHand,
+                {
+                  gainedCardName: gainedCardId
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, (str: string) => {
+                      return str.toUpperCase();
+                    }),
+                  value: value,
+                }
+              );
+              self.currentPlayer.hand.addCard(printCardById(gainedCardId));
               break;
             case CardEffectCategory.GainMoney:
               self.gameState.addGameLogEntry(GameLogEntryCategory.GainMoney, {

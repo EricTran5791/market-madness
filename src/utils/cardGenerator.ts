@@ -16,6 +16,16 @@ export function printCard(card: CardModelSnapshotType): CardModelType {
   return Card.create({ id: uniqid(), ...card });
 }
 
+// TODO: Improve with JSON card database
+export function printCardById(id: string): CardModelType {
+  const card =
+    cards.ActionCards[id] ||
+    cards.ConsumableCards[id] ||
+    cards.ItemCards[id] ||
+    cards.MoneyCards[id];
+  return printCard(card);
+}
+
 function printDuplicateCards(
   card: CardModelSnapshotType,
   qty: number
@@ -42,14 +52,14 @@ export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
       ...printDuplicateCards(cards.ConsumableCards.apple, 2),
-      ...printDuplicateCards(cards.ConsumableCards.bread, 2),
       printCard(cards.ItemCards.wetMop),
       printCard(cards.ItemCards.coatRack),
       ...printDuplicateCards(cards.ActionCards.exchangeGoods, 2),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
+      ...printDuplicateCards(cards.NPCCards.baker, 2),
       ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
-      ...printDuplicateCards(cards.NPCCards.postalWorker, 1),
+      ...printDuplicateCards(cards.NPCCards.postalWorker, 2),
     ]),
   });
 }

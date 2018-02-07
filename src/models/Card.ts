@@ -7,6 +7,7 @@ import {
   InteractiveCardEffectSnapshotType,
   InteractiveCardEffectCategory,
 } from './CardEffect';
+
 export enum CardCategory {
   Action = 'Action',
   Consumable = 'Consumable',
@@ -43,12 +44,25 @@ export const Card = types
       self.description += self.effects
         .map(effect => {
           if (effect.kind === CardEffectKind.Basic) {
-            const { category, value }: BasicCardEffectSnapshotType = effect;
+            const {
+              category,
+              value,
+              gainedCardId,
+            }: BasicCardEffectSnapshotType = effect;
             switch (category) {
               case CardEffectCategory.Draw:
                 return `Draw ${value} card${value > 1 ? 's' : ''}`;
               case CardEffectCategory.GainAttack:
                 return `+${value} Attack`;
+              case CardEffectCategory.GainCardToHand:
+                // The RegEx converts the camel case id to a spaced and capitalized name
+                // TODO: There was a circular dependency when cardGenerator was imported
+                // due to cardLibrary also importing CardCategory from Card
+                return `Add ${value} ${gainedCardId
+                  .replace(/([A-Z])/g, ' $1')
+                  .replace(/^./, (str: string) => {
+                    return str.toUpperCase();
+                  })} to your hand`;
               case CardEffectCategory.GainMoney:
                 return `+${value} Money`;
               case CardEffectCategory.Heal:

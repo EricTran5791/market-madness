@@ -11,6 +11,9 @@ export const Hand = types
     spentAttack: types.optional(types.number, 0),
   })
   .actions(self => ({
+    addCard(card: CardModelType) {
+      self.cardStack.add(card);
+    },
     increaseMoney(num: number) {
       self.availableMoney += num;
     },

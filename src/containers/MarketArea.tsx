@@ -37,6 +37,12 @@ const Title = styled.div`
   margin-bottom: 16px;
 `;
 
+const MarketCardRow = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 24px;
+`;
+
 @inject('store')
 @observer
 class MarketArea extends React.Component<Props, State> {
@@ -48,8 +54,8 @@ class MarketArea extends React.Component<Props, State> {
         .alwaysAvailableCardStack,
     };
   }
-  displayCards() {
-    // Show the 3 first market cards...
+  displayMarketCards() {
+    // Show the 3 first market cards
     const marketCards = this.state.cardStack.cards
       .slice(0, 3)
       .map((card, i) => {
@@ -65,8 +71,11 @@ class MarketArea extends React.Component<Props, State> {
           />
         );
       });
-    // ...and the 2 always available cards
-    const alwaysAvailableCards = this.state.alwaysAvailableCardStack.cards.map(
+    return marketCards;
+  }
+  displayAlwaysAvailableCards() {
+    // Show the 2 always available cards
+    const marketCards = this.state.alwaysAvailableCardStack.cards.map(
       (card, i) => {
         return (
           <CardView
@@ -81,7 +90,7 @@ class MarketArea extends React.Component<Props, State> {
         );
       }
     );
-    return marketCards.concat(alwaysAvailableCards);
+    return marketCards;
   }
   onMarketCardClick(card: CardModelType) {
     if (card.category === CardCategory.NPC) {
@@ -94,7 +103,10 @@ class MarketArea extends React.Component<Props, State> {
     return (
       <StyledMarketArea>
         <Title>The Market</Title>
-        <CardGrid columns={5}>{this.displayCards()}</CardGrid>
+        <MarketCardRow>
+          <CardGrid columns={3}>{this.displayMarketCards()}</CardGrid>
+          <CardGrid columns={2}>{this.displayAlwaysAvailableCards()}</CardGrid>
+        </MarketCardRow>
       </StyledMarketArea>
     );
   }

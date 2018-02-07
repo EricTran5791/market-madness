@@ -183,6 +183,19 @@ export const MoneyCards = {
 };
 
 export const NPCCards = {
+  baker: {
+    name: 'Baker',
+    category: CardCategory.NPC,
+    health: 3,
+    effects: [
+      {
+        category: CardEffectCategory.GainCardToHand,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'bread',
+      },
+    ],
+  },
   businessPerson: {
     name: 'Business Person',
     category: CardCategory.NPC,

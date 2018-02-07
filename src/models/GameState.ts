@@ -15,6 +15,7 @@ export enum GameLogEntryCategory {
   DefeatNPC = 'Defeat NPC',
   Discard = 'Discard',
   Draw = 'Draw',
+  GainCardToHand = 'Gain Card to Hand',
   GainMoney = 'Gain Money',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
@@ -23,6 +24,7 @@ export enum GameLogEntryCategory {
 
 export type GameLogEntryParams = {
   cardName?: string;
+  gainedCardName?: string;
   targets?: string[];
   value?: number;
 };
@@ -58,7 +60,7 @@ export const GameState = types
     },
     addGameLogEntry(
       category: string,
-      { cardName, targets, value = 0 }: GameLogEntryParams
+      { cardName, gainedCardName, targets, value = 0 }: GameLogEntryParams
     ) {
       let message = `${self.currentPlayer.id} ${category}`;
       switch (category) {
@@ -82,6 +84,11 @@ export const GameState = types
           message = `${self.currentPlayer.id} drew ${value} card${
             value > 1 ? 's' : ''
           } with ${cardName}`;
+          break;
+        case GameLogEntryCategory.GainCardToHand:
+          message = `${
+            self.currentPlayer.id
+          } added ${value} ${gainedCardName} to their hand`;
           break;
         case GameLogEntryCategory.GainMoney:
           message = `${self.currentPlayer.id} gained ${value} money`;
