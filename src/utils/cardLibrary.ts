@@ -7,6 +7,23 @@ import {
 } from '../models/CardEffect';
 
 export const ActionCards = {
+  dropShipment: {
+    name: 'Drop Shipment',
+    category: CardCategory.Action,
+    cost: 1,
+    effects: [
+      {
+        category: CardEffectCategory.GainAttack,
+        kind: CardEffectKind.Basic,
+        value: 1,
+      },
+      {
+        category: CardEffectCategory.Draw,
+        kind: CardEffectKind.Basic,
+        value: 1,
+      },
+    ],
+  },
   exchangeGoods: {
     name: 'Exchange Goods',
     category: CardCategory.Action,
@@ -88,7 +105,7 @@ export const ItemCards = {
     cost: 2,
     effects: [
       {
-        category: CardEffectCategory.GainAttackValue,
+        category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 2,
       },
@@ -118,7 +135,7 @@ export const ItemCards = {
     cost: 3,
     effects: [
       {
-        category: CardEffectCategory.GainAttackValue,
+        category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 3,
       },
@@ -130,29 +147,9 @@ export const ItemCards = {
     cost: 5,
     effects: [
       {
-        category: CardEffectCategory.GainAttackValue,
+        category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 5,
-      },
-    ],
-  },
-};
-
-export const AttackCards = {
-  dropShipment: {
-    name: 'Drop Shipment',
-    category: CardCategory.Attack,
-    cost: 1,
-    effects: [
-      {
-        category: CardEffectCategory.GainAttackValue,
-        kind: CardEffectKind.Basic,
-        value: 1,
-      },
-      {
-        category: CardEffectCategory.Draw,
-        kind: CardEffectKind.Basic,
-        value: 1,
       },
     ],
   },

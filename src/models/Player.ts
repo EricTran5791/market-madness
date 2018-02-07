@@ -32,12 +32,9 @@ export const Player = types
     attackOtherPlayer() {
       const store: StoreType = getParent(getParent(self));
       const hand = self.hand;
-      const availableAttackValue = hand.availableAttackValue;
-      if (
-        availableAttackValue > 0 &&
-        hand.spendAttackValue(availableAttackValue)
-      ) {
-        store.otherPlayer.takeDamage(availableAttackValue);
+      const availableAttack = hand.availableAttack;
+      if (availableAttack > 0 && hand.spendAttack(availableAttack)) {
+        store.otherPlayer.takeDamage(availableAttack);
       }
     },
     takeDamage(value: number) {
@@ -60,8 +57,8 @@ export const Player = types
       // Reset hand stats
       self.hand.availableMoney = 0;
       self.hand.spentMoney = 0;
-      self.hand.availableAttackValue = 0;
-      self.hand.spentAttackValue = 0;
+      self.hand.availableAttack = 0;
+      self.hand.spentAttack = 0;
     },
     drawFromDeck(numToDraw: number): number {
       let cardsDrawn = 0;

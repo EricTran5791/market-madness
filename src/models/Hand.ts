@@ -7,8 +7,8 @@ export const Hand = types
     cardStack: CardStack,
     availableMoney: types.optional(types.number, 0),
     spentMoney: types.optional(types.number, 0),
-    availableAttackValue: types.optional(types.number, 0),
-    spentAttackValue: types.optional(types.number, 0),
+    availableAttack: types.optional(types.number, 0),
+    spentAttack: types.optional(types.number, 0),
   })
   .actions(self => ({
     increaseMoney(num: number) {
@@ -22,13 +22,13 @@ export const Hand = types
       }
       return false;
     },
-    increaseAttackValue(num: number) {
-      self.availableAttackValue += num;
+    increaseAttack(num: number) {
+      self.availableAttack += num;
     },
-    spendAttackValue(num: number): boolean {
-      if (num <= self.availableAttackValue) {
-        self.availableAttackValue -= num;
-        self.spentAttackValue += num;
+    spendAttack(num: number): boolean {
+      if (num <= self.availableAttack) {
+        self.availableAttack -= num;
+        self.spentAttack += num;
         return true;
       }
       return false;

@@ -9,7 +9,6 @@ import {
 } from './CardEffect';
 export enum CardCategory {
   Action = 'Action',
-  Attack = 'Attack',
   Consumable = 'Consumable',
   Item = 'Item',
   Money = 'Money',
@@ -48,7 +47,7 @@ export const Card = types
             switch (category) {
               case CardEffectCategory.Draw:
                 return `Draw ${value} card${value > 1 ? 's' : ''}`;
-              case CardEffectCategory.GainAttackValue:
+              case CardEffectCategory.GainAttack:
                 return `+${value} Attack`;
               case CardEffectCategory.GainMoney:
                 return `+${value} Money`;

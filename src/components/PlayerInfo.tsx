@@ -221,12 +221,12 @@ export class PlayerInfo extends React.Component<Props, State> {
           >
             ❤️ {this.getPlayer().health}/{this.getPlayer().maxHealth}
           </PlayerHealth>
-          <Stat title="Available attack value">
-            👊 {this.getPlayer().hand.availableAttackValue}
+          <Stat title="Available attack">
+            👊 {this.getPlayer().hand.availableAttack}
           </Stat>
         </StatsContainer>
         {!this.isCurrentTurn &&
-          this.props.store!.currentPlayer.hand.availableAttackValue > 0 && (
+          this.props.store!.currentPlayer.hand.availableAttack > 0 && (
             <Hint>⬅️ Click to attack!</Hint>
           )}
       </StyledPlayerInfo>

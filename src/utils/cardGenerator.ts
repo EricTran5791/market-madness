@@ -27,7 +27,7 @@ export function generateStartingDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
       ...printDuplicateCards(cards.MoneyCards.coin, 8),
-      ...printDuplicateCards(cards.AttackCards.dropShipment, 2),
+      ...printDuplicateCards(cards.ActionCards.dropShipment, 2),
     ]),
   });
 }
@@ -50,7 +50,7 @@ export function generateMarketDeck(): CardStackModelType {
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
       ...printDuplicateCards(cards.MoneyCards.gem, 2),
-      ...printDuplicateCards(cards.NPCCards.businessPerson, 2),
+      ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
     ]),
   });
 }

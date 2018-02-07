@@ -102,8 +102,8 @@ export const Store = types
         if (effect.kind === CardEffectKind.Basic) {
           const { category, value }: BasicCardEffectSnapshotType = effect;
           switch (category) {
-            case CardEffectCategory.GainAttackValue:
-              self.currentPlayer.hand.increaseAttackValue(value);
+            case CardEffectCategory.GainAttack:
+              self.currentPlayer.hand.increaseAttack(value);
               break;
             case CardEffectCategory.GainMoney:
               self.gameState.addGameLogEntry(GameLogEntryCategory.GainMoney, {
@@ -252,7 +252,7 @@ export const Store = types
     }
 
     function attackNPC(card: CardModelType) {
-      if (self.currentPlayer.hand.spendAttackValue(card.health)) {
+      if (self.currentPlayer.hand.spendAttack(card.health)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.DefeatNPC, {
           cardName: card.name,
         });
