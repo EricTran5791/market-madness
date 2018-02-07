@@ -211,8 +211,8 @@ export class PlayerInfo extends React.Component<Props, State> {
       >
         <PlayerName>{this.props.playerId}</PlayerName>
         <StatsContainer>
-          <Stat title="Available buying power">
-            💵 {this.getPlayer().hand.availableBuyingPower}
+          <Stat title="Available money">
+            💵 {this.getPlayer().hand.availableMoney}
           </Stat>
           <PlayerHealth
             title="Health"

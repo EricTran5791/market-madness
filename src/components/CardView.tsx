@@ -92,7 +92,7 @@ const CardCost = styled.div`
   border-radius: 100%;
 `;
 
-const CardBuyingPower = styled.div`
+const CardMoney = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,8 +120,8 @@ function CardView({ model, onClick }: Props) {
       isPlayed={model.isPlayed}
     >
       <CardName>{model.name}</CardName>
-      {model.buyingPower ? (
-        <CardBuyingPower>{model.buyingPower}</CardBuyingPower>
+      {model.money ? (
+        <CardMoney>{model.money}</CardMoney>
       ) : (
         <CardDescription>{model.description}</CardDescription>
       )}

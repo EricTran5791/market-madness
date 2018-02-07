@@ -55,7 +55,7 @@ export const Store = types
     }
 
     function buyMarketCard(card: CardModelType) {
-      if (self.currentPlayer.hand.spendBuyingPower(card.cost)) {
+      if (self.currentPlayer.hand.spendMoney(card.cost)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
@@ -99,8 +99,11 @@ export const Store = types
         if (effect.kind === CardEffectKind.Basic) {
           const { category, value }: BasicCardEffectSnapshotType = effect;
           switch (category) {
-            case CardEffectCategory.Damage:
+            case CardEffectCategory.GainAttackValue:
               self.currentPlayer.hand.increaseAttackValue(value);
+              break;
+            case CardEffectCategory.GainMoney:
+              self.currentPlayer.hand.increaseMoney(value);
               break;
             case CardEffectCategory.Draw:
               const cardsDrawn = currentPlayer.drawFromDeck(value);
@@ -228,7 +231,7 @@ export const Store = types
       if (!self.gameState.isCardEffectActive) {
         switch (card.category) {
           case CardCategory.Money:
-            self.currentPlayer.hand.increaseBuyingPower(card);
+            self.currentPlayer.hand.increaseMoney(card);
             break;
           default:
             processCardEffects(card, card.effects);

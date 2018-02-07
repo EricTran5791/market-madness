@@ -14,6 +14,7 @@ export enum GameLogEntryCategory {
   Buy = 'Buy',
   Discard = 'Discard',
   Draw = 'Draw',
+  GainMoney = 'Gain Money',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
   Trash = 'Trash',
@@ -77,6 +78,9 @@ export const GameState = types
           message = `${self.currentPlayer.id} drew ${value} card${
             value > 1 ? 's' : ''
           } with ${cardName}`;
+          break;
+        case GameLogEntryCategory.GainMoney:
+          message = `${self.currentPlayer.id} gained ${value} money`;
           break;
         case GameLogEntryCategory.Heal:
           message = `${

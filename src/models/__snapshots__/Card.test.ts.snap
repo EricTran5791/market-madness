@@ -4,7 +4,6 @@ exports[`adds a card to the CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "buyingPower": 0,
       "category": "Consumable",
       "cost": 1,
       "description": "Heal 1, Trash this card",
@@ -22,10 +21,10 @@ Object {
       ],
       "id": "mock-id",
       "isPlayed": false,
+      "money": 0,
       "name": "Apple",
     },
     Object {
-      "buyingPower": 0,
       "category": "Consumable",
       "cost": 2,
       "description": "Heal 2, Trash this card",
@@ -43,6 +42,7 @@ Object {
       ],
       "id": "mock-id-2",
       "isPlayed": false,
+      "money": 0,
       "name": "Bananas",
     },
   ],
@@ -51,7 +51,6 @@ Object {
 
 exports[`creates a Card 1`] = `
 Object {
-  "buyingPower": 0,
   "category": "Consumable",
   "cost": 1,
   "description": "Heal 1, Trash this card",
@@ -69,6 +68,7 @@ Object {
   ],
   "id": "mock-id",
   "isPlayed": false,
+  "money": 0,
   "name": "Apple",
 }
 `;
@@ -77,7 +77,6 @@ exports[`creates a CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "buyingPower": 0,
       "category": "Consumable",
       "cost": 1,
       "description": "Heal 1, Trash this card",
@@ -95,6 +94,7 @@ Object {
       ],
       "id": "mock-id",
       "isPlayed": false,
+      "money": 0,
       "name": "Apple",
     },
   ],

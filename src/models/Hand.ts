@@ -5,19 +5,19 @@ import { StoreType } from './Store';
 export const Hand = types
   .model('Hand', {
     cardStack: CardStack,
-    availableBuyingPower: types.optional(types.number, 0),
-    spentBuyingPower: types.optional(types.number, 0),
+    availableMoney: types.optional(types.number, 0),
+    spentMoney: types.optional(types.number, 0),
     availableAttackValue: types.optional(types.number, 0),
     spentAttackValue: types.optional(types.number, 0),
   })
   .actions(self => ({
-    increaseBuyingPower(card: CardModelType) {
-      self.availableBuyingPower += card.buyingPower;
+    increaseMoney(card: CardModelType) {
+      self.availableMoney += card.money;
     },
-    spendBuyingPower(num: number): boolean {
-      if (num <= self.availableBuyingPower) {
-        self.availableBuyingPower -= num;
-        self.spentBuyingPower += num;
+    spendMoney(num: number): boolean {
+      if (num <= self.availableMoney) {
+        self.availableMoney -= num;
+        self.spentMoney += num;
         return true;
       }
       return false;

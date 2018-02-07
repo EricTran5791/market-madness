@@ -88,7 +88,7 @@ export const ItemCards = {
     cost: 2,
     effects: [
       {
-        category: CardEffectCategory.Damage,
+        category: CardEffectCategory.GainAttackValue,
         kind: CardEffectKind.Basic,
         value: 2,
       },
@@ -118,7 +118,7 @@ export const ItemCards = {
     cost: 3,
     effects: [
       {
-        category: CardEffectCategory.Damage,
+        category: CardEffectCategory.GainAttackValue,
         kind: CardEffectKind.Basic,
         value: 3,
       },
@@ -130,7 +130,7 @@ export const ItemCards = {
     cost: 5,
     effects: [
       {
-        category: CardEffectCategory.Damage,
+        category: CardEffectCategory.GainAttackValue,
         kind: CardEffectKind.Basic,
         value: 5,
       },
@@ -145,7 +145,7 @@ export const AttackCards = {
     cost: 1,
     effects: [
       {
-        category: CardEffectCategory.Damage,
+        category: CardEffectCategory.GainAttackValue,
         kind: CardEffectKind.Basic,
         value: 1,
       },
@@ -163,12 +163,12 @@ export const MoneyCards = {
     name: 'Coin',
     category: CardCategory.Money,
     cost: 1,
-    buyingPower: 1,
+    money: 1,
   },
   gem: {
     name: 'Gem',
     category: CardCategory.Money,
     cost: 3,
-    buyingPower: 2,
+    money: 2,
   },
 };

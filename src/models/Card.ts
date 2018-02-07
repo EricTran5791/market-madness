@@ -25,7 +25,7 @@ export const Card = types
     ),
     description: types.optional(types.string, ''),
     cost: types.optional(types.number, 0),
-    buyingPower: types.optional(types.number, 0),
+    money: types.optional(types.number, 0),
     isPlayed: types.optional(types.boolean, false),
     effects: types.optional(types.array(CardEffectUnion), []),
   })
@@ -40,10 +40,12 @@ export const Card = types
           if (effect.kind === CardEffectKind.Basic) {
             const { category, value }: BasicCardEffectSnapshotType = effect;
             switch (category) {
-              case CardEffectCategory.Damage:
-                return `+${value} Attack`;
               case CardEffectCategory.Draw:
                 return `Draw ${value} card${value > 1 ? 's' : ''}`;
+              case CardEffectCategory.GainAttackValue:
+                return `+${value} Attack`;
+              case CardEffectCategory.GainMoney:
+                return `+${value} Money`;
               case CardEffectCategory.Heal:
                 return `Heal ${value}`;
               case CardEffectCategory.IncreaseMaxHealth:
@@ -89,9 +91,9 @@ export const CardStack = types
     get totalCards(): number {
       return self.cards.length;
     },
-    get totalBuyingPower() {
+    get totalMoney() {
       return self.cards
-        .map(card => card.buyingPower)
+        .map(card => card.money)
         .reduce((sum, currentValue) => sum + currentValue, 0);
     },
     get unplayedCards() {

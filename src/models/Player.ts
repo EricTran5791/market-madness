@@ -58,8 +58,8 @@ export const Player = types
         self.discardPile.add(detach(card));
       });
       // Reset hand stats
-      self.hand.availableBuyingPower = 0;
-      self.hand.spentBuyingPower = 0;
+      self.hand.availableMoney = 0;
+      self.hand.spentMoney = 0;
       self.hand.availableAttackValue = 0;
       self.hand.spentAttackValue = 0;
     },
