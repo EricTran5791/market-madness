@@ -83,6 +83,24 @@ export const ConsumableCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
+  energyDrink: {
+    name: 'Energy Drink',
+    category: CardCategory.Consumable,
+    cost: 2,
+    effects: [
+      {
+        category: CardEffectCategory.Heal,
+        kind: CardEffectKind.Basic,
+        value: 1,
+      },
+      {
+        category: CardEffectCategory.Draw,
+        kind: CardEffectKind.Basic,
+        value: 1,
+      },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
+    ],
+  },
   spaghetti: {
     name: 'Spaghetti',
     category: CardCategory.Consumable,
@@ -109,18 +127,36 @@ export const ConsumableCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
+  verySpicyPepper: {
+    name: 'Very Spicy Pepper',
+    category: CardCategory.Consumable,
+    cost: 5,
+    effects: [
+      {
+        category: CardEffectCategory.GainAttack,
+        kind: CardEffectKind.Basic,
+        value: 5,
+      },
+      {
+        category: CardEffectCategory.Heal,
+        kind: CardEffectKind.Basic,
+        value: -3,
+      },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
+    ],
+  },
 };
 
 export const ItemCards = {
   basketball: {
     name: 'Basketball',
     category: CardCategory.Item,
-    cost: 2,
+    cost: 3,
     effects: [
       {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
-        value: 2,
+        value: 3,
       },
     ],
   },
@@ -255,7 +291,7 @@ export const NPCCards = {
   chef: {
     name: 'Chef',
     category: CardCategory.NPC,
-    health: 5,
+    health: 4,
     effects: [
       {
         category: CardEffectCategory.GainCardToHand,
@@ -268,6 +304,25 @@ export const NPCCards = {
         kind: CardEffectKind.Basic,
         value: 1,
         gainedCardId: 'ironPan',
+      },
+    ],
+  },
+  dietician: {
+    name: 'Dietician',
+    category: CardCategory.NPC,
+    health: 2,
+    effects: [
+      {
+        category: CardEffectCategory.GainCardToHand,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'apple',
+      },
+      {
+        category: CardEffectCategory.GainCardToHand,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'multivitamins',
       },
     ],
   },

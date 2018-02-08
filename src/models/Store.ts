@@ -301,26 +301,28 @@ export const Store = types
             break;
           default:
             // Check if it's possible to fulfill mandatory effect's number of cards to resolve
-            // Add up the total cards that need to be resolved by the mandatory effects
-            const mandatoryEffectsNumCardsToResolve = card.effects
-              .filter(
-                (_: InteractiveCardEffectSnapshotType) =>
-                  _.kind === CardEffectKind.Interactive &&
-                  _.resolveType === InteractiveCardEffectResolveType.Mandatory
-              )
-              .map(
-                (_: InteractiveCardEffectSnapshotType) => _.numCardsToResolve
-              )
-              .reduce((sum, currentValue) => sum + currentValue, 0);
-
-            // If there aren't enough unplayed cards to fulfill the effect, then we don't process it
+            // TODO: Currently only checks the first effect... we need to iterate through the
+            // card's effects one at a time and account for card draw effects that would increase
+            // the number of playable cards
             if (
-              mandatoryEffectsNumCardsToResolve >
-              self.currentPlayer.hand.cardStack.unplayedCards.length
+              card.effects[0] &&
+              card.effects[0].kind === CardEffectKind.Interactive
             ) {
-              card.isPlayed = false;
-              return;
+              const {
+                resolveType,
+                numCardsToResolve,
+              }: InteractiveCardEffectSnapshotType = card.effects[0];
+              // If there aren't enough unplayed cards to fulfill the effect, then we don't process it
+              if (
+                resolveType === InteractiveCardEffectResolveType.Mandatory &&
+                numCardsToResolve >
+                  self.currentPlayer.hand.cardStack.unplayedCards.length
+              ) {
+                card.isPlayed = false;
+                return;
+              }
             }
+
             processCardEffects(card, card.effects);
             break;
         }
