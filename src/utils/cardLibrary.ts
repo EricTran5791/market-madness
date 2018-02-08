@@ -141,6 +141,25 @@ export const ItemCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
+  portableFurnace: {
+    name: 'Portable Furnace',
+    category: CardCategory.Item,
+    cost: 4,
+    effects: [
+      {
+        category: InteractiveCardEffectCategory.MandatoryTrash,
+        kind: CardEffectKind.Interactive,
+        numCardsToResolve: 2,
+        resolveType: InteractiveCardEffectResolveType.Mandatory,
+      },
+      {
+        category: CardEffectCategory.GainCardToHand,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'gem',
+      },
+    ],
+  },
   shoppingBasket: {
     name: 'Shopping Basket',
     category: CardCategory.Item,

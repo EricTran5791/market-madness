@@ -10,6 +10,7 @@ import {
   InteractiveCardEffectSnapshotType,
   InteractiveCardEffectCategory,
   InteractiveCardEffectModelType,
+  InteractiveCardEffectResolveType,
 } from '../models/CardEffect';
 import { CardModelType, CardCategory } from '../models/Card';
 import { reaction } from 'mobx';
@@ -198,19 +199,40 @@ export const Store = types
                   if (status === ActiveCardEffectStatus.Completed) {
                     const cardsToResolve =
                       self.gameState.activeCardEffect.cardsToResolve;
-                    if (cardsToResolve.length > 0) {
-                      // Discard each card
-                      cardsToResolve.forEach(_ => {
-                        self.currentPlayer.discardCard(_);
-                      });
-                      self.gameState.addGameLogEntry(
-                        GameLogEntryCategory.Discard,
-                        {
-                          cardName: card.name,
-                          targets: cardsToResolve.map(_ => _.name),
-                        }
-                      );
-                    }
+                    // Discard each card
+                    cardsToResolve.forEach(_ => {
+                      self.currentPlayer.discardCard(_);
+                    });
+                    self.gameState.addGameLogEntry(
+                      GameLogEntryCategory.Discard,
+                      {
+                        cardName: card.name,
+                        targets: cardsToResolve.map(_ => _.name),
+                      }
+                    );
+                    disposer(); // Unsubscribe
+                    resolve();
+                  }
+                }
+              );
+              return;
+            }
+            case InteractiveCardEffectCategory.MandatoryTrash: {
+              // Subscribe to the card refs to resolve.
+              const disposer = reaction(
+                () => self.gameState.activeCardEffect.status,
+                status => {
+                  if (status === ActiveCardEffectStatus.Completed) {
+                    const cardsToResolve =
+                      self.gameState.activeCardEffect.cardsToResolve;
+                    // Trash each card
+                    cardsToResolve.forEach(_ => {
+                      self.currentPlayer.hand.trashCard(_);
+                    });
+                    self.gameState.addGameLogEntry(GameLogEntryCategory.Trash, {
+                      cardName: card.name,
+                      targets: cardsToResolve.map(_ => _.name),
+                    });
                     disposer(); // Unsubscribe
                     resolve();
                   }
@@ -264,6 +286,27 @@ export const Store = types
             self.currentPlayer.hand.increaseMoney(card.money);
             break;
           default:
+            // Check if it's possible to fulfill mandatory effect's number of cards to resolve
+            // Add up the total cards that need to be resolved by the mandatory effects
+            const mandatoryEffectsNumCardsToResolve = card.effects
+              .filter(
+                (_: InteractiveCardEffectSnapshotType) =>
+                  _.kind === CardEffectKind.Interactive &&
+                  _.resolveType === InteractiveCardEffectResolveType.Mandatory
+              )
+              .map(
+                (_: InteractiveCardEffectSnapshotType) => _.numCardsToResolve
+              )
+              .reduce((sum, currentValue) => sum + currentValue, 0);
+
+            // If there aren't enough unplayed cards to fulfill the effect, then we don't process it
+            if (
+              mandatoryEffectsNumCardsToResolve >
+              self.currentPlayer.hand.cardStack.unplayedCards.length
+            ) {
+              card.isPlayed = false;
+              return;
+            }
             processCardEffects(card, card.effects);
             break;
         }

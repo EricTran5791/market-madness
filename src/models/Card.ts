@@ -85,6 +85,8 @@ export const Card = types
                 return `Trash up to ${numCardsToResolve} cards`;
               case InteractiveCardEffectCategory.MandatoryDiscard:
                 return `Discard ${numCardsToResolve} cards`;
+              case InteractiveCardEffectCategory.MandatoryTrash:
+                return `Trash ${numCardsToResolve} cards`;
               default:
                 return '';
             }
