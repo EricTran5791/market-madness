@@ -115,6 +115,20 @@ export const Store = types
             case CardEffectCategory.GainAttack:
               self.currentPlayer.hand.increaseAttack(value);
               break;
+            case CardEffectCategory.GainCardToDiscardPile:
+              self.gameState.addGameLogEntry(
+                GameLogEntryCategory.GainCardToDiscardPile,
+                {
+                  gainedCardName: gainedCardId
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, (str: string) => {
+                      return str.toUpperCase();
+                    }),
+                  value: value,
+                }
+              );
+              self.currentPlayer.discardPile.add(printCardById(gainedCardId));
+              break;
             case CardEffectCategory.GainCardToHand:
               self.gameState.addGameLogEntry(
                 GameLogEntryCategory.GainCardToHand,

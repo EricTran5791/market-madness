@@ -15,6 +15,7 @@ export enum GameLogEntryCategory {
   DefeatNPC = 'Defeat NPC',
   Discard = 'Discard',
   Draw = 'Draw',
+  GainCardToDiscardPile = 'Gain Card to Discard Pile',
   GainCardToHand = 'Gain Card to Hand',
   GainMoney = 'Gain Money',
   Heal = 'Heal',
@@ -84,6 +85,11 @@ export const GameState = types
           message = `${self.currentPlayer.id} drew ${value} card${
             value > 1 ? 's' : ''
           } with ${cardName}`;
+          break;
+        case GameLogEntryCategory.GainCardToDiscardPile:
+          message = `${
+            self.currentPlayer.id
+          } gained ${value} ${gainedCardName}`;
           break;
         case GameLogEntryCategory.GainCardToHand:
           message = `${

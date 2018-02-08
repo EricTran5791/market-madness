@@ -83,6 +83,19 @@ export const ConsumableCards = {
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
   },
+  spaghetti: {
+    name: 'Spaghetti',
+    category: CardCategory.Consumable,
+    cost: 3,
+    effects: [
+      {
+        category: CardEffectCategory.Heal,
+        kind: CardEffectKind.Basic,
+        value: 3,
+      },
+      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
+    ],
+  },
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Consumable,
@@ -139,6 +152,18 @@ export const ItemCards = {
         numCardsToResolve: 2,
       },
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
+    ],
+  },
+  ironPan: {
+    name: 'Iron Pan',
+    category: CardCategory.Item,
+    cost: 4,
+    effects: [
+      {
+        category: CardEffectCategory.GainAttack,
+        kind: CardEffectKind.Basic,
+        value: 4,
+      },
     ],
   },
   portableFurnace: {
@@ -224,6 +249,38 @@ export const NPCCards = {
         category: CardEffectCategory.GainMoney,
         kind: CardEffectKind.Basic,
         value: 3,
+      },
+    ],
+  },
+  chef: {
+    name: 'Chef',
+    category: CardCategory.NPC,
+    health: 5,
+    effects: [
+      {
+        category: CardEffectCategory.GainCardToHand,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'spaghetti',
+      },
+      {
+        category: CardEffectCategory.GainCardToDiscardPile,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'ironPan',
+      },
+    ],
+  },
+  janitor: {
+    name: 'Janitor',
+    category: CardCategory.NPC,
+    health: 3,
+    effects: [
+      {
+        category: CardEffectCategory.GainCardToDiscardPile,
+        kind: CardEffectKind.Basic,
+        value: 1,
+        gainedCardId: 'wetMop',
       },
     ],
   },

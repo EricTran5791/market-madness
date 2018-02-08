@@ -3,6 +3,7 @@ import { types } from 'mobx-state-tree';
 export enum CardEffectCategory {
   Draw = 'Draw',
   GainAttack = 'Gain Attack',
+  GainCardToDiscardPile = 'Gain Card to Discard Pile',
   GainCardToHand = 'Gain Card to Hand',
   GainMoney = 'Gain Money',
   Heal = 'Heal',

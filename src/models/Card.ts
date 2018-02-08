@@ -54,6 +54,15 @@ export const Card = types
                 return `Draw ${value} card${value > 1 ? 's' : ''}`;
               case CardEffectCategory.GainAttack:
                 return `+${value} Attack`;
+              case CardEffectCategory.GainCardToDiscardPile:
+                // The RegEx converts the camel case id to a spaced and capitalized name
+                // TODO: There was a circular dependency when cardGenerator was imported
+                // due to cardLibrary also importing CardCategory from Card
+                return `Gain ${value} ${gainedCardId
+                  .replace(/([A-Z])/g, ' $1')
+                  .replace(/^./, (str: string) => {
+                    return str.toUpperCase();
+                  })}`;
               case CardEffectCategory.GainCardToHand:
                 // The RegEx converts the camel case id to a spaced and capitalized name
                 // TODO: There was a circular dependency when cardGenerator was imported
