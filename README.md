@@ -8,4 +8,4 @@ Work in progress.
 
 ## Demo
 
-https://frozen-meadow-35841.herokuapp.com/
+https://market-madness-game.herokuapp.com/
