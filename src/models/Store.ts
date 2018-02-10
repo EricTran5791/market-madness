@@ -297,7 +297,7 @@ export const Store = types
       if (!self.gameState.isCardEffectActive) {
         switch (card.category) {
           case CardCategory.Money:
-            self.currentPlayer.hand.increaseMoney(card.money);
+            self.currentPlayer.hand.increaseMoney(card.totalMoneyValue);
             break;
           default:
             // Check if it's possible to fulfill mandatory effect's number of cards to resolve

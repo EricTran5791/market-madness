@@ -296,7 +296,13 @@ export const MoneyCards = {
       kind: CardCostKind.Money,
       value: 1,
     },
-    money: 1,
+    effects: [
+      {
+        category: CardEffectCategory.GainMoney,
+        kind: CardEffectKind.Basic,
+        value: 1,
+      },
+    ],
   },
   gem: {
     name: 'Gem',
@@ -305,7 +311,13 @@ export const MoneyCards = {
       kind: CardCostKind.Money,
       value: 3,
     },
-    money: 2,
+    effects: [
+      {
+        category: CardEffectCategory.GainMoney,
+        kind: CardEffectKind.Basic,
+        value: 2,
+      },
+    ],
   },
 };
 

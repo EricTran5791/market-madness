@@ -129,8 +129,8 @@ function CardView({ model, onClick }: Props) {
       isPlayed={model.isPlayed}
     >
       <CardName>{model.name}</CardName>
-      {model.money ? (
-        <CardMoney>{model.money}</CardMoney>
+      {model.category === CardCategory.Money ? (
+        <CardMoney>{model.totalMoneyValue}</CardMoney>
       ) : (
         <CardDescription>{model.description}</CardDescription>
       )}

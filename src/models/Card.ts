@@ -55,10 +55,21 @@ export const Card = types
       ),
       value: types.optional(types.number, 0),
     }),
-    money: types.optional(types.number, 0),
     effects: types.optional(types.array(CardEffectUnion), []),
     isPlayed: types.optional(types.boolean, false),
   })
+  .views(self => ({
+    /** Get the total money value that can be gained by the card. */
+    get totalMoneyValue() {
+      return (
+        0 ||
+        self.effects
+          .filter(_ => _.category === CardEffectCategory.GainMoney)
+          .map((_: BasicCardEffectSnapshotType) => _.value)
+          .reduce((sum, currentValue) => sum + currentValue, 0)
+      );
+    },
+  }))
   .actions(self => ({
     afterCreate() {
       if (self.description.length > 0 || self.effects.length === 0) {
@@ -163,7 +174,7 @@ export const CardStack = types
     },
     get totalMoney() {
       return self.cards
-        .map(card => card.money)
+        .map(card => card.totalMoneyValue)
         .reduce((sum, currentValue) => sum + currentValue, 0);
     },
     get unplayedCards() {
