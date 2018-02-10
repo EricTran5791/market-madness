@@ -5,9 +5,12 @@ import {
   CardCategory,
   CardSubcategory,
   initialCardModelSnapshot,
+  CardCostKind,
 } from '../models/Card';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { Slider } from 'office-ui-fabric-react/lib/Slider';
+
 import { initializeIcons } from '@uifabric/icons';
 
 initializeIcons();
@@ -32,6 +35,23 @@ const Title = styled.div`
   font-family: 'Acme';
   font-size: 24px;
   margin-bottom: 16px;
+`;
+
+const ControlContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Label = styled.label`
+  padding: 5px 0;
+`;
+
+const CardCostContainer = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 16px;
+  margin: 16px 0;
 `;
 
 const TextFieldContainer = styled.div`
@@ -71,7 +91,7 @@ class CardEditor extends React.Component<object, State> {
 
           <Dropdown
             label="Category"
-            defaultSelectedKey={this.state.currentCard.category}
+            selectedKey={this.state.currentCard.category}
             options={Object.keys(CardCategory).map(key => {
               return { key: CardCategory[key], text: CardCategory[key] };
             })}
@@ -127,6 +147,38 @@ class CardEditor extends React.Component<object, State> {
               this.updateCurrentCard({ description: value });
             }}
           />
+
+          <CardCostContainer>
+            <Dropdown
+              label="Card Cost Kind"
+              selectedKey={this.state.currentCard.cost.kind}
+              options={Object.keys(CardCostKind).map(key => {
+                return { key: CardCostKind[key], text: CardCostKind[key] };
+              })}
+              onChanged={({ text }: IDropdownOption) => {
+                this.updateCurrentCard({
+                  cost: { ...this.state.currentCard.cost, kind: text },
+                });
+              }}
+            />
+            <ControlContainer>
+              <Label>Card Cost Value</Label>
+              <Slider
+                value={this.state.currentCard.cost.value}
+                min={0}
+                max={10}
+                step={1}
+                onChange={value => {
+                  this.updateCurrentCard({
+                    cost: {
+                      ...this.state.currentCard.cost,
+                      value,
+                    },
+                  });
+                }}
+              />
+            </ControlContainer>
+          </CardCostContainer>
         </CardEditorSection>
 
         <CardEditorSection>
