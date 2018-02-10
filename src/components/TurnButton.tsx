@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { StoreType } from '../models/Store';
-import { withProps } from '../withProps';
+import { withProps } from '../types/withProps';
 import { observer, inject } from 'mobx-react';
 import { GamePhase } from '../models/GameState';
 

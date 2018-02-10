@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { StoreType } from '../models/Store';
-import { withProps } from '../withProps';
+import { withProps } from '../types/withProps';
 import { observer, inject } from 'mobx-react';
 import { intercept } from 'mobx';
 import { ScalarNode } from 'mobx-state-tree/dist/internal';

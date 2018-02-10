@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { CardModelType, CardCategory } from '../models/Card';
-import { withProps } from '../withProps';
+import { withProps } from '../types/withProps';
 
 interface Props {
   model: CardModelType;
