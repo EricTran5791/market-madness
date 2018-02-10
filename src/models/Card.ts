@@ -18,6 +18,8 @@ export enum CardCategory {
 
 export enum CardSubcategory {
   Food = 'Food',
+  SportsEquipment = 'Sports Equipment',
+  Tool = 'Tool',
 }
 
 export enum CardCostKind {

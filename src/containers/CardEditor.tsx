@@ -1,9 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { CardModelSnapshotType, CardCategory } from '../models/Card';
+import {
+  CardModelSnapshotType,
+  CardCategory,
+  CardSubcategory,
+  initialCardModelSnapshot,
+} from '../models/Card';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
-import { ISelectableOption } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
+import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { initializeIcons } from '@uifabric/icons';
+
+initializeIcons();
 
 interface State {
   currentCard: CardModelSnapshotType;
@@ -37,7 +44,9 @@ const TextFieldContainer = styled.div`
 class CardEditor extends React.Component<object, State> {
   componentWillMount() {
     this.setState({
-      currentCard: {},
+      currentCard: {
+        ...initialCardModelSnapshot,
+      },
     });
   }
   updateCurrentCard(card: CardModelSnapshotType) {
@@ -62,12 +71,53 @@ class CardEditor extends React.Component<object, State> {
 
           <Dropdown
             label="Category"
-            options={Object.keys(CardCategory).map((key, i) => {
-              const category = CardCategory[key];
-              return { key: i, text: category };
+            defaultSelectedKey={this.state.currentCard.category}
+            options={Object.keys(CardCategory).map(key => {
+              return { key: CardCategory[key], text: CardCategory[key] };
             })}
-            onChanged={({ text }: ISelectableOption) => {
+            onChanged={({ text }: IDropdownOption) => {
               this.updateCurrentCard({ category: text });
+            }}
+          />
+
+          <Dropdown
+            label="Subcategories"
+            multiSelect
+            options={Object.keys(CardSubcategory)
+              .map(key => {
+                return {
+                  key: CardSubcategory[key],
+                  text: CardSubcategory[key],
+                };
+              })
+              .sort()}
+            onChanged={(option: IDropdownOption) => {
+              const subcategories: CardSubcategory[] = this.state.currentCard
+                .subcategories;
+              if (option.selected) {
+                this.updateCurrentCard({
+                  subcategories: [
+                    ...subcategories,
+                    option.text as CardSubcategory,
+                  ].sort(),
+                });
+              } else {
+                this.updateCurrentCard({
+                  subcategories: subcategories
+                    .filter(_ => _ !== option.text)
+                    .sort(),
+                });
+              }
+            }}
+            onRenderTitle={(options: IDropdownOption[]) => {
+              return (
+                <>
+                  {options
+                    .map(_ => _.text)
+                    .sort()
+                    .join(', ')}
+                </>
+              );
             }}
           />
 
@@ -85,6 +135,7 @@ class CardEditor extends React.Component<object, State> {
             <TextField
               multiline
               autoAdjustHeight
+              readOnly
               value={JSON.stringify(this.state.currentCard, undefined, 2)}
             />
           </TextFieldContainer>
