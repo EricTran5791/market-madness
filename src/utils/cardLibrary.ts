@@ -1,4 +1,4 @@
-import { CardCategory } from '../models/Card';
+import { CardCategory, CardSubcategory } from '../models/Card';
 import {
   CardEffectCategory,
   InteractiveCardEffectCategory,
@@ -60,6 +60,7 @@ export const ConsumableCards = {
   apple: {
     name: 'Apple',
     category: CardCategory.Consumable,
+    subcategories: [CardSubcategory.Food],
     cost: 1,
     effects: [
       {
@@ -73,6 +74,7 @@ export const ConsumableCards = {
   bread: {
     name: 'Bread',
     category: CardCategory.Consumable,
+    subcategories: [CardSubcategory.Food],
     cost: 2,
     effects: [
       {
@@ -86,6 +88,7 @@ export const ConsumableCards = {
   energyDrink: {
     name: 'Energy Drink',
     category: CardCategory.Consumable,
+    subcategories: [CardSubcategory.Food],
     cost: 2,
     effects: [
       {
@@ -104,6 +107,7 @@ export const ConsumableCards = {
   spaghetti: {
     name: 'Spaghetti',
     category: CardCategory.Consumable,
+    subcategories: [CardSubcategory.Food],
     cost: 3,
     effects: [
       {
@@ -130,6 +134,7 @@ export const ConsumableCards = {
   verySpicyPepper: {
     name: 'Very Spicy Pepper',
     category: CardCategory.Consumable,
+    subcategories: [CardSubcategory.Food],
     cost: 5,
     effects: [
       {

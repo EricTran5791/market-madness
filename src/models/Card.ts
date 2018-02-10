@@ -16,6 +16,10 @@ export enum CardCategory {
   NPC = 'NPC',
 }
 
+export enum CardSubcategory {
+  Food = 'Food',
+}
+
 export const Card = types
   .model({
     id: types.identifier(types.string),
@@ -23,6 +27,15 @@ export const Card = types
     category: types.enumeration(
       'Category',
       Object.keys(CardCategory).map(key => CardCategory[key])
+    ),
+    subcategories: types.optional(
+      types.array(
+        types.enumeration(
+          'Subcategory',
+          Object.keys(CardSubcategory).map(key => CardSubcategory[key])
+        )
+      ),
+      []
     ),
     description: types.optional(types.string, ''),
     cost: types.optional(types.number, 0),
