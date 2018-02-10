@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { CardModelType, CardCategory } from '../models/Card';
+import { CardModelType, CardCategory, CardCostKind } from '../models/Card';
 import { withProps } from '../types/withProps';
 
 interface Props {
@@ -135,10 +135,10 @@ function CardView({ model, onClick }: Props) {
         <CardDescription>{model.description}</CardDescription>
       )}
       <CardFooter>
-        {model.health ? (
-          <CardHealth>{model.health}</CardHealth>
+        {model.cost.kind === CardCostKind.Health ? (
+          <CardHealth>{model.cost.value}</CardHealth>
         ) : (
-          <CardCost>{model.cost}</CardCost>
+          <CardCost>{model.cost.value}</CardCost>
         )}
         {model.category}
       </CardFooter>

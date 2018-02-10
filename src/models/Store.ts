@@ -57,7 +57,7 @@ export const Store = types
     }
 
     function buyCard(card: CardModelType, shouldClone?: boolean) {
-      if (self.currentPlayer.hand.spendMoney(card.cost)) {
+      if (self.currentPlayer.hand.spendMoney(card.cost.value)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.Buy, {
           cardName: card.name,
         });
@@ -334,7 +334,7 @@ export const Store = types
     }
 
     function attackNPC(card: CardModelType) {
-      if (self.currentPlayer.hand.spendAttack(card.health)) {
+      if (self.currentPlayer.hand.spendAttack(card.cost.value)) {
         self.gameState.addGameLogEntry(GameLogEntryCategory.DefeatNPC, {
           cardName: card.name,
         });

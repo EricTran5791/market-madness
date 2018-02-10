@@ -1,4 +1,4 @@
-import { CardCategory, CardSubcategory } from '../models/Card';
+import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
 import {
   CardEffectCategory,
   InteractiveCardEffectCategory,
@@ -10,7 +10,10 @@ export const ActionCards = {
   dropShipment: {
     name: 'Drop Shipment',
     category: CardCategory.Action,
-    cost: 1,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 1,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -27,7 +30,10 @@ export const ActionCards = {
   exchangeGoods: {
     name: 'Exchange Goods',
     category: CardCategory.Action,
-    cost: 2,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.Draw,
@@ -45,7 +51,10 @@ export const ActionCards = {
   expressShipping: {
     name: 'Express Shipping',
     category: CardCategory.Action,
-    cost: 3,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.Draw,
@@ -61,7 +70,10 @@ export const ConsumableCards = {
     name: 'Apple',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
-    cost: 1,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 1,
+    },
     effects: [
       {
         category: CardEffectCategory.Heal,
@@ -75,7 +87,10 @@ export const ConsumableCards = {
     name: 'Bread',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
-    cost: 2,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.Heal,
@@ -89,7 +104,10 @@ export const ConsumableCards = {
     name: 'Energy Drink',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
-    cost: 2,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.Heal,
@@ -108,7 +126,10 @@ export const ConsumableCards = {
     name: 'Spaghetti',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
-    cost: 3,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.Heal,
@@ -121,7 +142,10 @@ export const ConsumableCards = {
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Consumable,
-    cost: 1,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 1,
+    },
     effects: [
       {
         category: CardEffectCategory.IncreaseMaxHealth,
@@ -135,7 +159,10 @@ export const ConsumableCards = {
     name: 'Very Spicy Pepper',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
-    cost: 5,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 5,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -156,7 +183,10 @@ export const ItemCards = {
   basketball: {
     name: 'Basketball',
     category: CardCategory.Item,
-    cost: 3,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -165,27 +195,21 @@ export const ItemCards = {
       },
     ],
   },
-  coatRack: {
-    name: 'Coat Rack',
-    category: CardCategory.Item,
-    cost: 5,
-    effects: [
-      {
-        category: CardEffectCategory.GainAttack,
-        kind: CardEffectKind.Basic,
-        value: 5,
-      },
-    ],
-  },
   fishBones: {
     name: 'Fish Bones',
     category: CardCategory.Item,
-    cost: 0,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 0,
+    },
   },
   garbageBag: {
     name: 'Garbage Bag',
     category: CardCategory.Item,
-    cost: 2,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 2,
+    },
     effects: [
       {
         category: InteractiveCardEffectCategory.OptionalTrash,
@@ -198,7 +222,10 @@ export const ItemCards = {
   ironPan: {
     name: 'Iron Pan',
     category: CardCategory.Item,
-    cost: 4,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 4,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -210,7 +237,10 @@ export const ItemCards = {
   portableFurnace: {
     name: 'Portable Furnace',
     category: CardCategory.Item,
-    cost: 4,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 4,
+    },
     effects: [
       {
         category: InteractiveCardEffectCategory.MandatoryTrash,
@@ -229,7 +259,10 @@ export const ItemCards = {
   shoppingBasket: {
     name: 'Shopping Basket',
     category: CardCategory.Item,
-    cost: 2,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -241,7 +274,10 @@ export const ItemCards = {
   wetMop: {
     name: 'Wet Mop',
     category: CardCategory.Item,
-    cost: 3,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.GainAttack,
@@ -256,13 +292,19 @@ export const MoneyCards = {
   coin: {
     name: 'Coin',
     category: CardCategory.Money,
-    cost: 1,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 1,
+    },
     money: 1,
   },
   gem: {
     name: 'Gem',
     category: CardCategory.Money,
-    cost: 3,
+    cost: {
+      kind: CardCostKind.Money,
+      value: 3,
+    },
     money: 2,
   },
 };
@@ -271,7 +313,10 @@ export const NPCCards = {
   baker: {
     name: 'Baker',
     category: CardCategory.NPC,
-    health: 3,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.GainCardToHand,
@@ -284,7 +329,10 @@ export const NPCCards = {
   businessPerson: {
     name: 'Business Person',
     category: CardCategory.NPC,
-    health: 4,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 4,
+    },
     effects: [
       {
         category: CardEffectCategory.GainMoney,
@@ -296,7 +344,10 @@ export const NPCCards = {
   chef: {
     name: 'Chef',
     category: CardCategory.NPC,
-    health: 4,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 4,
+    },
     effects: [
       {
         category: CardEffectCategory.GainCardToHand,
@@ -315,7 +366,10 @@ export const NPCCards = {
   dietician: {
     name: 'Dietician',
     category: CardCategory.NPC,
-    health: 2,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.GainCardToHand,
@@ -334,7 +388,10 @@ export const NPCCards = {
   janitor: {
     name: 'Janitor',
     category: CardCategory.NPC,
-    health: 3,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 3,
+    },
     effects: [
       {
         category: CardEffectCategory.GainCardToDiscardPile,
@@ -347,7 +404,10 @@ export const NPCCards = {
   postalWorker: {
     name: 'Postal Worker',
     category: CardCategory.NPC,
-    health: 2,
+    cost: {
+      kind: CardCostKind.Health,
+      value: 2,
+    },
     effects: [
       {
         category: CardEffectCategory.Draw,

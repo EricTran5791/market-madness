@@ -20,6 +20,11 @@ export enum CardSubcategory {
   Food = 'Food',
 }
 
+export enum CardCostKind {
+  Money = 'Money',
+  Health = 'Health',
+}
+
 export const Card = types
   .model({
     id: types.identifier(types.string),
@@ -38,11 +43,19 @@ export const Card = types
       []
     ),
     description: types.optional(types.string, ''),
-    cost: types.optional(types.number, 0),
+    cost: types.model('Cost', {
+      kind: types.optional(
+        types.enumeration(
+          'CardCostKind',
+          Object.keys(CardCostKind).map(key => CardCostKind[key])
+        ),
+        CardCostKind.Money
+      ),
+      value: types.optional(types.number, 0),
+    }),
     money: types.optional(types.number, 0),
-    health: types.optional(types.number, 0),
-    isPlayed: types.optional(types.boolean, false),
     effects: types.optional(types.array(CardEffectUnion), []),
+    isPlayed: types.optional(types.boolean, false),
   })
   .actions(self => ({
     afterCreate() {
@@ -125,6 +138,18 @@ export const Card = types
 
 export type CardModelType = typeof Card.Type;
 export type CardModelSnapshotType = typeof Card.SnapshotType;
+
+export const initialCardModelSnapshot: CardModelSnapshotType = {
+  name: '',
+  category: CardCategory.Item,
+  subcategories: [],
+  description: '',
+  cost: {
+    kind: CardCostKind.Money,
+    value: 0,
+  },
+  effects: [],
+};
 
 export const CardStack = types
   .model({
