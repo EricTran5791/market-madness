@@ -12,6 +12,7 @@ import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
 
 import { initializeIcons } from '@uifabric/icons';
+import CardEffectsDetailsList from '../components/CardEffectsDetailsList';
 
 initializeIcons();
 
@@ -179,6 +180,11 @@ class CardEditor extends React.Component<object, State> {
               />
             </ControlContainer>
           </CardCostContainer>
+
+          <ControlContainer>
+            <Label>Card Effects</Label>
+            <CardEffectsDetailsList items={this.state.currentCard.effects} />
+          </ControlContainer>
         </CardEditorSection>
 
         <CardEditorSection>
