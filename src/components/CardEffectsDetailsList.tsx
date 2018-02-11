@@ -13,7 +13,8 @@ export type MoveEffectDirection = 'Up' | 'Down';
 
 interface Props {
   items: CardEffect[];
-  onEdit: (index: number) => void;
+  onAdd: () => void;
+  onUpdate: (index: number) => void;
   onRemove: (index: number) => void;
   onMove: (index: number, direction: MoveEffectDirection) => void;
 }
@@ -35,7 +36,7 @@ const StyledCardEffectsDetailsList = styled.div`
 
 const ControlsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 32px 32px;
+  grid-template-columns: 1fr 1fr 1fr 32px 32px;
   grid-gap: 16px;
 `;
 
@@ -107,8 +108,12 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
     });
   }
 
-  editCardEffect(index: number) {
-    this.props.onEdit(index);
+  addCardEffect() {
+    this.props.onAdd();
+  }
+
+  updateCardEffect(index: number) {
+    this.props.onUpdate(index);
   }
 
   removeCardEffect(index: number) {
@@ -131,10 +136,18 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
         />
         <ControlsContainer>
           <DefaultButton
-            text="Edit"
+            text="Add"
+            primary
+            iconProps={{ iconName: 'Add' }}
+            onClick={() => {
+              this.addCardEffect();
+            }}
+          />
+          <DefaultButton
+            text="Update"
             disabled={!this.state.selectedItem}
             onClick={() => {
-              this.editCardEffect(this.state.selectedItem!.index);
+              this.updateCardEffect(this.state.selectedItem!.index);
             }}
           />
           <DefaultButton

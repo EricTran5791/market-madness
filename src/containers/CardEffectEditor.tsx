@@ -13,13 +13,22 @@ import { Title, ControlContainer, Label } from './CardEditor';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 interface Props {
   cardEffect: CardEffect | undefined;
+  cardEffectIndex: number | undefined;
+  onCancel: () => void;
+  onAdd: (effect: CardEffect) => void;
+  onUpdate: (effect: CardEffect, index: number) => void;
 }
+
+type EditMode = 'Add' | 'Update';
 
 interface State {
   cardEffect: CardEffect;
+  /** The edit mode will be 'Add' if no card effect was passed in, otherwise it will be 'Update' */
+  editMode: EditMode;
 }
 
 const StyledCardEffectEditor = styled.div`
@@ -27,21 +36,53 @@ const StyledCardEffectEditor = styled.div`
   flex-direction: column;
   min-width: 600px;
   min-height: 450px;
-  padding: 32px;
+  padding: 24px;
+`;
+
+const FooterControls = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: auto;
+`;
+
+const ControlsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 120px 130px;
+  grid-gap: 8px;
 `;
 
 class CardEffectEditor extends React.Component<Props, State> {
   componentWillMount() {
     this.setState({
       cardEffect: this.props.cardEffect || initialBasicCardEffect,
+      editMode: this.props.cardEffect ? 'Update' : 'Add',
     });
+  }
+
+  onCancel() {
+    this.props.onCancel();
+  }
+
+  onAdd(effect: CardEffect) {
+    this.props.onAdd(effect);
+  }
+
+  onEdit(effect: CardEffect, index: number = -1) {
+    if (index === -1) {
+      console.error(
+        'Error: Unable to update a card effect without a corresponding index.'
+      );
+    }
+    this.props.onUpdate(effect, index);
   }
 
   render() {
     return (
       <StyledCardEffectEditor>
         <Title>
-          {this.props.cardEffect ? 'Edit Card Effect' : 'New Card Effect'}
+          {this.state.editMode === 'Add'
+            ? 'Add Card Effect'
+            : 'Update Card Effect'}
         </Title>
         <Dropdown
           label="Kind"
@@ -180,6 +221,28 @@ class CardEffectEditor extends React.Component<Props, State> {
             />
           </ControlContainer>
         )}
+        <FooterControls>
+          <ControlsGrid>
+            <DefaultButton
+              text="Cancel"
+              onClick={() => {
+                this.onCancel();
+              }}
+            />
+            <DefaultButton
+              primary
+              text={this.state.editMode === 'Add' ? 'Add' : 'Update'}
+              onClick={() => {
+                this.state.editMode === 'Add'
+                  ? this.onAdd(this.state.cardEffect)
+                  : this.onEdit(
+                      this.state.cardEffect,
+                      this.props.cardEffectIndex
+                    );
+              }}
+            />
+          </ControlsGrid>
+        </FooterControls>
       </StyledCardEffectEditor>
     );
   }

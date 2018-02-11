@@ -18,6 +18,7 @@ import CardEffectsDetailsList, {
 } from '../components/CardEffectsDetailsList';
 import CardEffectEditor from './CardEffectEditor';
 import { CardEffect } from '../types/cardEffect.types';
+import { List } from 'immutable';
 
 initializeIcons();
 
@@ -26,6 +27,7 @@ interface State {
   cardEffectEditor: {
     isOpen: boolean;
     effect: CardEffect | undefined;
+    index: number;
   };
 }
 
@@ -80,11 +82,19 @@ class CardEditor extends React.Component<object, State> {
       cardEffectEditor: {
         isOpen: false,
         effect: undefined,
+        index: -1,
       },
     });
-    this.editCardEffect = this.editCardEffect.bind(this);
-    this.removeCardEffect = this.removeCardEffect.bind(this);
+    this.openAddCardEffectEditor = this.openAddCardEffectEditor.bind(this);
+    this.openUpdateCardEffectEditor = this.openUpdateCardEffectEditor.bind(
+      this
+    );
+    this.closeCardEffectEditor = this.closeCardEffectEditor.bind(this);
     this.changeCardEffectOrder = this.changeCardEffectOrder.bind(this);
+
+    this.addCardEffect = this.addCardEffect.bind(this);
+    this.updateCardEffect = this.updateCardEffect.bind(this);
+    this.removeCardEffect = this.removeCardEffect.bind(this);
   }
 
   updateCurrentCard(card: Partial<Card>) {
@@ -96,13 +106,50 @@ class CardEditor extends React.Component<object, State> {
     });
   }
 
-  editCardEffect(index: number) {
+  openAddCardEffectEditor() {
+    this.setState({
+      cardEffectEditor: {
+        isOpen: true,
+        effect: undefined,
+        index: -1,
+      },
+    });
+  }
+
+  openUpdateCardEffectEditor(index: number) {
     this.setState({
       cardEffectEditor: {
         isOpen: true,
         effect: this.state.currentCard.effects.find((_, i) => i === index),
+        index,
       },
     });
+  }
+
+  closeCardEffectEditor() {
+    this.setState({
+      cardEffectEditor: {
+        isOpen: false,
+        effect: undefined,
+        index: -1,
+      },
+    });
+  }
+
+  addCardEffect(effect: CardEffect) {
+    this.updateCurrentCard({
+      effects: this.state.currentCard.effects.push(effect),
+    });
+    this.closeCardEffectEditor();
+  }
+
+  updateCardEffect(effect: CardEffect, index: number) {
+    this.updateCurrentCard({
+      effects: List<CardEffect>(
+        this.state.currentCard.effects.splice(index, 1, effect)
+      ),
+    });
+    this.closeCardEffectEditor();
   }
 
   removeCardEffect(index: number) {
@@ -234,7 +281,8 @@ class CardEditor extends React.Component<object, State> {
             <Label>Card Effects</Label>
             <CardEffectsDetailsList
               items={this.state.currentCard.effects.toArray()}
-              onEdit={this.editCardEffect}
+              onAdd={this.openAddCardEffectEditor}
+              onUpdate={this.openUpdateCardEffectEditor}
               onRemove={this.removeCardEffect}
               onMove={this.changeCardEffectOrder}
             />
@@ -257,12 +305,18 @@ class CardEditor extends React.Component<object, State> {
           isOpen={this.state.cardEffectEditor.isOpen}
           onDismiss={() =>
             this.setState({
-              cardEffectEditor: { isOpen: false, effect: undefined },
+              cardEffectEditor: { isOpen: false, effect: undefined, index: -1 },
             })
           }
         >
           {this.state.cardEffectEditor.isOpen && (
-            <CardEffectEditor cardEffect={this.state.cardEffectEditor.effect} />
+            <CardEffectEditor
+              cardEffect={this.state.cardEffectEditor.effect}
+              cardEffectIndex={this.state.cardEffectEditor.index}
+              onCancel={this.closeCardEffectEditor}
+              onAdd={this.addCardEffect}
+              onUpdate={this.updateCardEffect}
+            />
           )}
         </Modal>
       </StyledCardEditor>
