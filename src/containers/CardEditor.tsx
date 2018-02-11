@@ -1,12 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  CardModelSnapshotType,
-  CardCategory,
-  CardSubcategory,
-  initialCardModelSnapshot,
-  CardCostKind,
-} from '../models/Card';
+import { Card, initialCard } from '../types/cardTypes';
+import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
@@ -17,7 +12,7 @@ import CardEffectsDetailsList from '../components/CardEffectsDetailsList';
 initializeIcons();
 
 interface State {
-  currentCard: CardModelSnapshotType;
+  currentCard: Card;
 }
 
 const StyledCardEditor = styled.div`
@@ -66,11 +61,12 @@ class CardEditor extends React.Component<object, State> {
   componentWillMount() {
     this.setState({
       currentCard: {
-        ...initialCardModelSnapshot,
+        ...initialCard,
       },
     });
+    this.removeCardEffect = this.removeCardEffect.bind(this);
   }
-  updateCurrentCard(card: CardModelSnapshotType) {
+  updateCurrentCard(card: Partial<Card>) {
     this.setState({
       currentCard: {
         ...this.state.currentCard,
@@ -78,6 +74,12 @@ class CardEditor extends React.Component<object, State> {
       },
     });
   }
+  removeCardEffect(index: number) {
+    this.updateCurrentCard({
+      effects: this.state.currentCard.effects.filter((_, i) => i !== index),
+    });
+  }
+
   render() {
     return (
       <StyledCardEditor>
@@ -94,10 +96,10 @@ class CardEditor extends React.Component<object, State> {
             label="Category"
             selectedKey={this.state.currentCard.category}
             options={Object.keys(CardCategory).map(key => {
-              return { key: CardCategory[key], text: CardCategory[key] };
+              return { key, text: CardCategory[key] };
             })}
-            onChanged={({ text }: IDropdownOption) => {
-              this.updateCurrentCard({ category: text });
+            onChanged={({ key }: IDropdownOption) => {
+              this.updateCurrentCard({ category: CardCategory[key] });
             }}
           />
 
@@ -107,25 +109,25 @@ class CardEditor extends React.Component<object, State> {
             options={Object.keys(CardSubcategory)
               .map(key => {
                 return {
-                  key: CardSubcategory[key],
+                  key,
                   text: CardSubcategory[key],
                 };
               })
               .sort()}
-            onChanged={(option: IDropdownOption) => {
+            onChanged={({ key, selected }: IDropdownOption) => {
               const subcategories: CardSubcategory[] = this.state.currentCard
                 .subcategories;
-              if (option.selected) {
+              if (selected) {
                 this.updateCurrentCard({
                   subcategories: [
                     ...subcategories,
-                    option.text as CardSubcategory,
+                    CardSubcategory[key],
                   ].sort(),
                 });
               } else {
                 this.updateCurrentCard({
                   subcategories: subcategories
-                    .filter(_ => _ !== option.text)
+                    .filter(_ => _ !== CardSubcategory[key])
                     .sort(),
                 });
               }
@@ -154,11 +156,14 @@ class CardEditor extends React.Component<object, State> {
               label="Card Cost Kind"
               selectedKey={this.state.currentCard.cost.kind}
               options={Object.keys(CardCostKind).map(key => {
-                return { key: CardCostKind[key], text: CardCostKind[key] };
+                return { key, text: CardCostKind[key] };
               })}
-              onChanged={({ text }: IDropdownOption) => {
+              onChanged={({ key }: IDropdownOption) => {
                 this.updateCurrentCard({
-                  cost: { ...this.state.currentCard.cost, kind: text },
+                  cost: {
+                    ...this.state.currentCard.cost,
+                    kind: CardCostKind[key],
+                  },
                 });
               }}
             />
@@ -183,7 +188,10 @@ class CardEditor extends React.Component<object, State> {
 
           <ControlContainer>
             <Label>Card Effects</Label>
-            <CardEffectsDetailsList items={this.state.currentCard.effects} />
+            <CardEffectsDetailsList
+              items={this.state.currentCard.effects}
+              onRemove={this.removeCardEffect}
+            />
           </ControlContainer>
         </CardEditorSection>
 

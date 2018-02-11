@@ -152,18 +152,6 @@ export const Card = types
 export type CardModelType = typeof Card.Type;
 export type CardModelSnapshotType = typeof Card.SnapshotType;
 
-export const initialCardModelSnapshot: CardModelSnapshotType = {
-  name: '',
-  category: CardCategory.Item,
-  subcategories: [],
-  description: '',
-  cost: {
-    kind: CardCostKind.Money,
-    value: 0,
-  },
-  effects: [],
-};
-
 export const CardStack = types
   .model({
     cards: types.array(Card),
