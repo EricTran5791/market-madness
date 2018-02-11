@@ -7,12 +7,15 @@ import {
   SelectionMode,
   Selection,
 } from 'office-ui-fabric-react/lib/DetailsList';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
+
+export type MoveEffectDirection = 'Up' | 'Down';
 
 interface Props {
   items: CardEffect[];
   onEdit: (index: number) => void;
   onRemove: (index: number) => void;
+  onMove: (index: number, direction: MoveEffectDirection) => void;
 }
 
 type SelectedItem = {
@@ -32,7 +35,7 @@ const StyledCardEffectsDetailsList = styled.div`
 
 const ControlsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 32px 32px;
   grid-gap: 16px;
 `;
 
@@ -112,6 +115,10 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
     this.props.onRemove(index);
   }
 
+  moveCardEffect(index: number, direction: MoveEffectDirection) {
+    this.props.onMove(index, direction);
+  }
+
   render() {
     return (
       <StyledCardEffectsDetailsList>
@@ -135,6 +142,32 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
             disabled={!this.state.selectedItem}
             onClick={() => {
               this.removeCardEffect(this.state.selectedItem!.index);
+            }}
+          />
+
+          <IconButton
+            disabled={
+              !this.state.selectedItem ||
+              (this.state.selectedItem && this.state.selectedItem.index === 0)
+            }
+            iconProps={{ iconName: 'CaretSolidUp' }}
+            primary
+            title="Move order up"
+            onClick={() => {
+              this.moveCardEffect(this.state.selectedItem!.index, 'Up');
+            }}
+          />
+          <IconButton
+            disabled={
+              !this.state.selectedItem ||
+              (this.state.selectedItem &&
+                this.state.selectedItem.index === this.props.items.length - 1)
+            }
+            iconProps={{ iconName: 'CaretSolidDown' }}
+            primary
+            title="Move order down"
+            onClick={() => {
+              this.moveCardEffect(this.state.selectedItem!.index, 'Down');
             }}
           />
         </ControlsContainer>

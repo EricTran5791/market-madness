@@ -13,7 +13,9 @@ import { Slider } from 'office-ui-fabric-react/lib/Slider';
 import { Modal } from 'office-ui-fabric-react/lib/Modal';
 
 import { initializeIcons } from '@uifabric/icons';
-import CardEffectsDetailsList from '../components/CardEffectsDetailsList';
+import CardEffectsDetailsList, {
+  MoveEffectDirection,
+} from '../components/CardEffectsDetailsList';
 import CardEffectEditor from './CardEffectEditor';
 import { CardEffect } from '../types/cardEffect.types';
 
@@ -82,6 +84,7 @@ class CardEditor extends React.Component<object, State> {
     });
     this.editCardEffect = this.editCardEffect.bind(this);
     this.removeCardEffect = this.removeCardEffect.bind(this);
+    this.changeCardEffectOrder = this.changeCardEffectOrder.bind(this);
   }
 
   updateCurrentCard(card: Partial<Card>) {
@@ -104,7 +107,20 @@ class CardEditor extends React.Component<object, State> {
 
   removeCardEffect(index: number) {
     this.updateCurrentCard({
-      effects: this.state.currentCard.effects.filter((_, i) => i !== index),
+      effects: this.state.currentCard.effects.remove(index),
+    });
+  }
+
+  /** Remove the effect at index i from the list, then re-insert it at a new index position. */
+  changeCardEffectOrder(index: number, direction: MoveEffectDirection) {
+    const movedEffect = this.state.currentCard.effects.find(
+      (_, i) => i === index
+    );
+    const newIndex = index + (direction === 'Up' ? -1 : 1);
+    this.updateCurrentCard({
+      effects: this.state.currentCard.effects
+        .remove(index)
+        .insert(newIndex, movedEffect),
     });
   }
 
@@ -217,9 +233,10 @@ class CardEditor extends React.Component<object, State> {
           <ControlContainer>
             <Label>Card Effects</Label>
             <CardEffectsDetailsList
-              items={this.state.currentCard.effects}
+              items={this.state.currentCard.effects.toArray()}
               onEdit={this.editCardEffect}
               onRemove={this.removeCardEffect}
+              onMove={this.changeCardEffectOrder}
             />
           </ControlContainer>
         </CardEditorSection>
