@@ -42,7 +42,7 @@ export const initialCard: Card = {
       value: 2,
     },
     {
-      category: InteractiveCardEffectCategory.MandatoryTrash,
+      category: InteractiveCardEffectCategory.Trash,
       kind: CardEffectKind.Interactive,
       numCardsToResolve: 2,
       resolveType: InteractiveCardEffectResolveType.Mandatory,

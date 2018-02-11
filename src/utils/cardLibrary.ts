@@ -41,7 +41,7 @@ export const ActionCards = {
         value: 2,
       },
       {
-        category: InteractiveCardEffectCategory.MandatoryDiscard,
+        category: InteractiveCardEffectCategory.Discard,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
         resolveType: InteractiveCardEffectResolveType.Mandatory,
@@ -212,9 +212,10 @@ export const ItemCards = {
     },
     effects: [
       {
-        category: InteractiveCardEffectCategory.OptionalTrash,
+        category: InteractiveCardEffectCategory.Trash,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
+        resolveType: InteractiveCardEffectResolveType.Optional,
       },
       { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
     ],
@@ -243,7 +244,7 @@ export const ItemCards = {
     },
     effects: [
       {
-        category: InteractiveCardEffectCategory.MandatoryTrash,
+        category: InteractiveCardEffectCategory.Trash,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
         resolveType: InteractiveCardEffectResolveType.Mandatory,

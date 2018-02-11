@@ -6,6 +6,7 @@ import {
   CardEffectCategory,
   InteractiveCardEffectSnapshotType,
   InteractiveCardEffectCategory,
+  InteractiveCardEffectResolveType,
 } from './CardEffect';
 
 export enum CardCategory {
@@ -127,14 +128,17 @@ export const Card = types
             const {
               category,
               numCardsToResolve,
+              resolveType,
             }: InteractiveCardEffectSnapshotType = effect;
             switch (category) {
-              case InteractiveCardEffectCategory.OptionalTrash:
-                return `Trash up to ${numCardsToResolve} cards`;
-              case InteractiveCardEffectCategory.MandatoryDiscard:
+              case InteractiveCardEffectCategory.Discard:
                 return `Discard ${numCardsToResolve} cards`;
-              case InteractiveCardEffectCategory.MandatoryTrash:
-                return `Trash ${numCardsToResolve} cards`;
+              case InteractiveCardEffectCategory.Trash:
+                return `Trash ${
+                  resolveType === InteractiveCardEffectResolveType.Optional
+                    ? 'up to'
+                    : ''
+                } ${numCardsToResolve} cards`;
               default:
                 return '';
             }

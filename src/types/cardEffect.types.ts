@@ -30,7 +30,7 @@ export const initialBasicCardEffect: BasicCardEffect = {
 
 export const initialInteractiveCardEffect: InteractiveCardEffect = {
   kind: CardEffectKind.Interactive,
-  category: InteractiveCardEffectCategory.OptionalTrash,
+  category: InteractiveCardEffectCategory.Trash,
   numCardsToResolve: 0,
   resolveType: InteractiveCardEffectResolveType.Optional,
 };

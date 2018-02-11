@@ -12,9 +12,8 @@ export enum CardEffectCategory {
 }
 
 export enum InteractiveCardEffectCategory {
-  MandatoryDiscard = 'Mandatory Discard',
-  MandatoryTrash = 'Mandatory Trash',
-  OptionalTrash = 'Optional Trash',
+  Discard = 'Discard',
+  Trash = 'Trash',
 }
 
 export enum CardEffectKind {

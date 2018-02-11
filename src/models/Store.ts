@@ -205,7 +205,7 @@ export const Store = types
           );
 
           switch (category) {
-            case InteractiveCardEffectCategory.MandatoryDiscard: {
+            case InteractiveCardEffectCategory.Discard: {
               // Subscribe to the card refs to resolve.
               const disposer = reaction(
                 () => self.gameState.activeCardEffect.status,
@@ -231,7 +231,7 @@ export const Store = types
               );
               return;
             }
-            case InteractiveCardEffectCategory.MandatoryTrash: {
+            case InteractiveCardEffectCategory.Trash: {
               // Subscribe to the card refs to resolve.
               const disposer = reaction(
                 () => self.gameState.activeCardEffect.status,
@@ -247,34 +247,6 @@ export const Store = types
                       cardName: card.name,
                       targets: cardsToResolve.map(_ => _.name),
                     });
-                    disposer(); // Unsubscribe
-                    resolve();
-                  }
-                }
-              );
-              return;
-            }
-            case InteractiveCardEffectCategory.OptionalTrash: {
-              // Subscribe to the card refs to resolve.
-              const disposer = reaction(
-                () => self.gameState.activeCardEffect.status,
-                status => {
-                  if (status === ActiveCardEffectStatus.Completed) {
-                    const cardsToResolve =
-                      self.gameState.activeCardEffect.cardsToResolve;
-                    if (cardsToResolve.length > 0) {
-                      // Trash each card
-                      cardsToResolve.forEach(_ => {
-                        self.currentPlayer.hand.trashCard(_);
-                      });
-                      self.gameState.addGameLogEntry(
-                        GameLogEntryCategory.Trash,
-                        {
-                          cardName: card.name,
-                          targets: cardsToResolve.map(_ => _.name),
-                        }
-                      );
-                    }
                     disposer(); // Unsubscribe
                     resolve();
                   }
