@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { StoreType } from '../models/Store';
 import { observer, inject } from 'mobx-react';
 import { GamePhase } from '../models/GameState';
-import { InteractiveCardEffectResolveType } from '../models/CardEffect';
+import { InteractiveCardEffectResolveType } from '../types/cardEffect.types';
 
 interface Props {
   store?: StoreType;

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { CardEffect, initialBasicCardEffect } from '../types/cardEffect.types';
-import { Title } from './CardEditor';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import {
+  CardEffect,
+  initialBasicCardEffect,
   CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
-} from '../models/CardEffect';
+} from '../types/cardEffect.types';
+import { Title } from './CardEditor';
+import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
 interface Props {
   cardEffect: CardEffect | undefined;

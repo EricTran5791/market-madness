@@ -1,14 +1,11 @@
 import * as React from 'react';
 import CardGrid from '../components/CardGrid';
 import CardView from '../components/CardView';
-import {
-  CardStackModelType,
-  CardModelType,
-  CardCategory,
-} from '../models/Card';
+import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
+import { CardCategory } from '../types/cardTypes';
 
 interface Props {
   store?: StoreType;

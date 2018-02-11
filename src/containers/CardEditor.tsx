@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Card, initialCard } from '../types/cardTypes';
-import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
+import {
+  Card,
+  initialCard,
+  CardCategory,
+  CardSubcategory,
+  CardCostKind,
+} from '../types/cardTypes';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';

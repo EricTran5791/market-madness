@@ -1,11 +1,29 @@
-import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
-import { CardEffect } from './cardEffect.types';
 import {
-  CardEffectCategory,
+  CardEffect,
   CardEffectKind,
+  CardEffectCategory,
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
-} from '../models/CardEffect';
+} from './cardEffect.types';
+
+export enum CardCategory {
+  Action = 'Action',
+  Consumable = 'Consumable',
+  Item = 'Item',
+  Money = 'Money',
+  NPC = 'NPC',
+}
+
+export enum CardSubcategory {
+  Food = 'Food',
+  SportsEquipment = 'Sports Equipment',
+  Tool = 'Tool',
+}
+
+export enum CardCostKind {
+  Money = 'Money',
+  Health = 'Health',
+}
 
 export type Card = {
   name: string;

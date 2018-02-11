@@ -4,18 +4,21 @@ import { Player, PlayerId } from './Player';
 import { Market } from './Market';
 import { Trash } from './Trash';
 import {
-  CardEffectCategory,
-  CardEffectKind,
   BasicCardEffectSnapshotType,
   InteractiveCardEffectSnapshotType,
-  InteractiveCardEffectCategory,
   InteractiveCardEffectModelType,
-  InteractiveCardEffectResolveType,
 } from '../models/CardEffect';
-import { CardModelType, CardCategory } from '../models/Card';
+import { CardModelType } from '../models/Card';
 import { reaction } from 'mobx';
 import { ActiveCardEffectStatus } from './ActiveCardEffectState';
 import { printCard, printCardById } from '../utils/cardGenerator';
+import {
+  CardEffectKind,
+  CardEffectCategory,
+  InteractiveCardEffectCategory,
+  InteractiveCardEffectResolveType,
+} from '../types/cardEffect.types';
+import { CardCategory } from '../types/cardTypes';
 
 export const Store = types
   .model('Store', {

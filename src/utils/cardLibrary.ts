@@ -1,10 +1,14 @@
-import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
 import {
+  CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
-  CardEffectKind,
   InteractiveCardEffectResolveType,
-} from '../models/CardEffect';
+} from '../types/cardEffect.types';
+import {
+  CardCategory,
+  CardSubcategory,
+  CardCostKind,
+} from '../types/cardTypes';
 
 export const ActionCards = {
   dropShipment: {

@@ -1,32 +1,20 @@
 import { types } from 'mobx-state-tree';
 import {
   CardEffectUnion,
-  CardEffectKind,
   BasicCardEffectSnapshotType,
-  CardEffectCategory,
   InteractiveCardEffectSnapshotType,
+} from './CardEffect';
+import {
+  CardEffectKind,
+  CardEffectCategory,
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
-} from './CardEffect';
-
-export enum CardCategory {
-  Action = 'Action',
-  Consumable = 'Consumable',
-  Item = 'Item',
-  Money = 'Money',
-  NPC = 'NPC',
-}
-
-export enum CardSubcategory {
-  Food = 'Food',
-  SportsEquipment = 'Sports Equipment',
-  Tool = 'Tool',
-}
-
-export enum CardCostKind {
-  Money = 'Money',
-  Health = 'Health',
-}
+} from '../types/cardEffect.types';
+import {
+  CardCategory,
+  CardSubcategory,
+  CardCostKind,
+} from '../types/cardTypes';
 
 export const Card = types
   .model({

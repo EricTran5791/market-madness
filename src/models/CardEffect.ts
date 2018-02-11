@@ -1,25 +1,10 @@
 import { types } from 'mobx-state-tree';
-
-export enum CardEffectCategory {
-  Draw = 'Draw',
-  GainAttack = 'Gain Attack',
-  GainCardToDiscardPile = 'Gain Card to Discard Pile',
-  GainCardToHand = 'Gain Card to Hand',
-  GainMoney = 'Gain Money',
-  Heal = 'Heal',
-  IncreaseMaxHealth = 'Increase Max Health',
-  TrashSelf = 'Trash Self',
-}
-
-export enum InteractiveCardEffectCategory {
-  Discard = 'Discard',
-  Trash = 'Trash',
-}
-
-export enum CardEffectKind {
-  Basic = 'Basic',
-  Interactive = 'Interactive',
-}
+import {
+  CardEffectKind,
+  CardEffectCategory,
+  InteractiveCardEffectCategory,
+  InteractiveCardEffectResolveType,
+} from '../types/cardEffect.types';
 
 export const CardEffect = types.model('CardEffect', {
   kind: types.enumeration(
@@ -40,11 +25,6 @@ export const BasicCardEffect = CardEffect.named('BasicCardEffect').props({
 });
 
 export type BasicCardEffectSnapshotType = typeof BasicCardEffect.SnapshotType;
-
-export enum InteractiveCardEffectResolveType {
-  Mandatory = 'Mandatory',
-  Optional = 'Optional',
-}
 
 /** A card effect that requires further interaction from the player. Ex: Choosing cards from the player's hand. */
 export const InteractiveCardEffect = CardEffect.named(

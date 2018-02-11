@@ -1,9 +1,28 @@
-import {
-  CardEffectKind,
-  CardEffectCategory,
-  InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
-} from '../models/CardEffect';
+export enum CardEffectKind {
+  Basic = 'Basic',
+  Interactive = 'Interactive',
+}
+
+export enum CardEffectCategory {
+  Draw = 'Draw',
+  GainAttack = 'Gain Attack',
+  GainCardToDiscardPile = 'Gain Card to Discard Pile',
+  GainCardToHand = 'Gain Card to Hand',
+  GainMoney = 'Gain Money',
+  Heal = 'Heal',
+  IncreaseMaxHealth = 'Increase Max Health',
+  TrashSelf = 'Trash Self',
+}
+
+export enum InteractiveCardEffectCategory {
+  Discard = 'Discard',
+  Trash = 'Trash',
+}
+
+export enum InteractiveCardEffectResolveType {
+  Mandatory = 'Mandatory',
+  Optional = 'Optional',
+}
 
 interface BasicCardEffect {
   kind: CardEffectKind.Basic;
