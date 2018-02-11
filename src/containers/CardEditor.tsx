@@ -5,14 +5,21 @@ import { CardCategory, CardSubcategory, CardCostKind } from '../models/Card';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
+import { Modal } from 'office-ui-fabric-react/lib/Modal';
 
 import { initializeIcons } from '@uifabric/icons';
 import CardEffectsDetailsList from '../components/CardEffectsDetailsList';
+import CardEffectEditor from './CardEffectEditor';
+import { CardEffect } from '../types/cardEffect.types';
 
 initializeIcons();
 
 interface State {
   currentCard: Card;
+  cardEffectEditor: {
+    isOpen: boolean;
+    effect: CardEffect | undefined;
+  };
 }
 
 const StyledCardEditor = styled.div`
@@ -27,13 +34,13 @@ const CardEditorSection = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   font-family: 'Acme';
   font-size: 24px;
   margin-bottom: 16px;
 `;
 
-const ControlContainer = styled.div`
+export const ControlContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,9 +70,15 @@ class CardEditor extends React.Component<object, State> {
       currentCard: {
         ...initialCard,
       },
+      cardEffectEditor: {
+        isOpen: false,
+        effect: undefined,
+      },
     });
+    this.editCardEffect = this.editCardEffect.bind(this);
     this.removeCardEffect = this.removeCardEffect.bind(this);
   }
+
   updateCurrentCard(card: Partial<Card>) {
     this.setState({
       currentCard: {
@@ -74,6 +87,16 @@ class CardEditor extends React.Component<object, State> {
       },
     });
   }
+
+  editCardEffect(index: number) {
+    this.setState({
+      cardEffectEditor: {
+        isOpen: true,
+        effect: this.state.currentCard.effects.find((_, i) => i === index),
+      },
+    });
+  }
+
   removeCardEffect(index: number) {
     this.updateCurrentCard({
       effects: this.state.currentCard.effects.filter((_, i) => i !== index),
@@ -190,6 +213,7 @@ class CardEditor extends React.Component<object, State> {
             <Label>Card Effects</Label>
             <CardEffectsDetailsList
               items={this.state.currentCard.effects}
+              onEdit={this.editCardEffect}
               onRemove={this.removeCardEffect}
             />
           </ControlContainer>
@@ -206,6 +230,19 @@ class CardEditor extends React.Component<object, State> {
             />
           </TextFieldContainer>
         </CardEditorSection>
+
+        <Modal
+          isOpen={this.state.cardEffectEditor.isOpen}
+          onDismiss={() =>
+            this.setState({
+              cardEffectEditor: { isOpen: false, effect: undefined },
+            })
+          }
+        >
+          {this.state.cardEffectEditor.isOpen && (
+            <CardEffectEditor cardEffect={this.state.cardEffectEditor.effect} />
+          )}
+        </Modal>
       </StyledCardEditor>
     );
   }

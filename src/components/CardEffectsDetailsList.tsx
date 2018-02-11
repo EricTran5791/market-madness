@@ -11,6 +11,7 @@ import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 interface Props {
   items: CardEffect[];
+  onEdit: (index: number) => void;
   onRemove: (index: number) => void;
 }
 
@@ -96,6 +97,10 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
     });
   }
 
+  editCardEffect(index: number) {
+    this.props.onEdit(index);
+  }
+
   removeCardEffect(index: number) {
     this.props.onRemove(index);
   }
@@ -111,6 +116,13 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
           selectionMode={SelectionMode.single}
         />
         <ControlsContainer>
+          <DefaultButton
+            text="Edit"
+            disabled={!this.state.selectedItem}
+            onClick={() => {
+              this.editCardEffect(this.state.selectedItem!.index);
+            }}
+          />
           <DefaultButton
             text="Remove"
             disabled={!this.state.selectedItem}

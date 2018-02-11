@@ -20,3 +20,17 @@ interface InteractiveCardEffect {
 }
 
 export type CardEffect = BasicCardEffect | InteractiveCardEffect;
+
+export const initialBasicCardEffect: BasicCardEffect = {
+  kind: CardEffectKind.Basic,
+  category: CardEffectCategory.Draw,
+  value: 0,
+  gainedCardName: '',
+};
+
+export const initialInteractiveCardEffect: InteractiveCardEffect = {
+  kind: CardEffectKind.Interactive,
+  category: InteractiveCardEffectCategory.OptionalTrash,
+  numCardsToResolve: 0,
+  resolveType: InteractiveCardEffectResolveType.Optional,
+};
