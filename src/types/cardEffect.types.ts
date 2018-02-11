@@ -34,8 +34,8 @@ interface BasicCardEffect {
 interface InteractiveCardEffect {
   kind: CardEffectKind.Interactive;
   category: InteractiveCardEffectCategory;
-  numCardsToResolve?: number;
   resolveType: InteractiveCardEffectResolveType;
+  numCardsToResolve?: number;
 }
 
 export type CardEffect = BasicCardEffect | InteractiveCardEffect;
@@ -49,7 +49,7 @@ export const initialBasicCardEffect: BasicCardEffect = {
 
 export const initialInteractiveCardEffect: InteractiveCardEffect = {
   kind: CardEffectKind.Interactive,
-  category: InteractiveCardEffectCategory.Trash,
-  numCardsToResolve: 0,
+  category: InteractiveCardEffectCategory.Discard,
   resolveType: InteractiveCardEffectResolveType.Optional,
+  numCardsToResolve: 0,
 };

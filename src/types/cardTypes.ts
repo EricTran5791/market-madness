@@ -62,8 +62,8 @@ export const initialCard: Card = {
     {
       category: InteractiveCardEffectCategory.Trash,
       kind: CardEffectKind.Interactive,
-      numCardsToResolve: 2,
       resolveType: InteractiveCardEffectResolveType.Mandatory,
+      numCardsToResolve: 2,
     },
   ],
 };

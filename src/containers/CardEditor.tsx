@@ -51,11 +51,11 @@ export const ControlContainer = styled.div`
   justify-content: center;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   padding: 5px 0;
 `;
 
-const CardCostContainer = styled.div`
+export const CardCostContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-gap: 16px;
