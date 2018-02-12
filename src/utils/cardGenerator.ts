@@ -3,7 +3,6 @@ import {
   CardStackModelType,
   Card,
   CardModelType,
-  CardModelSnapshotType,
 } from '../models/Card';
 import * as cards from './cardLibrary';
 import * as uniqid from 'uniqid';
@@ -15,14 +14,18 @@ import {
   InteractiveCardEffectResolveType,
 } from '../types/cardEffect.types';
 import { List } from 'immutable';
-import { CardCategory } from '../types/cardTypes';
+import { Card as CardType, CardCategory } from '../types/cardTypes';
 
 export function generateEmptyDeck(): CardStackModelType {
   return CardStack.create({ cards: [] });
 }
 
-export function printCard(card: CardModelSnapshotType): CardModelType {
-  return Card.create({ id: uniqid(), ...card });
+export function printCard(card: CardType): CardModelType {
+  return Card.create({
+    id: uniqid(),
+    ...card,
+    effects: card.effects.toArray(),
+  });
 }
 
 // TODO: Improve with JSON card database
@@ -35,10 +38,7 @@ export function printCardById(id: string): CardModelType {
   return printCard(card);
 }
 
-function printDuplicateCards(
-  card: CardModelSnapshotType,
-  qty: number
-): CardModelType[] {
+function printDuplicateCards(card: CardType, qty: number): CardModelType[] {
   return new Array(qty).fill(undefined).map(_ => printCard(card));
 }
 
@@ -63,13 +63,11 @@ export function generateMarketDeck(): CardStackModelType {
       ...printDuplicateCards(cards.ActionCards.exchangeGoods, 3),
       ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
       ...printDuplicateCards(cards.ConsumableCards.energyDrink, 2),
-      ...printDuplicateCards(cards.ConsumableCards.verySpicyPepper, 2),
       ...printDuplicateCards(cards.ItemCards.basketball, 3),
       ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
       ...printDuplicateCards(cards.ItemCards.portableFurnace, 2),
       ...printDuplicateCards(cards.NPCCards.baker, 1),
       ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
-      ...printDuplicateCards(cards.NPCCards.chef, 1),
       ...printDuplicateCards(cards.NPCCards.dietician, 1),
       ...printDuplicateCards(cards.NPCCards.janitor, 1),
       ...printDuplicateCards(cards.NPCCards.postalWorker, 2),
