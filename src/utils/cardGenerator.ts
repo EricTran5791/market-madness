@@ -7,6 +7,15 @@ import {
 } from '../models/Card';
 import * as cards from './cardLibrary';
 import * as uniqid from 'uniqid';
+import {
+  CardEffect,
+  CardEffectKind,
+  CardEffectCategory,
+  InteractiveCardEffectCategory,
+  InteractiveCardEffectResolveType,
+} from '../types/cardEffect.types';
+import { List } from 'immutable';
+import { CardCategory } from '../types/cardTypes';
 
 export function generateEmptyDeck(): CardStackModelType {
   return CardStack.create({ cards: [] });
@@ -94,4 +103,63 @@ export function shuffleCardStackModel(
     cardStack.cards.move(i, j);
   }
   return cardStack;
+}
+
+export function generateCardDescription(
+  cardCategory: CardCategory,
+  effects: List<CardEffect>
+): string {
+  return (
+    `${cardCategory === CardCategory.NPC ? 'Defeat: ' : ''}` +
+    effects
+      .map((effect: CardEffect) => {
+        if (effect.kind === CardEffectKind.Basic) {
+          const { category, value, gainedCardId } = effect;
+          switch (category) {
+            case CardEffectCategory.Draw:
+              return `Draw ${value} card${value > 1 ? 's' : ''}`;
+            case CardEffectCategory.GainAttack:
+              return `+${value} Attack`;
+            case CardEffectCategory.GainCardToDiscardPile:
+              // TODO: Map card id to card name once the JSON card library is done
+              return `Gain ${value} ${gainedCardId}`;
+            case CardEffectCategory.GainCardToHand:
+              // TODO: Map card id to card name once the JSON card library is done
+              return `Add ${value} ${gainedCardId} to your hand`;
+            case CardEffectCategory.GainMoney:
+              return `+${value} Money`;
+            case CardEffectCategory.Heal:
+              return `Heal ${value}`;
+            case CardEffectCategory.IncreaseMaxHealth:
+              return `Increase max health by ${value}`;
+            case CardEffectCategory.TrashSelf:
+              return `Trash this card`;
+            default:
+              console.error(
+                `Error: No description template available for basic card effect category '${category}'.`
+              );
+              return '';
+          }
+        } else if (effect.kind === CardEffectKind.Interactive) {
+          const { category, numCardsToResolve, resolveType } = effect;
+          switch (category) {
+            case InteractiveCardEffectCategory.Discard:
+              return `Discard ${numCardsToResolve} cards`;
+            case InteractiveCardEffectCategory.Trash:
+              return `Trash ${
+                resolveType === InteractiveCardEffectResolveType.Optional
+                  ? 'up to '
+                  : ''
+              }${numCardsToResolve} cards`;
+            default:
+              console.error(
+                `Error: No description template available for interactive card effect category '${category}'.`
+              );
+              return '';
+          }
+        }
+        return '';
+      })
+      .join(', ')
+  );
 }

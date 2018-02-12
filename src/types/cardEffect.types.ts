@@ -27,8 +27,8 @@ export enum InteractiveCardEffectResolveType {
 interface BasicCardEffect {
   kind: CardEffectKind.Basic;
   category: CardEffectCategory;
-  value?: number;
-  gainedCardName?: string;
+  value: number;
+  gainedCardId?: string;
 }
 
 interface InteractiveCardEffect {
@@ -44,7 +44,7 @@ export const initialBasicCardEffect: BasicCardEffect = {
   kind: CardEffectKind.Basic,
   category: CardEffectCategory.Draw,
   value: 0,
-  gainedCardName: '',
+  gainedCardId: '',
 };
 
 export const initialInteractiveCardEffect: InteractiveCardEffect = {

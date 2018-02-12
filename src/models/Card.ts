@@ -1,20 +1,13 @@
 import { types } from 'mobx-state-tree';
-import {
-  CardEffectUnion,
-  BasicCardEffectSnapshotType,
-  InteractiveCardEffectSnapshotType,
-} from './CardEffect';
-import {
-  CardEffectKind,
-  CardEffectCategory,
-  InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
-} from '../types/cardEffect.types';
+import { CardEffectUnion, BasicCardEffectSnapshotType } from './CardEffect';
+import { CardEffect, CardEffectCategory } from '../types/cardEffect.types';
 import {
   CardCategory,
   CardSubcategory,
   CardCostKind,
 } from '../types/cardTypes';
+import { generateCardDescription } from '../utils/cardGenerator';
+import { List } from 'immutable';
 
 export const Card = types
   .model({
@@ -64,76 +57,11 @@ export const Card = types
       if (self.description.length > 0 || self.effects.length === 0) {
         return;
       }
-
-      // Auto generate descriptions
-      if (self.category === CardCategory.NPC) {
-        self.description = 'Defeat: ';
-      }
-      self.description += self.effects
-        .map(effect => {
-          if (effect.kind === CardEffectKind.Basic) {
-            const {
-              category,
-              value,
-              gainedCardId,
-            }: BasicCardEffectSnapshotType = effect;
-            switch (category) {
-              case CardEffectCategory.Draw:
-                return `Draw ${value} card${value > 1 ? 's' : ''}`;
-              case CardEffectCategory.GainAttack:
-                return `+${value} Attack`;
-              case CardEffectCategory.GainCardToDiscardPile:
-                // The RegEx converts the camel case id to a spaced and capitalized name
-                // TODO: There was a circular dependency when cardGenerator was imported
-                // due to cardLibrary also importing CardCategory from Card
-                return `Gain ${value} ${gainedCardId
-                  .replace(/([A-Z])/g, ' $1')
-                  .replace(/^./, (str: string) => {
-                    return str.toUpperCase();
-                  })}`;
-              case CardEffectCategory.GainCardToHand:
-                // The RegEx converts the camel case id to a spaced and capitalized name
-                // TODO: There was a circular dependency when cardGenerator was imported
-                // due to cardLibrary also importing CardCategory from Card
-                return `Add ${value} ${gainedCardId
-                  .replace(/([A-Z])/g, ' $1')
-                  .replace(/^./, (str: string) => {
-                    return str.toUpperCase();
-                  })} to your hand`;
-              case CardEffectCategory.GainMoney:
-                return `+${value} Money`;
-              case CardEffectCategory.Heal:
-                return `Heal ${value}`;
-              case CardEffectCategory.IncreaseMaxHealth:
-                return `Increase max health by ${value}`;
-              case CardEffectCategory.TrashSelf:
-                return `Trash this card`;
-              default:
-                return '';
-            }
-          }
-          if (effect.kind === CardEffectKind.Interactive) {
-            const {
-              category,
-              numCardsToResolve,
-              resolveType,
-            }: InteractiveCardEffectSnapshotType = effect;
-            switch (category) {
-              case InteractiveCardEffectCategory.Discard:
-                return `Discard ${numCardsToResolve} cards`;
-              case InteractiveCardEffectCategory.Trash:
-                return `Trash ${
-                  resolveType === InteractiveCardEffectResolveType.Optional
-                    ? 'up to'
-                    : ''
-                } ${numCardsToResolve} cards`;
-              default:
-                return '';
-            }
-          }
-          return '';
-        })
-        .join(', ');
+      // TODO: No need to call this once we read cards from the JSON library
+      self.description = generateCardDescription(
+        self.category as CardCategory,
+        List<CardEffect>(self.effects)
+      );
     },
     /** Reset a card's isPlayed status every time it is detached from its direct parent. */
     beforeDetach() {

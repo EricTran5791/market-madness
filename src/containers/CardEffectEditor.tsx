@@ -161,16 +161,16 @@ class CardEffectEditor extends React.Component<Props, State> {
             />
           </ControlContainer>
         )}
-        {/** TODO: Change to a drop down that queries the library for all card names */ this
+        {/** TODO: Change to a drop down that queries the library for all cards */ this
           .state.cardEffect.kind === CardEffectKind.Basic && (
           <TextField
-            label="Gained Card Name"
+            label="Gained Card Id"
             onChanged={(value: string) => {
               if (this.state.cardEffect.kind === CardEffectKind.Basic) {
                 this.setState({
                   cardEffect: {
                     ...this.state.cardEffect,
-                    gainedCardName: value,
+                    gainedCardId: value,
                   },
                 });
               }
