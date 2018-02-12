@@ -122,6 +122,11 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
 
   moveCardEffect(index: number, direction: MoveEffectDirection) {
     this.props.onMove(index, direction);
+    // The card effect gets deselected after being moved, here we reselect it once the items are refreshed.
+    const newIndex = index + (direction === 'Up' ? -1 : 1);
+    window.requestAnimationFrame(() => {
+      this.state.selection.setIndexSelected(newIndex, true, false);
+    });
   }
 
   render() {
