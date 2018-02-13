@@ -1,5 +1,4 @@
 import * as React from 'react';
-import CardGrid from '../components/CardGrid';
 import CardView from '../components/CardView';
 import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
@@ -22,6 +21,13 @@ const StyledHandArea = styled.div`
   min-height: 160px;
 `;
 
+const HandContainer = styled.div`
+  position: absolute;
+  display: flex;
+  /** Centers the hand on the screen. */
+  transform: translateX(calc(-25% - 46px));
+`;
+
 @inject('store')
 @observer
 class HandArea extends React.Component<Props, State> {
@@ -32,12 +38,73 @@ class HandArea extends React.Component<Props, State> {
         .cardStack,
     };
   }
+
+  calculateCardYPos(
+    index: number,
+    isEven: boolean,
+    handMedian: number
+  ): number {
+    const adjustedIndex = index + 1;
+    if (isEven) {
+      return adjustedIndex === handMedian || adjustedIndex - 1 === handMedian
+        ? 5
+        : Math.pow(
+            1.5,
+            Math.abs(
+              (adjustedIndex > handMedian ? index : adjustedIndex) - handMedian
+            )
+          ) * 10;
+    } else {
+      return adjustedIndex === Math.round(handMedian)
+        ? 5
+        : Math.pow(
+            1.5,
+            Math.abs(
+              (adjustedIndex > Math.round(handMedian) ? index : adjustedIndex) -
+                handMedian
+            )
+          ) * 10;
+    }
+  }
+
+  calculateCardRotationDeg(
+    index: number,
+    isEven: boolean,
+    handMedian: number
+  ): number {
+    const adjustedIndex = index + 1;
+    const direction = adjustedIndex < handMedian ? -1 : 1;
+    if (isEven) {
+      return adjustedIndex === handMedian || adjustedIndex - 1 === handMedian
+        ? 0
+        : Math.pow(
+            2.3,
+            Math.abs(
+              (adjustedIndex > handMedian ? index : adjustedIndex) - handMedian
+            )
+          ) * direction;
+    } else {
+      return adjustedIndex === Math.round(handMedian)
+        ? 0
+        : Math.pow(2.3, Math.abs(adjustedIndex - Math.round(handMedian))) *
+            direction;
+    }
+  }
+
   displayCards() {
+    const isEven = this.state.cardStack.cards.length % 2 === 0;
+    const handMedian = this.state.cardStack.cards.length / 2;
     return this.state.cardStack.cards.map((card, i) => {
       return (
         <CardView
           key={i}
           model={card}
+          cardPosition={{
+            zIndex: i * 10,
+            xPos: -1 * i * 50,
+            yPos: this.calculateCardYPos(i, isEven, handMedian),
+            rotationDeg: this.calculateCardRotationDeg(i, isEven, handMedian),
+          }}
           onClick={!card.isPlayed ? () => this.onClick(card) : undefined}
         />
       );
@@ -49,7 +116,7 @@ class HandArea extends React.Component<Props, State> {
   render() {
     return (
       <StyledHandArea>
-        <CardGrid columns={5}>{this.displayCards()}</CardGrid>
+        <HandContainer>{this.displayCards()}</HandContainer>
         {this.props.playerId === this.props.store!.currentPlayer.id && (
           <ActiveCardEffectInfo />
         )}

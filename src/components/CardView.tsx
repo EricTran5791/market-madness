@@ -4,13 +4,22 @@ import { CardModelType } from '../models/Card';
 import { withProps } from '../types/withProps';
 import { CardCategory, CardCostKind } from '../types/cardTypes';
 
+type CardPosition = {
+  zIndex?: number;
+  xPos?: number;
+  yPos?: number;
+  rotationDeg?: number;
+};
+
 interface Props {
   model: CardModelType;
+  cardPosition?: CardPosition;
   onClick?: () => void;
 }
 
 interface StyledCardProps {
   category: string;
+  cardPosition?: CardPosition;
   showHoverAnimation: boolean;
   isPlayed: boolean;
 }
@@ -30,19 +39,20 @@ export const BasicCard = styled.div`
 
 const hover = keyframes`
   0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
+    transform: translateY(-10%) scale(1.08);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(-15%) scale(1.08);
   }
 `;
 
 const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
   cursor: ${({ showHoverAnimation }: StyledCardProps): string =>
     showHoverAnimation ? 'pointer' : 'default'};
+  ${({ cardPosition }: StyledCardProps): string =>
+    cardPosition && cardPosition.zIndex
+      ? `z-index: ${cardPosition.zIndex}`
+      : ''};
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
       case CardCategory.Action:
@@ -57,13 +67,28 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
         return '#222222';
     }
   }};
-  transform: ${({ isPlayed }: StyledCardProps): string =>
-    isPlayed ? 'translateY(-8px)' : ''};
+  position: relative;
+  ${({ cardPosition }: StyledCardProps): string =>
+    cardPosition && cardPosition.yPos ? `top: ${cardPosition.yPos}px` : ''};
+  ${({ cardPosition }: StyledCardProps): string =>
+    cardPosition && cardPosition.xPos ? `left: ${cardPosition.xPos}px` : ''};
+  transform: ${({ isPlayed, cardPosition }: StyledCardProps): string =>
+    (isPlayed ? `translateY(-15%)` : `translateY(0)`).concat(
+      cardPosition && cardPosition.rotationDeg
+        ? `rotate(${cardPosition.rotationDeg}deg)`
+        : ''
+    )};
   opacity: ${({ isPlayed }: StyledCardProps): string =>
-    isPlayed ? '0.75' : '1'};
+    isPlayed ? '0.9' : '1'};
   &:hover {
     animation: ${({ showHoverAnimation }: StyledCardProps): string =>
-      showHoverAnimation ? `${hover} 1s infinite` : ''};
+      showHoverAnimation
+        ? `${hover} 0.15s forwards cubic-bezier(0.445, 0.05, 0.55, 0.95)`
+        : ''};
+    ${({ cardPosition }: StyledCardProps): string =>
+      cardPosition && cardPosition.zIndex
+        ? `z-index: ${cardPosition.zIndex * 100}`
+        : ''};
   }
 `;
 
@@ -121,11 +146,12 @@ const CardDescription = styled.div`
   text-align: center;
 `;
 
-function CardView({ model, onClick }: Props) {
+function CardView({ model, cardPosition, onClick }: Props) {
   return (
     <StyledCard
       onClick={onClick}
       category={model.category}
+      cardPosition={cardPosition}
       showHoverAnimation={onClick !== undefined}
       isPlayed={model.isPlayed}
     >
