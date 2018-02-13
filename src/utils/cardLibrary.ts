@@ -13,6 +13,7 @@ import {
 
 export const ActionCards: Record<string, Card> = {
   dropShipment: {
+    id: 'dropShipment',
     name: 'Drop Shipment',
     category: CardCategory.Action,
     subcategories: [],
@@ -35,6 +36,7 @@ export const ActionCards: Record<string, Card> = {
     ],
   },
   exchangeGoods: {
+    id: 'exchangeGoods',
     name: 'Exchange Goods',
     category: CardCategory.Action,
     subcategories: [],
@@ -58,6 +60,7 @@ export const ActionCards: Record<string, Card> = {
     ],
   },
   expressShipping: {
+    id: 'expressShipping',
     name: 'Express Shipping',
     category: CardCategory.Action,
     subcategories: [],
@@ -78,6 +81,7 @@ export const ActionCards: Record<string, Card> = {
 
 export const ConsumableCards: Record<string, Card> = {
   apple: {
+    id: 'apple',
     name: 'Apple',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
@@ -100,6 +104,7 @@ export const ConsumableCards: Record<string, Card> = {
     ],
   },
   bread: {
+    id: 'bread',
     name: 'Bread',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
@@ -122,6 +127,7 @@ export const ConsumableCards: Record<string, Card> = {
     ],
   },
   energyDrink: {
+    id: 'energyDrink',
     name: 'Energy Drink',
     category: CardCategory.Consumable,
     subcategories: [CardSubcategory.Food],
@@ -149,6 +155,7 @@ export const ConsumableCards: Record<string, Card> = {
     ],
   },
   multivitamins: {
+    id: 'multivitamins',
     name: 'Multivitamins',
     category: CardCategory.Consumable,
     subcategories: [],
@@ -174,6 +181,7 @@ export const ConsumableCards: Record<string, Card> = {
 
 export const ItemCards: Record<string, Card> = {
   basketball: {
+    id: 'basketball',
     name: 'Basketball',
     category: CardCategory.Item,
     subcategories: [],
@@ -191,6 +199,7 @@ export const ItemCards: Record<string, Card> = {
     ],
   },
   fishBones: {
+    id: 'fishBones',
     name: 'Fish Bones',
     category: CardCategory.Item,
     subcategories: [],
@@ -202,6 +211,7 @@ export const ItemCards: Record<string, Card> = {
     effects: [],
   },
   garbageBag: {
+    id: 'garbageBag',
     name: 'Garbage Bag',
     category: CardCategory.Item,
     subcategories: [],
@@ -225,6 +235,7 @@ export const ItemCards: Record<string, Card> = {
     ],
   },
   portableFurnace: {
+    id: 'portableFurnace',
     name: 'Portable Furnace',
     category: CardCategory.Item,
     subcategories: [],
@@ -249,6 +260,7 @@ export const ItemCards: Record<string, Card> = {
     ],
   },
   shoppingBasket: {
+    id: 'shoppingBasket',
     name: 'Shopping Basket',
     category: CardCategory.Item,
     subcategories: [],
@@ -265,27 +277,11 @@ export const ItemCards: Record<string, Card> = {
       },
     ],
   },
-  wetMop: {
-    name: 'Wet Mop',
-    category: CardCategory.Item,
-    subcategories: [],
-    description: '',
-    cost: {
-      kind: CardCostKind.Money,
-      value: 3,
-    },
-    effects: [
-      {
-        category: CardEffectCategory.GainAttack,
-        kind: CardEffectKind.Basic,
-        value: 3,
-      },
-    ],
-  },
 };
 
 export const MoneyCards: Record<string, Card> = {
   coin: {
+    id: 'coin',
     name: 'Coin',
     category: CardCategory.Money,
     subcategories: [],
@@ -303,6 +299,7 @@ export const MoneyCards: Record<string, Card> = {
     ],
   },
   gem: {
+    id: 'gem',
     name: 'Gem',
     category: CardCategory.Money,
     subcategories: [],
@@ -323,6 +320,7 @@ export const MoneyCards: Record<string, Card> = {
 
 export const NPCCards: Record<string, Card> = {
   baker: {
+    id: 'baker',
     name: 'Baker',
     category: CardCategory.NPC,
     subcategories: [],
@@ -341,6 +339,7 @@ export const NPCCards: Record<string, Card> = {
     ],
   },
   businessPerson: {
+    id: 'businessPerson',
     name: 'Business Person',
     category: CardCategory.NPC,
     subcategories: [],
@@ -358,6 +357,7 @@ export const NPCCards: Record<string, Card> = {
     ],
   },
   dietician: {
+    id: 'dietician',
     name: 'Dietician',
     category: CardCategory.NPC,
     subcategories: [],
@@ -381,25 +381,8 @@ export const NPCCards: Record<string, Card> = {
       },
     ],
   },
-  janitor: {
-    name: 'Janitor',
-    category: CardCategory.NPC,
-    subcategories: [],
-    description: '',
-    cost: {
-      kind: CardCostKind.Health,
-      value: 3,
-    },
-    effects: [
-      {
-        category: CardEffectCategory.GainCardToDiscardPile,
-        kind: CardEffectKind.Basic,
-        value: 1,
-        gainedCardId: 'wetMop',
-      },
-    ],
-  },
   postalWorker: {
+    id: 'postalWorker',
     name: 'Postal Worker',
     category: CardCategory.NPC,
     subcategories: [],

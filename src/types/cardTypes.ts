@@ -26,6 +26,7 @@ export enum CardCostKind {
 }
 
 export type Card = {
+  id: string;
   name: string;
   category: CardCategory;
   subcategories: CardSubcategory[];
@@ -39,6 +40,7 @@ export type Card = {
 };
 
 export const initialCard: Card = {
+  id: '',
   name: '',
   category: CardCategory.Item,
   subcategories: [],

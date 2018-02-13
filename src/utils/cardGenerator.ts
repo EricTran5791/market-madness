@@ -22,7 +22,7 @@ export function generateEmptyDeck(): CardStackModelType {
 
 export function printCard(card: CardType): CardModelType {
   return Card.create({
-    id: uniqid(),
+    uniqid: uniqid(),
     ...card,
   });
 }
@@ -68,7 +68,6 @@ export function generateMarketDeck(): CardStackModelType {
       ...printDuplicateCards(cards.NPCCards.baker, 1),
       ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
       ...printDuplicateCards(cards.NPCCards.dietician, 1),
-      ...printDuplicateCards(cards.NPCCards.janitor, 1),
       ...printDuplicateCards(cards.NPCCards.postalWorker, 2),
     ]),
   });

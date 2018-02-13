@@ -66,6 +66,13 @@ export const Label = styled.label`
   padding: 5px 0;
 `;
 
+export const IdNameContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+  margin: 16px 0;
+`;
+
 export const DescriptionContainer = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -196,12 +203,21 @@ class CardEditor extends React.Component<object, State> {
       <StyledCardEditor>
         <CardEditorSection>
           <Title>Card Editor</Title>
-          <TextField
-            label="Name"
-            onChanged={(value: string) => {
-              this.updateCurrentCard({ name: value });
-            }}
-          />
+          <IdNameContainer>
+            <TextField
+              label="Id"
+              onChanged={(value: string) => {
+                this.updateCurrentCard({ id: value });
+              }}
+            />
+
+            <TextField
+              label="Name"
+              onChanged={(value: string) => {
+                this.updateCurrentCard({ name: value });
+              }}
+            />
+          </IdNameContainer>
 
           <Dropdown
             label="Category"

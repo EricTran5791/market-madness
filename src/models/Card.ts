@@ -11,7 +11,9 @@ import { List } from 'immutable';
 
 export const Card = types
   .model({
-    id: types.identifier(types.string),
+    /** An instance-specific unique id for state reconciliation purposes (ex: cloning). */
+    uniqid: types.identifier(types.string),
+    id: types.string,
     name: types.string,
     category: types.enumeration(
       'Category',
