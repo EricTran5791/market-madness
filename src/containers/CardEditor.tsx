@@ -150,7 +150,7 @@ class CardEditor extends React.Component<object, State> {
 
   addCardEffect(effect: CardEffect) {
     this.updateCurrentCard({
-      effects: this.state.store.currentCard.effectsList.push(effect),
+      effects: this.state.store.currentCard.effectsList.push(effect).toArray(),
     });
     this.closeCardEffectEditor();
   }
@@ -159,14 +159,14 @@ class CardEditor extends React.Component<object, State> {
     this.updateCurrentCard({
       effects: List<CardEffect>(
         this.state.store.currentCard.effectsList.splice(index, 1, effect)
-      ),
+      ).toArray(),
     });
     this.closeCardEffectEditor();
   }
 
   removeCardEffect(index: number) {
     this.updateCurrentCard({
-      effects: this.state.store.currentCard.effectsList.remove(index),
+      effects: this.state.store.currentCard.effectsList.remove(index).toArray(),
     });
   }
 
@@ -179,7 +179,8 @@ class CardEditor extends React.Component<object, State> {
     this.updateCurrentCard({
       effects: this.state.store.currentCard.effectsList
         .remove(index)
-        .insert(newIndex, movedEffect),
+        .insert(newIndex, movedEffect)
+        .toArray(),
     });
   }
 
@@ -197,7 +198,9 @@ class CardEditor extends React.Component<object, State> {
 
           <Dropdown
             label="Category"
-            selectedKey={this.state.store.currentCard.category}
+            selectedKey={Object.keys(CardCategory).find(
+              _ => this.state.store.currentCard.category === CardCategory[_]
+            )}
             options={Object.keys(CardCategory).map(key => {
               return { key, text: CardCategory[key] };
             })}
@@ -220,17 +223,17 @@ class CardEditor extends React.Component<object, State> {
             onChanged={({ key, selected }: IDropdownOption) => {
               if (selected) {
                 this.updateCurrentCard({
-                  subcategories: [
-                    ...this.state.store.currentCard.subcategories,
-                    CardSubcategory[key],
-                  ].sort(),
+                  subcategories: this.state.store.currentCard.subcategoriesList
+                    .push(CardSubcategory[key])
+                    .sort()
+                    .toArray(),
                 });
               } else {
                 this.updateCurrentCard({
-                  /* tslint:disable no-any */
-                  subcategories: this.state.store.currentCard.subcategories
+                  subcategories: this.state.store.currentCard.subcategoriesList
                     .filter(_ => _ !== CardSubcategory[key])
-                    .sort() as any,
+                    .sort()
+                    .toArray(),
                 });
               }
             }}
@@ -267,16 +270,17 @@ class CardEditor extends React.Component<object, State> {
           <CardCostContainer>
             <Dropdown
               label="Card Cost Kind"
-              selectedKey={this.state.store.currentCard.cost.kind}
+              selectedKey={Object.keys(CardCostKind).find(
+                _ => this.state.store.currentCard.cost.kind === CardCostKind[_]
+              )}
               options={Object.keys(CardCostKind).map(key => {
                 return { key, text: CardCostKind[key] };
               })}
               onChanged={({ key }: IDropdownOption) => {
                 this.updateCurrentCard({
                   cost: {
-                    /* tslint:disable no-any */
-                    ...(this.state.store.currentCard.cost as any),
                     kind: CardCostKind[key],
+                    value: this.state.store.currentCard.cost.value,
                   },
                 });
               }}
@@ -291,8 +295,8 @@ class CardEditor extends React.Component<object, State> {
                 onChange={value => {
                   this.updateCurrentCard({
                     cost: {
-                      /* tslint:disable no-any */
-                      ...(this.state.store.currentCard.cost as any),
+                      kind: this.state.store.currentCard.cost
+                        .kind as CardCostKind,
                       value,
                     },
                   });

@@ -5,7 +5,6 @@ import {
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
 } from './cardEffect.types';
-import { List } from 'immutable';
 
 export enum CardCategory {
   Action = 'Action',
@@ -35,7 +34,7 @@ export type Card = {
     kind: CardCostKind;
     value: number;
   };
-  effects: List<CardEffect>;
+  effects: CardEffect[];
   isPlayed?: boolean;
 };
 
@@ -49,7 +48,7 @@ export const initialCard: Card = {
     value: 0,
   },
   // TEMP
-  effects: List<CardEffect>([
+  effects: [
     {
       category: CardEffectCategory.GainAttack,
       kind: CardEffectKind.Basic,
@@ -66,5 +65,5 @@ export const initialCard: Card = {
       resolveType: InteractiveCardEffectResolveType.Mandatory,
       numCardsToResolve: 2,
     },
-  ]),
+  ],
 };

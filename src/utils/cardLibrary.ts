@@ -1,5 +1,4 @@
 import {
-  CardEffect,
   CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
@@ -11,7 +10,6 @@ import {
   CardSubcategory,
   CardCostKind,
 } from '../types/cardTypes';
-import { List } from 'immutable';
 
 export const ActionCards: Record<string, Card> = {
   dropShipment: {
@@ -23,7 +21,7 @@ export const ActionCards: Record<string, Card> = {
       kind: CardCostKind.Money,
       value: 1,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
@@ -34,7 +32,7 @@ export const ActionCards: Record<string, Card> = {
         kind: CardEffectKind.Basic,
         value: 1,
       },
-    ]),
+    ],
   },
   exchangeGoods: {
     name: 'Exchange Goods',
@@ -45,7 +43,7 @@ export const ActionCards: Record<string, Card> = {
       kind: CardCostKind.Money,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Draw,
         kind: CardEffectKind.Basic,
@@ -57,7 +55,7 @@ export const ActionCards: Record<string, Card> = {
         numCardsToResolve: 2,
         resolveType: InteractiveCardEffectResolveType.Mandatory,
       },
-    ]),
+    ],
   },
   expressShipping: {
     name: 'Express Shipping',
@@ -68,17 +66,17 @@ export const ActionCards: Record<string, Card> = {
       kind: CardCostKind.Money,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Draw,
         kind: CardEffectKind.Basic,
         value: 2,
       },
-    ]),
+    ],
   },
 };
 
-export const ConsumableCards = {
+export const ConsumableCards: Record<string, Card> = {
   apple: {
     name: 'Apple',
     category: CardCategory.Consumable,
@@ -88,14 +86,18 @@ export const ConsumableCards = {
       kind: CardCostKind.Money,
       value: 1,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Heal,
         kind: CardEffectKind.Basic,
         value: 1,
       },
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
-    ]),
+      {
+        category: CardEffectCategory.TrashSelf,
+        kind: CardEffectKind.Basic,
+        value: 0,
+      },
+    ],
   },
   bread: {
     name: 'Bread',
@@ -106,14 +108,18 @@ export const ConsumableCards = {
       kind: CardCostKind.Money,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Heal,
         kind: CardEffectKind.Basic,
         value: 2,
       },
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
-    ]),
+      {
+        category: CardEffectCategory.TrashSelf,
+        kind: CardEffectKind.Basic,
+        value: 0,
+      },
+    ],
   },
   energyDrink: {
     name: 'Energy Drink',
@@ -124,7 +130,7 @@ export const ConsumableCards = {
       kind: CardCostKind.Money,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Heal,
         kind: CardEffectKind.Basic,
@@ -135,29 +141,38 @@ export const ConsumableCards = {
         kind: CardEffectKind.Basic,
         value: 1,
       },
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
-    ]),
+      {
+        category: CardEffectCategory.TrashSelf,
+        kind: CardEffectKind.Basic,
+        value: 0,
+      },
+    ],
   },
   multivitamins: {
     name: 'Multivitamins',
     category: CardCategory.Consumable,
+    subcategories: [],
     description: '',
     cost: {
       kind: CardCostKind.Money,
       value: 1,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.IncreaseMaxHealth,
         kind: CardEffectKind.Basic,
         value: 1,
       },
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
-    ]),
+      {
+        category: CardEffectCategory.TrashSelf,
+        kind: CardEffectKind.Basic,
+        value: 0,
+      },
+    ],
   },
 };
 
-export const ItemCards = {
+export const ItemCards: Record<string, Card> = {
   basketball: {
     name: 'Basketball',
     category: CardCategory.Item,
@@ -167,13 +182,13 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 3,
       },
-    ]),
+    ],
   },
   fishBones: {
     name: 'Fish Bones',
@@ -184,7 +199,7 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 0,
     },
-    effects: List<CardEffect>([]),
+    effects: [],
   },
   garbageBag: {
     name: 'Garbage Bag',
@@ -195,15 +210,19 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: InteractiveCardEffectCategory.Trash,
         kind: CardEffectKind.Interactive,
         numCardsToResolve: 2,
         resolveType: InteractiveCardEffectResolveType.Optional,
       },
-      { category: CardEffectCategory.TrashSelf, kind: CardEffectKind.Basic },
-    ]),
+      {
+        category: CardEffectCategory.TrashSelf,
+        kind: CardEffectKind.Basic,
+        value: 0,
+      },
+    ],
   },
   portableFurnace: {
     name: 'Portable Furnace',
@@ -214,7 +233,7 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 4,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: InteractiveCardEffectCategory.Trash,
         kind: CardEffectKind.Interactive,
@@ -227,7 +246,7 @@ export const ItemCards = {
         value: 1,
         gainedCardId: 'gem',
       },
-    ]),
+    ],
   },
   shoppingBasket: {
     name: 'Shopping Basket',
@@ -238,13 +257,13 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 2,
       },
-    ]),
+    ],
   },
   wetMop: {
     name: 'Wet Mop',
@@ -255,17 +274,17 @@ export const ItemCards = {
       kind: CardCostKind.Money,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainAttack,
         kind: CardEffectKind.Basic,
         value: 3,
       },
-    ]),
+    ],
   },
 };
 
-export const MoneyCards = {
+export const MoneyCards: Record<string, Card> = {
   coin: {
     name: 'Coin',
     category: CardCategory.Money,
@@ -275,13 +294,13 @@ export const MoneyCards = {
       kind: CardCostKind.Money,
       value: 1,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainMoney,
         kind: CardEffectKind.Basic,
         value: 1,
       },
-    ]),
+    ],
   },
   gem: {
     name: 'Gem',
@@ -292,17 +311,17 @@ export const MoneyCards = {
       kind: CardCostKind.Money,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainMoney,
         kind: CardEffectKind.Basic,
         value: 2,
       },
-    ]),
+    ],
   },
 };
 
-export const NPCCards = {
+export const NPCCards: Record<string, Card> = {
   baker: {
     name: 'Baker',
     category: CardCategory.NPC,
@@ -312,14 +331,14 @@ export const NPCCards = {
       kind: CardCostKind.Health,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainCardToHand,
         kind: CardEffectKind.Basic,
         value: 1,
         gainedCardId: 'bread',
       },
-    ]),
+    ],
   },
   businessPerson: {
     name: 'Business Person',
@@ -330,13 +349,13 @@ export const NPCCards = {
       kind: CardCostKind.Health,
       value: 4,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainMoney,
         kind: CardEffectKind.Basic,
         value: 3,
       },
-    ]),
+    ],
   },
   dietician: {
     name: 'Dietician',
@@ -347,7 +366,7 @@ export const NPCCards = {
       kind: CardCostKind.Health,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainCardToHand,
         kind: CardEffectKind.Basic,
@@ -360,7 +379,7 @@ export const NPCCards = {
         value: 1,
         gainedCardId: 'multivitamins',
       },
-    ]),
+    ],
   },
   janitor: {
     name: 'Janitor',
@@ -371,14 +390,14 @@ export const NPCCards = {
       kind: CardCostKind.Health,
       value: 3,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.GainCardToDiscardPile,
         kind: CardEffectKind.Basic,
         value: 1,
         gainedCardId: 'wetMop',
       },
-    ]),
+    ],
   },
   postalWorker: {
     name: 'Postal Worker',
@@ -389,12 +408,12 @@ export const NPCCards = {
       kind: CardCostKind.Health,
       value: 2,
     },
-    effects: List<CardEffect>([
+    effects: [
       {
         category: CardEffectCategory.Draw,
         kind: CardEffectKind.Basic,
         value: 1,
       },
-    ]),
+    ],
   },
 };

@@ -9,7 +9,6 @@ beforeEach(() => {
   mockCard = Card.create({
     id: 'mock-id',
     ...cards.ConsumableCards.apple,
-    effects: cards.ConsumableCards.apple.effects.toArray(),
   });
   mockCardStack = CardStack.create({
     cards: [mockCard],
@@ -29,7 +28,6 @@ it('adds a card to the CardStack', () => {
     Card.create({
       id: 'mock-id-2',
       ...cards.ConsumableCards.bread,
-      effects: cards.ConsumableCards.bread.effects.toArray(),
     })
   );
   expect(getSnapshot(mockCardStack)).toMatchSnapshot();

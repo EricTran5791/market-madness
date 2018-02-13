@@ -24,7 +24,6 @@ export function printCard(card: CardType): CardModelType {
   return Card.create({
     id: uniqid(),
     ...card,
-    effects: card.effects.toArray(),
   });
 }
 

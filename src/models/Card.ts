@@ -51,6 +51,9 @@ export const Card = types
           .reduce((sum, currentValue) => sum + currentValue, 0)
       );
     },
+    get subcategoriesList() {
+      return List<CardSubcategory>(self.subcategories);
+    },
     get effectsList() {
       return List<CardEffect>(self.effects);
     },
