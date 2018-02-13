@@ -25,6 +25,7 @@ import {
   CardEditorStore,
   CardEditorStoreModelType,
 } from '../models/CardEditorStore';
+import CardView from '../components/CardView';
 
 initializeIcons();
 
@@ -84,6 +85,12 @@ const TextFieldContainer = styled.div`
     height: 60vh;
     max-height: 60vh;
   }
+`;
+
+const CardPreviewContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 `;
 
 @observer
@@ -318,6 +325,10 @@ class CardEditor extends React.Component<object, State> {
         </CardEditorSection>
 
         <CardEditorSection>
+          <Title>Card Preview</Title>
+          <CardPreviewContainer>
+            <CardView model={this.state.store.currentCard} />
+          </CardPreviewContainer>
           <Title>Card JSON</Title>
           <TextFieldContainer>
             <TextField
