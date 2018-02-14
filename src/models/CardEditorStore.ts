@@ -30,7 +30,7 @@ export const CardEditorStore = types
           ? generateCardDescription(
               /* tslint:disable no-any unfortunately because MobX State Tree types are bad... */
               card.category || (self.currentCard.category as any),
-              self.currentCard.effects as any
+              card.effects || (self.currentCard.effects as any)
             )
           : '';
 
