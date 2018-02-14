@@ -4,7 +4,6 @@ import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
-import { ActiveCardEffectInfo } from '../components/ActiveCardEffectInfo';
 
 interface Props {
   playerId: string;
@@ -117,9 +116,6 @@ class HandArea extends React.Component<Props, State> {
     return (
       <StyledHandArea>
         <HandContainer>{this.displayCards()}</HandContainer>
-        {this.props.playerId === this.props.store!.currentPlayer.id && (
-          <ActiveCardEffectInfo />
-        )}
       </StyledHandArea>
     );
   }

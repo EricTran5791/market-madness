@@ -12,6 +12,7 @@ import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 import { TurnButton } from '../components/TurnButton';
 import DeckInfo from '../components/DeckInfo';
+import ActiveCardEffectInfo from '../components/ActiveCardEffectInfo';
 
 interface Props {
   store?: StoreType;
@@ -130,6 +131,7 @@ class PlayingField extends React.Component<Props, object> {
         </MarketGridArea>
 
         <GameInfoGridArea>
+          <ActiveCardEffectInfo />
           <TurnButton />
         </GameInfoGridArea>
 

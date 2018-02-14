@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { StoreType } from '../models/Store';
 import { observer, inject } from 'mobx-react';
-import { GamePhase } from '../models/GameState';
 import { InteractiveCardEffectResolveType } from '../types/cardEffect.types';
 
 interface Props {
@@ -33,14 +32,6 @@ const Button = styled.button`
 @inject('store')
 @observer
 export class ActiveCardEffectInfo extends React.Component<Props, object> {
-  turnButtonCallback() {
-    if (this.props.store!.currentGamePhase === GamePhase.GameOver) {
-      this.props.store!.createNewGame();
-    } else {
-      this.props.store!.endTurn();
-    }
-  }
-
   render() {
     return (
       <StyledActiveCardEffectInfo>
