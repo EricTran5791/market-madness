@@ -7,7 +7,7 @@ let mockCardStack: CardStackModelType;
 
 beforeEach(() => {
   mockCard = Card.create({
-    id: 'mock-id',
+    uniqid: 'mock-id',
     ...cards.ConsumableCards.apple,
   });
   mockCardStack = CardStack.create({
@@ -26,7 +26,7 @@ it('creates a CardStack', () => {
 it('adds a card to the CardStack', () => {
   mockCardStack.add(
     Card.create({
-      id: 'mock-id-2',
+      uniqid: 'mock-id-2',
       ...cards.ConsumableCards.bread,
     })
   );
