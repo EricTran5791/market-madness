@@ -59,6 +59,12 @@ export const Card = types
     get effectsList() {
       return List<CardEffect>(self.effects);
     },
+    /** The card in a JSON format readable and writable to the card library JSON. */
+    get cardJson() {
+      // Don't capture the uniqid or isPlayed in the JSON
+      const { uniqid, isPlayed, ...card } = self;
+      return JSON.stringify({ [card.id]: { card } }, undefined, 2);
+    },
   }))
   .actions(self => ({
     afterCreate() {

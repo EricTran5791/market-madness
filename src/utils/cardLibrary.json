@@ -1,0 +1,65 @@
+{
+  "basketball": {
+    "id": "basketball",
+    "name": "Basketball",
+    "category": "Item",
+    "subcategories": ["Sports Equipment"],
+    "description": "+3 Attack",
+    "cost": {
+      "kind": "Money",
+      "value": 3
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Attack",
+        "value": 3,
+        "gainedCardId": ""
+      }
+    ]
+  },
+  "coin": {
+    "id": "coin",
+    "name": "Coin",
+    "category": "Money",
+    "subcategories": [],
+    "description": "+1 Money",
+    "cost": {
+      "kind": "Money",
+      "value": 1
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Money",
+        "value": 1,
+        "gainedCardId": ""
+      }
+    ]
+  },
+  "dropShipment": {
+    "id": "dropShipment",
+    "name": "Drop Shipment",
+    "category": "Action",
+    "subcategories": [],
+    "description": "+1 Attack, Draw 1 card",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Attack",
+        "value": 1,
+        "gainedCardId": ""
+      },
+      {
+        "kind": "Basic",
+        "category": "Draw",
+        "value": 1,
+        "gainedCardId": ""
+      }
+    ]
+  }
+}

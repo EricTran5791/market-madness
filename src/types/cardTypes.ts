@@ -1,10 +1,4 @@
-import {
-  CardEffect,
-  CardEffectKind,
-  CardEffectCategory,
-  InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
-} from './cardEffect.types';
+import { CardEffect } from './cardEffect.types';
 
 export enum CardCategory {
   Action = 'Action',
@@ -49,23 +43,7 @@ export const initialCard: Card = {
     kind: CardCostKind.Money,
     value: 0,
   },
-  // TEMP
-  effects: [
-    {
-      category: CardEffectCategory.GainAttack,
-      kind: CardEffectKind.Basic,
-      value: 2,
-    },
-    {
-      category: CardEffectCategory.Heal,
-      kind: CardEffectKind.Basic,
-      value: 2,
-    },
-    {
-      category: InteractiveCardEffectCategory.Trash,
-      kind: CardEffectKind.Interactive,
-      resolveType: InteractiveCardEffectResolveType.Mandatory,
-      numCardsToResolve: 2,
-    },
-  ],
+  effects: [],
 };
+
+export type CardLibrary = Record<string, Card>;

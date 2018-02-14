@@ -14,7 +14,13 @@ import {
   InteractiveCardEffectResolveType,
 } from '../types/cardEffect.types';
 import { List } from 'immutable';
-import { Card as CardType, CardCategory } from '../types/cardTypes';
+import {
+  Card as CardType,
+  CardCategory,
+  CardLibrary,
+} from '../types/cardTypes';
+
+import cardLibrary from './cardLibrary.json';
 
 export function generateEmptyDeck(): CardStackModelType {
   return CardStack.create({ cards: [] });
@@ -25,6 +31,17 @@ export function printCard(card: CardType): CardModelType {
     uniqid: uniqid(),
     ...card,
   });
+}
+
+export function printCardByIdNew(id: string): CardModelType {
+  const library: CardLibrary = cardLibrary;
+  const card = library[id];
+  if (!card) {
+    throw new Error(
+      `Error! Card id '${id}' was not found in the card library JSON.`
+    );
+  }
+  return printCard(card);
 }
 
 // TODO: Improve with JSON card database
