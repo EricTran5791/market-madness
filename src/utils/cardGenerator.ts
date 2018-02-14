@@ -159,3 +159,23 @@ export function generateCardDescription(
       .join(', ')
   );
 }
+
+/** Converts a name to a camel case id.
+ * https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case?noredirect=1&lq=1
+ */
+export function generateIdFromName(name: string) {
+  return (
+    name
+      .toLowerCase()
+      // Replaces any - or _ characters with a space
+      .replace(/[-_]+/g, ' ')
+      // Removes any non alphanumeric characters
+      .replace(/[^\w\s]/g, '')
+      // Uppercases the first character in each group immediately following a space (delimited by spaces)
+      .replace(/ (.)/g, _ => {
+        return _.toUpperCase();
+      })
+      // Removes spaces
+      .replace(/ /g, '')
+  );
+}

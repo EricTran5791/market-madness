@@ -68,7 +68,7 @@ export const Label = styled.label`
 
 export const IdNameContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
   grid-gap: 16px;
   margin: 16px 0;
 `;
@@ -206,9 +206,9 @@ class CardEditor extends React.Component<object, State> {
           <IdNameContainer>
             <TextField
               label="Id"
-              onChanged={(value: string) => {
-                this.updateCurrentCard({ id: value });
-              }}
+              readOnly
+              disabled
+              value={this.state.store.currentCard.id}
             />
 
             <TextField

@@ -1,7 +1,10 @@
 import { types } from 'mobx-state-tree';
 import { Card } from './Card';
 import { Card as CardType } from '../types/cardTypes';
-import { generateCardDescription } from '../utils/cardGenerator';
+import {
+  generateCardDescription,
+  generateIdFromName,
+} from '../utils/cardGenerator';
 
 export const CardEditorStore = types
   .model('CardEditor', {
@@ -15,6 +18,11 @@ export const CardEditorStore = types
         /* tslint:disable no-any unfortunately because MobX State Tree types are bad... */
         ...(card as any),
       };
+
+      // Update the id if the name is changed
+      if (card.name || card.name === '') {
+        self.currentCard.id = generateIdFromName(card.name);
+      }
 
       // If auto generate description is selected and the category or
       // effects were changed, then we regenerate a card description
