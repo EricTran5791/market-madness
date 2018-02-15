@@ -17,7 +17,7 @@ import CardEffectsDetailsList, {
   MoveEffectDirection,
 } from '../components/CardEffectsDetailsList';
 import CardEffectEditor from './CardEffectEditor';
-import { CardEffect } from '../types/cardEffect.types';
+import { CardEffect, CardEffectKind } from '../types/cardEffect.types';
 import { List } from 'immutable';
 import { printCardByIdNew } from '../utils/cardGenerator';
 import { observer } from 'mobx-react';
@@ -342,7 +342,17 @@ class CardEditor extends React.Component<object, State> {
           <ControlContainer>
             <Label>Card Effects</Label>
             <CardEffectsDetailsList
-              items={this.state.store.currentCard.effectsList.toArray()}
+              items={this.state.store.currentCard.effectsList
+                .map((_: CardEffect) => {
+                  return {
+                    ..._,
+                    gainedCardName:
+                      _.kind === CardEffectKind.Basic && _.gainedCard
+                        ? _.gainedCard.name
+                        : '',
+                  };
+                })
+                .toArray()}
               onAdd={this.openAddCardEffectEditor}
               onUpdate={this.openUpdateCardEffectEditor}
               onRemove={this.removeCardEffect}
@@ -379,6 +389,9 @@ class CardEditor extends React.Component<object, State> {
             <CardEffectEditor
               cardEffect={this.state.cardEffectEditor.effect}
               cardEffectIndex={this.state.cardEffectEditor.index}
+              cardLibraryItems={this.state.store.cardLibrary.cards.map(_ => {
+                return { key: _.id, text: _.name };
+              })}
               onCancel={this.closeCardEffectEditor}
               onAdd={this.addCardEffect}
               onUpdate={this.updateCardEffect}

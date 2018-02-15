@@ -12,12 +12,17 @@ import {
 import { Title, ControlContainer, Label } from './CardEditor';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import {
+  ComboBox,
+  IComboBoxOption,
+  IComboBox,
+} from 'office-ui-fabric-react/lib/ComboBox';
 
 interface Props {
   cardEffect: CardEffect | undefined;
   cardEffectIndex: number | undefined;
+  cardLibraryItems: IComboBoxOption[];
   onCancel: () => void;
   onAdd: (effect: CardEffect) => void;
   onUpdate: (effect: CardEffect, index: number) => void;
@@ -52,11 +57,18 @@ const ControlsGrid = styled.div`
 `;
 
 class CardEffectEditor extends React.Component<Props, State> {
-  componentWillMount() {
-    this.setState({
+  private gainedCardComboBox: IComboBox;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
       cardEffect: this.props.cardEffect || initialBasicCardEffect,
       editMode: this.props.cardEffect ? 'Update' : 'Add',
-    });
+    };
+  }
+
+  setGainedCardComboBoxRef(component: IComboBox) {
+    this.gainedCardComboBox = component;
   }
 
   onCancel() {
@@ -161,21 +173,52 @@ class CardEffectEditor extends React.Component<Props, State> {
             />
           </ControlContainer>
         )}
-        {/** TODO: Change to a drop down that queries the library for all cards */ this
-          .state.cardEffect.kind === CardEffectKind.Basic && (
-          <TextField
-            label="Gained Card Id"
-            onChanged={(value: string) => {
-              if (this.state.cardEffect.kind === CardEffectKind.Basic) {
-                this.setState({
-                  cardEffect: {
-                    ...this.state.cardEffect,
-                    gainedCardId: value,
-                  },
-                });
+        {this.state.cardEffect.kind === CardEffectKind.Basic && (
+          <>
+            <Label>Gained Card</Label>
+            <ComboBox
+              options={this.props.cardLibraryItems}
+              value={
+                (this.state.cardEffect.gainedCard &&
+                  this.state.cardEffect.gainedCard.name) ||
+                'Choose a card...'
               }
-            }}
-          />
+              allowFreeform
+              autoComplete="on"
+              componentRef={component => {
+                this.setGainedCardComboBoxRef(component);
+              }}
+              onChanged={(options, index) => {
+                if (
+                  options &&
+                  this.state.cardEffect.kind === CardEffectKind.Basic
+                ) {
+                  this.setState({
+                    cardEffect: {
+                      ...this.state.cardEffect,
+                      gainedCard: {
+                        id: `${options.key}`,
+                        name: `${options.text}`,
+                      },
+                    },
+                  });
+                } else if (
+                  !options &&
+                  this.state.cardEffect.kind === CardEffectKind.Basic
+                ) {
+                  const { gainedCard, ...cardEffect } = this.state.cardEffect;
+                  this.setState({
+                    cardEffect: {
+                      ...cardEffect,
+                    },
+                  });
+                }
+              }}
+              onClick={() => {
+                this.gainedCardComboBox.focus(true);
+              }}
+            />
+          </>
         )}
         {this.state.cardEffect.kind === CardEffectKind.Interactive && (
           <Dropdown
