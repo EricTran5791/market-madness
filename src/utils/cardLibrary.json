@@ -13,8 +13,7 @@
       {
         "kind": "Basic",
         "category": "Gain Attack",
-        "value": 3,
-        "gainedCardId": ""
+        "value": 3
       }
     ]
   },
@@ -32,8 +31,7 @@
       {
         "kind": "Basic",
         "category": "Gain Money",
-        "value": 1,
-        "gainedCardId": ""
+        "value": 1
       }
     ]
   },
@@ -51,14 +49,12 @@
       {
         "kind": "Basic",
         "category": "Gain Attack",
-        "value": 1,
-        "gainedCardId": ""
+        "value": 1
       },
       {
         "kind": "Basic",
         "category": "Draw",
-        "value": 1,
-        "gainedCardId": ""
+        "value": 1
       }
     ]
   }

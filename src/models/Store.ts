@@ -112,7 +112,7 @@ export const Store = types
           const {
             category,
             value,
-            gainedCardId,
+            gainedCard,
           }: BasicCardEffectSnapshotType = effect;
           switch (category) {
             case CardEffectCategory.GainAttack:
@@ -122,29 +122,21 @@ export const Store = types
               self.gameState.addGameLogEntry(
                 GameLogEntryCategory.GainCardToDiscardPile,
                 {
-                  gainedCardName: gainedCardId
-                    .replace(/([A-Z])/g, ' $1')
-                    .replace(/^./, (str: string) => {
-                      return str.toUpperCase();
-                    }),
+                  gainedCardName: gainedCard.name,
                   value: value,
                 }
               );
-              self.currentPlayer.discardPile.add(printCardById(gainedCardId));
+              self.currentPlayer.discardPile.add(printCardById(gainedCard.id));
               break;
             case CardEffectCategory.GainCardToHand:
               self.gameState.addGameLogEntry(
                 GameLogEntryCategory.GainCardToHand,
                 {
-                  gainedCardName: gainedCardId
-                    .replace(/([A-Z])/g, ' $1')
-                    .replace(/^./, (str: string) => {
-                      return str.toUpperCase();
-                    }),
+                  gainedCardName: gainedCard.name,
                   value: value,
                 }
               );
-              self.currentPlayer.hand.addCard(printCardById(gainedCardId));
+              self.currentPlayer.hand.addCard(printCardById(gainedCard.id));
               break;
             case CardEffectCategory.GainMoney:
               self.gameState.addGameLogEntry(GameLogEntryCategory.GainMoney, {

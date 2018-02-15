@@ -28,7 +28,7 @@ export interface BasicCardEffect {
   kind: CardEffectKind.Basic;
   category: CardEffectCategory;
   value: number;
-  gainedCardId?: string;
+  gainedCard?: { id: string; name: string };
 }
 
 export interface InteractiveCardEffect {
@@ -44,7 +44,6 @@ export const initialBasicCardEffect: BasicCardEffect = {
   kind: CardEffectKind.Basic,
   category: CardEffectCategory.Draw,
   value: 0,
-  gainedCardId: '',
 };
 
 export const initialInteractiveCardEffect: InteractiveCardEffect = {

@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, isStateTreeNode, getSnapshot } from 'mobx-state-tree';
 import {
   CardEffectKind,
   CardEffectCategory,
@@ -20,8 +20,19 @@ export const BasicCardEffect = CardEffect.named('BasicCardEffect').props({
     Object.keys(CardEffectCategory).map(key => CardEffectCategory[key])
   ),
   value: types.optional(types.number, 0),
-  /** The name of the card to be gained from the effect. */
-  gainedCardId: types.optional(types.string, ''),
+  /** The card to be gained from the effect. */
+  gainedCard: types.maybe(
+    types
+      .model('GainedCard', {
+        id: types.string,
+        name: types.string,
+      })
+      .preProcessSnapshot(snapshot => {
+        // Workaround for MobX State Tree bug where the object may get added to a state tree that it already lives in
+        // https://github.com/mobxjs/mobx-state-tree/issues/616
+        return isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot;
+      })
+  ),
 });
 
 export type BasicCardEffectSnapshotType = typeof BasicCardEffect.SnapshotType;

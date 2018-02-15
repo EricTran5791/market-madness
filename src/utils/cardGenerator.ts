@@ -127,7 +127,7 @@ export function generateCardDescription(
     effects
       .map((effect: CardEffect) => {
         if (effect.kind === CardEffectKind.Basic) {
-          const { category, value, gainedCardId } = effect;
+          const { category, value, gainedCard } = effect;
           switch (category) {
             case CardEffectCategory.Draw:
               return `Draw ${value} card${value > 1 ? 's' : ''}`;
@@ -135,10 +135,11 @@ export function generateCardDescription(
               return `+${value} Attack`;
             case CardEffectCategory.GainCardToDiscardPile:
               // TODO: Map card id to card name once the JSON card library is done
-              return `Gain ${value} ${gainedCardId}`;
+              return `Gain ${value} ${gainedCard && gainedCard.name}`;
             case CardEffectCategory.GainCardToHand:
               // TODO: Map card id to card name once the JSON card library is done
-              return `Add ${value} ${gainedCardId} to your hand`;
+              return `Add ${value} ${gainedCard &&
+                gainedCard.name} to your hand`;
             case CardEffectCategory.GainMoney:
               return `+${value} Money`;
             case CardEffectCategory.Heal:

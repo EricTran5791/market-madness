@@ -13,13 +13,13 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 1,
         },
         Object {
           "category": "Trash Self",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 0,
         },
@@ -42,13 +42,13 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 2,
         },
         Object {
           "category": "Trash Self",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 0,
         },
@@ -76,13 +76,13 @@ Object {
   "effects": Array [
     Object {
       "category": "Heal",
-      "gainedCardId": "",
+      "gainedCard": null,
       "kind": "Basic",
       "value": 1,
     },
     Object {
       "category": "Trash Self",
-      "gainedCardId": "",
+      "gainedCard": null,
       "kind": "Basic",
       "value": 0,
     },
@@ -110,13 +110,13 @@ Object {
       "effects": Array [
         Object {
           "category": "Heal",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 1,
         },
         Object {
           "category": "Trash Self",
-          "gainedCardId": "",
+          "gainedCard": null,
           "kind": "Basic",
           "value": 0,
         },

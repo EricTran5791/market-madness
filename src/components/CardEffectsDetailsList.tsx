@@ -79,7 +79,7 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
     },
     {
       key: 'gainedCardName',
-      name: 'Gained Card Name',
+      name: 'Gained Card',
       fieldName: 'gainedCardName',
       minWidth: 0,
     },
