@@ -99,7 +99,7 @@ class HandArea extends React.Component<Props, State> {
           key={i}
           model={card}
           cardPosition={{
-            zIndex: i * 10,
+            zIndex: (i + 1) * 10,
             xPos: -1 * i * 50,
             yPos: this.calculateCardYPos(i, isEven, handMedian),
             rotationDeg: this.calculateCardRotationDeg(i, isEven, handMedian),
