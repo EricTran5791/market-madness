@@ -26,7 +26,12 @@ ReactDOM.render(
           </Provider>
         )}
       />
-      <Route path="/card-editor" component={CardEditor} />
+      <Route
+        path="/card-editor/:cardId?"
+        render={({ match }) => (
+          <CardEditor cardId={match.params.cardId || ''} />
+        )}
+      />
     </>
   </Router>,
   document.getElementById('root') as HTMLElement
