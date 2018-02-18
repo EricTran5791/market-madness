@@ -63,7 +63,7 @@ export const Card = types
     get cardJson() {
       // Don't capture the uniqid or isPlayed in the JSON
       const { uniqid, isPlayed, ...card } = self;
-      return JSON.stringify({ [card.id]: { card } }, undefined, 2);
+      return JSON.stringify({ [card.id]: { ...card } }, undefined, 2);
     },
   }))
   .actions(self => ({
