@@ -8,6 +8,11 @@ export const CardLibrary = types
   .model('CardLibrary', {
     cards: types.optional(types.array(Card), []),
   })
+  .views(self => ({
+    get cardLibraryJson() {
+      return self.cards.map(_ => _.cardJson).join(',\n');
+    },
+  }))
   .actions(self => ({
     afterCreate() {
       const library = cardLibrary as CardLibraryRecordType;
