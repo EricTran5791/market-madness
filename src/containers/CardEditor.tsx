@@ -242,24 +242,32 @@ class CardEditor extends React.Component<Props, State> {
   }
 
   updateCard() {
-    this.props.cardLibrary!.updateCard(
-      this.state.initialCard.id,
-      getSnapshot(this.state.store.currentCard)
-    );
-    this.setState({
-      initialCard: {
-        id: this.state.store.currentCard.id,
-        name: this.state.store.currentCard.name,
-      },
-    });
+    if (
+      this.props.cardLibrary!.updateCard(
+        this.state.initialCard.id,
+        getSnapshot(this.state.store.currentCard)
+      )
+    ) {
+      this.setState({
+        initialCard: {
+          id: this.state.store.currentCard.id,
+          name: this.state.store.currentCard.name,
+        },
+      });
+    } else {
+      console.error('duplicate id');
+    }
   }
 
   addCard() {
     const newCard = printCard(getSnapshot(this.state.store.currentCard));
-    this.props.cardLibrary!.addCard(newCard);
-    this.setState({
-      initialCard: { id: newCard.id, name: newCard.name },
-    });
+    if (this.props.cardLibrary!.addCard(newCard)) {
+      this.setState({
+        initialCard: { id: newCard.id, name: newCard.name },
+      });
+    } else {
+      console.error('duplicate id');
+    }
   }
 
   deleteCard() {

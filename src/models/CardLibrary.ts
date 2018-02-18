@@ -12,6 +12,9 @@ export const CardLibrary = types
     get cardLibraryJson() {
       return self.cards.map(_ => _.cardJson).join(',\n');
     },
+    getCardById(id: string) {
+      return self.cards.find(_ => _.id === id);
+    },
   }))
   .actions(self => ({
     afterCreate() {
@@ -23,15 +26,25 @@ export const CardLibrary = types
         })
       );
     },
-    updateCard(id: string, snapshot: CardModelSnapshotType) {
+    updateCard(id: string, snapshot: CardModelSnapshotType): boolean {
+      // If the id was changed in the snapshot, check that there isn't a card with the same id as the snapshot
+      const duplicateId = id !== snapshot.id && self.getCardById(snapshot.id);
       const updatedCard = self.cards.find(_ => _.id === id);
-      if (updatedCard) {
+      if (updatedCard && !duplicateId) {
         applySnapshot(updatedCard, snapshot);
+        return true;
+      } else {
+        return false;
       }
     },
-    addCard(card: CardModelType) {
-      // TODO: Validate for duplicate ids
-      self.cards.push(card);
+    addCard(card: CardModelType): boolean {
+      const duplicateId = self.getCardById(card.id);
+      if (!duplicateId) {
+        self.cards.push(card);
+        return true;
+      } else {
+        return false;
+      }
     },
     deleteCard(id: string) {
       const deletedCard = self.cards.find(_ => _.id === id);
