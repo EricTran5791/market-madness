@@ -109,8 +109,20 @@ class CardLibraryView extends React.Component<Props, State> {
       <StyledCardLibrary>
         <OptionsContainer>
           <DefaultButton
-            text="View Card Library JSON"
+            text="View card library JSON"
             onClick={() => this.setState({ isJsonPreviewOpen: true })}
+          />
+          <Route
+            render={({ history }) => (
+              <DefaultButton
+                text="Create a new card"
+                primary
+                iconProps={{ iconName: 'Add' }}
+                onClick={() => {
+                  history.replace('/card-editor/new');
+                }}
+              />
+            )}
           />
         </OptionsContainer>
 

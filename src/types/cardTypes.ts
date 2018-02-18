@@ -37,7 +37,7 @@ export type Card = {
 export const initialCard: Card = {
   id: '',
   name: '',
-  category: CardCategory.Hardware,
+  category: CardCategory.Neutral,
   subcategories: [],
   description: '',
   cost: {
