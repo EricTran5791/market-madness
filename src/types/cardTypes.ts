@@ -34,7 +34,7 @@ export type Card = {
   isPlayed?: boolean;
 };
 
-export const initialCard: Card = {
+export const initialCardState: Card = {
   id: '',
   name: '',
   category: CardCategory.Neutral,

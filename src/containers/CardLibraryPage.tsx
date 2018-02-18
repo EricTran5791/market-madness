@@ -19,7 +19,7 @@ interface State {
 const StyledCardLibrary = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 32px;
+  padding: 16px 128px;
 `;
 
 const OptionsContainer = styled.div`
