@@ -12,7 +12,7 @@ interface Props {
 const StyledCardLibrary = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 64px;
+  padding: 16px 32px;
 `;
 
 const Title = styled.div`
@@ -54,7 +54,7 @@ class CardLibraryView extends React.Component<Props, object> {
   render() {
     return (
       <StyledCardLibrary>
-        <Title>Card Library</Title>
+        <Title>All Cards</Title>
         <CardContainer>{this.displayCards()}</CardContainer>
       </StyledCardLibrary>
     );

@@ -12,6 +12,7 @@ import DevTools from 'mobx-react-devtools';
 import CardEditor from './containers/CardEditor';
 import CardLibraryView from './components/CardLibraryView';
 import { CardLibrary } from './models/CardLibrary';
+import AppBar from './components/AppBar';
 
 ReactDOM.render(
   <Provider cardLibrary={CardLibrary.create()}>
@@ -29,11 +30,25 @@ ReactDOM.render(
             </Provider>
           )}
         />
-        <Route path="/card-library" component={CardLibraryView} />
+        <Route
+          path="/card-library"
+          render={() => (
+            <>
+              <AppBar title="Card Library" />
+              <CardLibraryView />
+            </>
+          )}
+        />
         <Route
           path="/card-editor/:cardId?"
           render={({ match }) => (
-            <CardEditor cardId={match.params.cardId || ''} />
+            <>
+              <AppBar
+                title="Card Editor"
+                backNavItem={{ text: 'Library', link: '/card-library' }}
+              />
+              <CardEditor cardId={match.params.cardId || ''} />
+            </>
           )}
         />
       </>

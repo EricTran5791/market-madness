@@ -48,8 +48,8 @@ interface State {
 const StyledCardEditor = styled.div`
   display: grid;
   grid-template-columns: 3fr 2fr;
-  grid-gap: 16px;
-  padding: 16px;
+  grid-gap: 32px;
+  padding: 16px 32px;
 `;
 
 const CardEditorSection = styled.div`
@@ -220,7 +220,7 @@ class CardEditor extends React.Component<Props, State> {
     return (
       <StyledCardEditor>
         <CardEditorSection>
-          <Title>Card Editor</Title>
+          <Title>{this.state.store.currentCard.name}</Title>
           <IdNameContainer>
             <TextField
               label="Id"
