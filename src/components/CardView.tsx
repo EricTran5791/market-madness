@@ -55,10 +55,12 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
       : ''};
   background-color: ${({ category }: StyledCardProps): string => {
     switch (category) {
-      case CardCategory.Action:
-        return '#066ac1';
-      case CardCategory.Consumable:
-        return 'seagreen';
+      case CardCategory.Groceries:
+        return '#03A93B';
+      case CardCategory.Hardware:
+        return '#F26210';
+      case CardCategory.Sports:
+        return '#304DFF';
       case CardCategory.Money:
         return '#66514A';
       case CardCategory.NPC:

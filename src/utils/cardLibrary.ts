@@ -15,7 +15,7 @@ export const ActionCards: Record<string, Card> = {
   dropShipment: {
     id: 'dropShipment',
     name: 'Drop Shipment',
-    category: CardCategory.Action,
+    category: CardCategory.Neutral,
     subcategories: [],
     description: '',
     cost: {
@@ -38,7 +38,7 @@ export const ActionCards: Record<string, Card> = {
   exchangeGoods: {
     id: 'exchangeGoods',
     name: 'Exchange Goods',
-    category: CardCategory.Action,
+    category: CardCategory.Neutral,
     subcategories: [],
     description: '',
     cost: {
@@ -62,7 +62,7 @@ export const ActionCards: Record<string, Card> = {
   expressShipping: {
     id: 'expressShipping',
     name: 'Express Shipping',
-    category: CardCategory.Action,
+    category: CardCategory.Neutral,
     subcategories: [],
     description: '',
     cost: {
@@ -83,7 +83,7 @@ export const ConsumableCards: Record<string, Card> = {
   apple: {
     id: 'apple',
     name: 'Apple',
-    category: CardCategory.Consumable,
+    category: CardCategory.Groceries,
     subcategories: [CardSubcategory.Food],
     description: '',
     cost: {
@@ -106,7 +106,7 @@ export const ConsumableCards: Record<string, Card> = {
   bread: {
     id: 'bread',
     name: 'Bread',
-    category: CardCategory.Consumable,
+    category: CardCategory.Groceries,
     subcategories: [CardSubcategory.Food],
     description: '',
     cost: {
@@ -129,7 +129,7 @@ export const ConsumableCards: Record<string, Card> = {
   energyDrink: {
     id: 'energyDrink',
     name: 'Energy Drink',
-    category: CardCategory.Consumable,
+    category: CardCategory.Groceries,
     subcategories: [CardSubcategory.Food],
     description: '',
     cost: {
@@ -157,7 +157,7 @@ export const ConsumableCards: Record<string, Card> = {
   multivitamins: {
     id: 'multivitamins',
     name: 'Multivitamins',
-    category: CardCategory.Consumable,
+    category: CardCategory.Groceries,
     subcategories: [],
     description: '',
     cost: {
@@ -183,7 +183,7 @@ export const ItemCards: Record<string, Card> = {
   basketball: {
     id: 'basketball',
     name: 'Basketball',
-    category: CardCategory.Item,
+    category: CardCategory.Sports,
     subcategories: [],
     description: '',
     cost: {
@@ -201,7 +201,7 @@ export const ItemCards: Record<string, Card> = {
   fishBones: {
     id: 'fishBones',
     name: 'Fish Bones',
-    category: CardCategory.Item,
+    category: CardCategory.Neutral,
     subcategories: [],
     description: '',
     cost: {
@@ -213,7 +213,7 @@ export const ItemCards: Record<string, Card> = {
   garbageBag: {
     id: 'garbageBag',
     name: 'Garbage Bag',
-    category: CardCategory.Item,
+    category: CardCategory.Hardware,
     subcategories: [],
     description: '',
     cost: {
@@ -237,7 +237,7 @@ export const ItemCards: Record<string, Card> = {
   portableFurnace: {
     id: 'portableFurnace',
     name: 'Portable Furnace',
-    category: CardCategory.Item,
+    category: CardCategory.Hardware,
     subcategories: [],
     description: '',
     cost: {
@@ -262,7 +262,7 @@ export const ItemCards: Record<string, Card> = {
   shoppingBasket: {
     id: 'shoppingBasket',
     name: 'Shopping Basket',
-    category: CardCategory.Item,
+    category: CardCategory.Neutral,
     subcategories: [],
     description: '',
     cost: {

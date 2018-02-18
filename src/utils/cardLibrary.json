@@ -2,7 +2,7 @@
   "basketball": {
     "id": "basketball",
     "name": "Basketball",
-    "category": "Item",
+    "category": "Sports",
     "subcategories": ["Sports Equipment"],
     "description": "+3 Attack",
     "cost": {
@@ -38,7 +38,7 @@
   "dropShipment": {
     "id": "dropShipment",
     "name": "Drop Shipment",
-    "category": "Action",
+    "category": "Neutral",
     "subcategories": [],
     "description": "+1 Attack, Draw 1 card",
     "cost": {
