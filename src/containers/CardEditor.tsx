@@ -39,9 +39,11 @@ interface Props {
   cardLibrary?: CardLibraryModelType;
 }
 
+type InitialCardType = { id: string; name: string };
+
 interface State {
   /** Track the initial card so that we can replace the old card in the card library after saving. */
-  initialCard: { id: string; name: string };
+  initialCard: InitialCardType;
   store: CardEditorStoreModelType;
   cardEffectEditor: {
     isOpen: boolean;
@@ -239,6 +241,27 @@ class CardEditor extends React.Component<Props, State> {
     });
   }
 
+  updateCard() {
+    this.props.cardLibrary!.updateCard(
+      this.state.initialCard.id,
+      getSnapshot(this.state.store.currentCard)
+    );
+    this.setState({
+      initialCard: {
+        id: this.state.store.currentCard.id,
+        name: this.state.store.currentCard.name,
+      },
+    });
+  }
+
+  addCard() {
+    const newCard = printCard(getSnapshot(this.state.store.currentCard));
+    this.props.cardLibrary!.addCard(newCard);
+    this.setState({
+      initialCard: { id: newCard.id, name: newCard.name },
+    });
+  }
+
   deleteCard() {
     this.props.cardLibrary!.deleteCard(this.state.initialCard.id);
     this.props.history.replace('/card-library');
@@ -250,9 +273,15 @@ class CardEditor extends React.Component<Props, State> {
         <CardEditorSection>
           <CardEditorOptionsContainer>
             <DefaultButton
-              text="Save card"
+              text={this.state.initialCard.id ? 'Update card' : 'Save card'}
               primary
-              onClick={() => console.log('saved')}
+              onClick={() => {
+                if (this.state.initialCard.id) {
+                  this.updateCard();
+                } else {
+                  this.addCard();
+                }
+              }}
               split
               menuProps={{
                 items: [
