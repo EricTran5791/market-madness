@@ -83,11 +83,11 @@ export const Player = types
         });
 
         // Draw the remaining amount of cards
-        for (
-          let i = 0;
-          i < Math.min(remainingDeckDraws, self.deck.cards.length);
-          i++
-        ) {
+        const numRemainingDeckDraws = Math.min(
+          remainingDeckDraws,
+          self.deck.cards.length
+        );
+        for (let i = 0; i < numRemainingDeckDraws; i++) {
           cardsDrawn++;
           self.hand.cardStack.add(detach(self.deck.cards[0]));
         }
