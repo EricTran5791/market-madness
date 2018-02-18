@@ -28,15 +28,20 @@ import {
 import CardView from '../components/CardView';
 import { CardLibraryModelType } from '../models/CardLibrary';
 import { getSnapshot } from 'mobx-state-tree';
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { History } from 'history';
 
 initializeIcons();
 
 interface Props {
   cardId: string;
+  history: History;
   cardLibrary?: CardLibraryModelType;
 }
 
 interface State {
+  /** Track the initial card so that we can replace the old card in the card library after saving. */
+  initialCard: { id: string; name: string };
   store: CardEditorStoreModelType;
   cardEffectEditor: {
     isOpen: boolean;
@@ -61,6 +66,10 @@ export const Title = styled.div`
   font-family: 'Acme';
   font-size: 24px;
   margin-bottom: 16px;
+`;
+
+export const CardTitle = Title.extend`
+  margin: auto 0;
 `;
 
 export const ControlContainer = styled.div`
@@ -107,6 +116,17 @@ const CardPreviewContainer = styled.div`
   margin-bottom: 16px;
 `;
 
+const CardEditorOptionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, fit-content(100%));
+  grid-gap: 16px;
+  margin-bottom: 32px;
+
+  button {
+    height: 48px;
+  }
+`;
+
 @inject('cardLibrary')
 @observer
 class CardEditor extends React.Component<Props, State> {
@@ -118,6 +138,9 @@ class CardEditor extends React.Component<Props, State> {
       props.cardLibrary.cards.find(card => card.id === props.cardId);
 
     this.state = {
+      initialCard: currentCard
+        ? { id: currentCard.id, name: currentCard.name }
+        : { id: '', name: 'New Card' },
       store: CardEditorStore.create({
         // Copy the requested card if it's in the library, otherwise start with a new card
         currentCard: currentCard
@@ -216,11 +239,38 @@ class CardEditor extends React.Component<Props, State> {
     });
   }
 
+  deleteCard() {
+    this.props.cardLibrary!.deleteCard(this.state.initialCard.id);
+    this.props.history.replace('/card-library');
+  }
+
   render() {
     return (
       <StyledCardEditor>
         <CardEditorSection>
-          <Title>{this.state.store.currentCard.name}</Title>
+          <CardEditorOptionsContainer>
+            <DefaultButton
+              text="Save card"
+              primary
+              onClick={() => console.log('saved')}
+              split
+              menuProps={{
+                items: [
+                  {
+                    key: 'delete',
+                    name: 'Delete card',
+                    icon: 'Trash',
+                    disabled: this.state.initialCard.id === '',
+                    onClick: () => this.deleteCard(),
+                  },
+                ],
+              }}
+            />
+            <CardTitle>
+              {this.state.initialCard.name || 'Untitled Card'}
+            </CardTitle>
+          </CardEditorOptionsContainer>
+
           <IdNameContainer>
             <TextField
               label="Id"

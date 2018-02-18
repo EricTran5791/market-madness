@@ -41,13 +41,16 @@ ReactDOM.render(
         />
         <Route
           path="/card-editor/:cardId?"
-          render={({ match }) => (
+          render={({ match, history }) => (
             <>
               <AppBar
                 title="Card Editor"
                 backNavItem={{ text: 'Library', link: '/card-library' }}
               />
-              <CardEditor cardId={match.params.cardId || ''} />
+              <CardEditor
+                cardId={match.params.cardId || ''}
+                history={history}
+              />
             </>
           )}
         />

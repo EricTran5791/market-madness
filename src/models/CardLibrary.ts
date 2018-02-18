@@ -23,6 +23,12 @@ export const CardLibrary = types
         })
       );
     },
+    deleteCard(id: string) {
+      const deletedCard = self.cards.find(_ => _.id === id);
+      if (deletedCard) {
+        self.cards.remove(deletedCard);
+      }
+    },
   }));
 
 export type CardLibraryModelType = typeof CardLibrary.Type;
