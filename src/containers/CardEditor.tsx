@@ -254,6 +254,15 @@ class CardEditor extends React.Component<Props, State> {
           <Dropdown
             label="Subcategories"
             multiSelect
+            selectedKeys={this.state.store.currentCard.subcategories.map(
+              subcategory => {
+                return (
+                  Object.keys(CardSubcategory).find(
+                    _ => CardSubcategory[_] === subcategory
+                  ) || ''
+                );
+              }
+            )}
             options={Object.keys(CardSubcategory)
               .map(key => {
                 return {
