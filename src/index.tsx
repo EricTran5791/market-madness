@@ -10,7 +10,7 @@ import PlayingField from './containers/PlayingField';
 import { initializeStore } from './utils/gameStateManager';
 import DevTools from 'mobx-react-devtools';
 import CardEditor from './containers/CardEditor';
-import CardLibraryView from './components/CardLibraryView';
+import CardLibraryPage from './containers/CardLibraryPage';
 import { CardLibrary } from './models/CardLibrary';
 import AppBar from './components/AppBar';
 
@@ -35,7 +35,7 @@ ReactDOM.render(
           render={() => (
             <>
               <AppBar title="Card Library" />
-              <CardLibraryView />
+              <CardLibraryPage />
             </>
           )}
         />
