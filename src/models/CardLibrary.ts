@@ -1,5 +1,6 @@
 import { types, applySnapshot } from 'mobx-state-tree';
 import { Card, CardModelSnapshotType, CardModelType } from './Card';
+import { Map } from 'immutable';
 
 export enum CardLibraryOperationKind {
   Success = 'Success',
@@ -31,8 +32,13 @@ export const CardLibrary = types
     cards: types.optional(types.array(Card), []),
   })
   .views(self => ({
+    /** Returns a map of the card library. Uses the card id as the key and the card view data as the value. */
     get cardLibraryJson() {
-      return self.cards.map(_ => _.cardJson).join(',\n');
+      return JSON.stringify(
+        Map(self.cards.map(_ => [_.id, _.viewData])).toObject(),
+        undefined,
+        2
+      );
     },
     getCardById(id: string): CardModelType {
       return self.cards.find(_ => _.id === id);

@@ -59,11 +59,10 @@ export const Card = types
     get effectsList() {
       return List<CardEffect>(self.effects);
     },
-    /** The card in a JSON format readable and writable to the card library JSON. */
-    get cardJson() {
-      // Don't capture the uniqid or isPlayed in the JSON
+    /** Returns only the properties required for viewing and not playing. */
+    get viewData() {
       const { uniqid, isPlayed, ...card } = self;
-      return JSON.stringify({ [card.id]: { ...card } }, undefined, 2);
+      return card;
     },
   }))
   .actions(self => ({
@@ -80,6 +79,10 @@ export const Card = types
     /** Reset a card's isPlayed status every time it is detached from its direct parent. */
     beforeDetach() {
       self.isPlayed = false;
+    },
+    /** The card in a JSON format, used by the JSON preview in the card editor. */
+    getCardJson() {
+      return JSON.stringify(self.viewData, undefined, 2);
     },
   }));
 

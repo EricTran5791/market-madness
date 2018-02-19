@@ -515,7 +515,7 @@ class CardEditor extends React.Component<Props, State> {
               multiline
               autoAdjustHeight
               readOnly
-              value={this.state.store.currentCard.cardJson}
+              value={this.state.store.currentCard.getCardJson()}
             />
           </TextFieldContainer>
         </CardEditorSection>
