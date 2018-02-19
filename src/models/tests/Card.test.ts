@@ -8,9 +8,10 @@ describe('Card and CardStack Model', () => {
 
   beforeEach(() => {
     mockCard = Card.create({
-      uniqid: 'mock-id-0',
       ...initialCardState,
-      name: 'Mock Card 0',
+      uniqid: '1',
+      id: '1',
+      name: 'Card 1',
     });
     mockCardStack = CardStack.create({
       cards: [mockCard],
@@ -28,9 +29,10 @@ describe('Card and CardStack Model', () => {
   it('adds a card to the CardStack', () => {
     mockCardStack.add(
       Card.create({
-        uniqid: 'mock-id-1',
         ...initialCardState,
-        name: 'Mock Card 1',
+        uniqid: '2',
+        id: '2',
+        name: 'Card 2',
       })
     );
     expect(getSnapshot(mockCardStack)).toMatchSnapshot();

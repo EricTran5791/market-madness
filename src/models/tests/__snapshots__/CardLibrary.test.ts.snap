@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card Library adds a new card to the library 1`] = `
+Object {
+  "kind": "Success",
+  "text": "Success! New Card has been added to the card library.",
+}
+`;
+
+exports[`Card Library creates a Card Library 1`] = `
+Object {
+  "cards": Array [
+    Object {
+      "category": "Neutral",
+      "cost": Object {
+        "kind": "Money",
+        "value": 0,
+      },
+      "description": "",
+      "effects": Array [],
+      "id": "1",
+      "isPlayed": false,
+      "name": "Card 1",
+      "subcategories": Array [],
+      "uniqid": "1",
+    },
+    Object {
+      "category": "Neutral",
+      "cost": Object {
+        "kind": "Money",
+        "value": 0,
+      },
+      "description": "",
+      "effects": Array [],
+      "id": "2",
+      "isPlayed": false,
+      "name": "Card 2",
+      "subcategories": Array [],
+      "uniqid": "2",
+    },
+    Object {
+      "category": "Neutral",
+      "cost": Object {
+        "kind": "Money",
+        "value": 0,
+      },
+      "description": "",
+      "effects": Array [],
+      "id": "3",
+      "isPlayed": false,
+      "name": "Card 3",
+      "subcategories": Array [],
+      "uniqid": "3",
+    },
+  ],
+}
+`;
+
+exports[`Card Library deletes a card in the library 1`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
+
+exports[`Card Library deletes a card in the library 2`] = `undefined`;
+
+exports[`Card Library fails to add a new card to the library when the new card id
+    is already being used by another card in the library 1`] = `
+Object {
+  "kind": "Error",
+  "text": "There is another card in the library with the same id. Please use another name.",
+}
+`;
+
+exports[`Card Library fails to add a new card to the library when the new card id
+    is already being used by another card in the library 2`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
+
+exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 1`] = `
+Object {
+  "kind": "Error",
+  "text": "There is another card in the library with the same id. Please use another name.",
+}
+`;
+
+exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 2`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
+
+exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 3`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "2",
+  "isPlayed": false,
+  "name": "Card 2",
+  "subcategories": Array [],
+  "uniqid": "2",
+}
+`;
+
+exports[`Card Library gets a card by id from the library 1`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
+
+exports[`Card Library gets a card by id from the library 2`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "2",
+  "isPlayed": false,
+  "name": "Card 2",
+  "subcategories": Array [],
+  "uniqid": "2",
+}
+`;
+
+exports[`Card Library gets a card by id from the library 3`] = `undefined`;
+
+exports[`Card Library updates a card in the library 1`] = `
+Object {
+  "kind": "Success",
+  "text": "Success! Card 1 New has been updated in the card library.",
+}
+`;
+
+exports[`Card Library updates a card in the library 2`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1 New",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
