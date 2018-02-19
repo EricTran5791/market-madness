@@ -178,6 +178,27 @@ Object {
 
 exports[`Card Library gets a card by id from the library 3`] = `undefined`;
 
+exports[`Card Library invalidates a card where the id or name is empty 1`] = `
+Object {
+  "kind": "Invalid",
+  "text": "Error! The card id and name must not be empty. Please change the card name.",
+}
+`;
+
+exports[`Card Library invalidates a card where the id or name is empty 2`] = `
+Object {
+  "kind": "Invalid",
+  "text": "Error! The card id and name must not be empty. Please change the card name.",
+}
+`;
+
+exports[`Card Library invalidates a card where the target id is already present in the library 1`] = `
+Object {
+  "kind": "Invalid",
+  "text": "There is another card in the library with the same id. Please use another name.",
+}
+`;
+
 exports[`Card Library updates a card in the library 1`] = `
 Object {
   "kind": "Success",
@@ -199,5 +220,12 @@ Object {
   "name": "Card 1 New",
   "subcategories": Array [],
   "uniqid": "1",
+}
+`;
+
+exports[`Card Library validates a valid card 1`] = `
+Object {
+  "kind": "Valid",
+  "text": "",
 }
 `;

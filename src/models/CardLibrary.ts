@@ -22,7 +22,7 @@ type CardValidationStatus = {
 };
 
 type ValidateCardParams = {
-  card: CardModelType;
+  card: CardModelType | CardModelSnapshotType;
   targetId: string;
 };
 
@@ -43,14 +43,19 @@ export const CardLibrary = types
       id: string,
       snapshot: CardModelSnapshotType
     ): CardLibraryOperation {
+      // Find the card to be updated
       const cardToUpdate = self.getCardById(id);
       const cardValidationStatus = validateCard({
-        card: cardToUpdate,
+        // Validate the snapshot
+        card: snapshot,
         // If the id was changed in the snapshot, check that there isn't a card with the same id as the snapshot
-        targetId: id !== snapshot.id ? snapshot.id : undefined,
+        targetId: id !== snapshot.id ? snapshot.id : '',
       });
 
-      if (cardValidationStatus.kind === CardValidationStatusKind.Valid) {
+      if (
+        cardToUpdate &&
+        cardValidationStatus.kind === CardValidationStatusKind.Valid
+      ) {
         applySnapshot(cardToUpdate, snapshot);
         return {
           kind: CardLibraryOperationKind.Success,
@@ -102,12 +107,12 @@ export const CardLibrary = types
         };
       }
 
-      // Check for an empty id
-      if (card.id === '') {
+      // Check for an empty id or name
+      if (card.id === '' || card.name === '') {
         return {
           kind: CardValidationStatusKind.Invalid,
           text:
-            'Error! The card id must not be empty. Please change the card name.',
+            'Error! The card id and name must not be empty. Please change the card name.',
         };
       }
 

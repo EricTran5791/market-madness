@@ -94,4 +94,31 @@ describe('Card Library', () => {
     mockCardLibrary.deleteCard('1');
     expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
   });
+
+  it('validates a valid card', () => {
+    expect(
+      mockCardLibrary.validateCard({ card: mockCard, targetId: '' })
+    ).toMatchSnapshot();
+  });
+
+  it('invalidates a card where the target id is already present in the library', () => {
+    expect(
+      mockCardLibrary.validateCard({ card: mockCard, targetId: '2' })
+    ).toMatchSnapshot();
+  });
+
+  it('invalidates a card where the id or name is empty', () => {
+    expect(
+      mockCardLibrary.validateCard({
+        card: { ...initialCardState, id: '' },
+        targetId: '',
+      })
+    ).toMatchSnapshot();
+    expect(
+      mockCardLibrary.validateCard({
+        card: { ...initialCardState, id: 'new', name: '' },
+        targetId: '',
+      })
+    ).toMatchSnapshot();
+  });
 });
