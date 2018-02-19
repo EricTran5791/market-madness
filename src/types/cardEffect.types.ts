@@ -24,11 +24,16 @@ export enum InteractiveCardEffectResolveType {
   Optional = 'Optional',
 }
 
+export type GainedCard = {
+  id: string;
+  name: string;
+};
+
 export interface BasicCardEffect {
   kind: CardEffectKind.Basic;
   category: CardEffectCategory;
   value: number;
-  gainedCard?: { id: string; name: string };
+  gainedCard?: GainedCard;
 }
 
 export interface InteractiveCardEffect {

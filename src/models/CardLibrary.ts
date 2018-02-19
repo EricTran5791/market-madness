@@ -1,7 +1,8 @@
 import { types, applySnapshot } from 'mobx-state-tree';
 import { Card, CardModelSnapshotType, CardModelType } from './Card';
-import { Map } from 'immutable';
-import { BasicCardEffect } from '../types/cardEffect.types';
+import { Map, List } from 'immutable';
+import { BasicCardEffect, GainedCard } from '../types/cardEffect.types';
+import { generateCardDescription } from '../utils/cardGenerator';
 
 export enum CardLibraryOperationKind {
   Success = 'Success',
@@ -93,6 +94,10 @@ export const CardLibrary = types
         cardToUpdate &&
         validationStatus.kind === CardValidationStatusKind.Valid
       ) {
+        updateReferencedCardEffects(
+          { id: cardToUpdate.id, name: cardToUpdate.name },
+          { id: snapshot.id, name: snapshot.name }
+        );
         applySnapshot(cardToUpdate, snapshot);
         return {
           kind: CardLibraryOperationKind.Success,
@@ -203,6 +208,40 @@ export const CardLibrary = types
       }
 
       return { kind: CardValidationStatusKind.Valid, text: '' };
+    }
+
+    /** Find all cards with references to the old card id/name, and replace the references with the new card id/name. */
+    function updateReferencedCardEffects(
+      oldRef: GainedCard,
+      newRef: GainedCard
+    ) {
+      self.cards
+        .filter(
+          _ =>
+            !!_.effectsList.find(
+              (effect: BasicCardEffect) =>
+                (effect.gainedCard && effect.gainedCard.id === oldRef.id) ||
+                false
+            )
+        )
+        .forEach((_: CardModelSnapshotType) => {
+          const updatedEffects = _.effects.map((effect: BasicCardEffect) => {
+            return effect.gainedCard && effect.gainedCard.id === oldRef.id
+              ? {
+                  ...effect,
+                  gainedCard: { id: newRef.id, name: newRef.name },
+                }
+              : effect;
+          });
+          updateCard(_.id, {
+            ..._,
+            effects: updatedEffects,
+            description: generateCardDescription(
+              _.category,
+              List(updatedEffects)
+            ),
+          });
+        });
     }
 
     return {

@@ -227,19 +227,40 @@ Object {
 }
 `;
 
-exports[`Card Library updates a card in the library 2`] = `
+exports[`Card Library updates a card in the library 2`] = `undefined`;
+
+exports[`Card Library updates a card's name and all other cards that reference the card 1`] = `
+Object {
+  "kind": "Success",
+  "text": "Success! Card 1 New has been updated in the card library.",
+}
+`;
+
+exports[`Card Library updates a card's name and all other cards that reference the card 2`] = `undefined`;
+
+exports[`Card Library updates a card's name and all other cards that reference the card 3`] = `
 Object {
   "category": "Neutral",
   "cost": Object {
     "kind": "Money",
     "value": 0,
   },
-  "description": "",
-  "effects": Array [],
-  "id": "1",
+  "description": "Draw 0 card",
+  "effects": Array [
+    Object {
+      "category": "Draw",
+      "gainedCard": Object {
+        "id": "1 new",
+        "name": "Card 1 New",
+      },
+      "kind": "Basic",
+      "value": 0,
+    },
+  ],
+  "id": "new",
   "isPlayed": false,
-  "name": "Card 1 New",
+  "name": "New Card that references Card 1",
   "subcategories": Array [],
-  "uniqid": "1",
+  "uniqid": "new",
 }
 `;

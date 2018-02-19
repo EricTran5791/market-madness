@@ -45,9 +45,36 @@ describe('Card Library', () => {
 
   it('updates a card in the library', () => {
     expect(
-      mockCardLibrary.updateCard('1', { ...mockCard, name: 'Card 1 New' })
+      mockCardLibrary.updateCard('1', {
+        ...mockCard,
+        id: '1 new',
+        name: 'Card 1 New',
+      })
     ).toMatchSnapshot();
     expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
+  });
+
+  it(`updates a card's name and all other cards that reference the card`, () => {
+    mockCardLibrary.addCard(
+      Card.create({
+        ...initialCardState,
+        uniqid: 'new',
+        id: 'new',
+        name: 'New Card that references Card 1',
+        effects: [
+          { ...initialBasicCardEffect, gainedCard: { id: '1', name: '1' } },
+        ],
+      })
+    );
+    expect(
+      mockCardLibrary.updateCard('1', {
+        ...mockCard,
+        id: '1 new',
+        name: 'Card 1 New',
+      })
+    ).toMatchSnapshot();
+    expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
+    expect(mockCardLibrary.getCardById('new')).toMatchSnapshot();
   });
 
   it('fails to update a card in the library when the snapshot id is being used by another card in the library', () => {
