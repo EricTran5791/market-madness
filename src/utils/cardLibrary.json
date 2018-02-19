@@ -1,4 +1,29 @@
 {
+  "shoppersFrenzy": {
+    "id": "shoppersFrenzy",
+    "name": "Shopper's Frenzy",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "+1 Attack, Draw 1 card",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Attack",
+        "value": 1,
+        "gainedCard": null
+      },
+      {
+        "kind": "Basic",
+        "category": "Draw",
+        "value": 1,
+        "gainedCard": null
+      }
+    ]
+  },
   "basketball": {
     "id": "basketball",
     "name": "Basketball",
@@ -29,31 +54,6 @@
       "value": 2
     },
     "effects": [
-      {
-        "kind": "Basic",
-        "category": "Draw",
-        "value": 1,
-        "gainedCard": null
-      }
-    ]
-  },
-  "dropShipment": {
-    "id": "dropShipment",
-    "name": "Drop Shipment",
-    "category": "Neutral",
-    "subcategories": [],
-    "description": "+1 Attack, Draw 1 card",
-    "cost": {
-      "kind": "Money",
-      "value": 2
-    },
-    "effects": [
-      {
-        "kind": "Basic",
-        "category": "Gain Attack",
-        "value": 1,
-        "gainedCard": null
-      },
       {
         "kind": "Basic",
         "category": "Draw",
@@ -187,6 +187,18 @@
         "gainedCard": null
       }
     ]
+  },
+  "fishBones": {
+    "id": "fishBones",
+    "name": "Fish Bones",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "",
+    "cost": {
+      "kind": "Money",
+      "value": 0
+    },
+    "effects": []
   },
   "bread": {
     "id": "bread",

@@ -4,7 +4,6 @@ import {
   Card,
   CardModelType,
 } from '../models/Card';
-import * as cards from './cardLibrary';
 import * as uniqid from 'uniqid';
 import {
   CardEffect,
@@ -33,7 +32,7 @@ export function printCard(card: CardType): CardModelType {
   });
 }
 
-export function printCardByIdNew(id: string): CardModelType {
+export function printCardById(id: string): CardModelType {
   const library: CardLibraryRecord = cardLibrary;
   const card = library[id];
   if (!card) {
@@ -44,58 +43,43 @@ export function printCardByIdNew(id: string): CardModelType {
   return printCard(card);
 }
 
-// TODO: Improve with JSON card database
-export function printCardById(id: string): CardModelType {
-  const card =
-    cards.ActionCards[id] ||
-    cards.ConsumableCards[id] ||
-    cards.ItemCards[id] ||
-    cards.MoneyCards[id];
-  return printCard(card);
-}
-
-function printDuplicateCards(card: CardType, qty: number): CardModelType[] {
-  return new Array(qty).fill(undefined).map(_ => printCard(card));
+function printDuplicateCards(id: string, qty: number): CardModelType[] {
+  return new Array(qty).fill(undefined).map(_ => printCardById(id));
 }
 
 export function generateStartingDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards(cards.MoneyCards.coin, 8),
-      ...printDuplicateCards(cards.ActionCards.dropShipment, 2),
+      ...printDuplicateCards('coin', 8),
+      ...printDuplicateCards('shoppersFrenzy', 2),
     ]),
   });
 }
 
 export function generateTrashDeck(): CardStackModelType {
   return CardStack.create({
-    cards: [printCard(cards.ItemCards.fishBones)],
+    cards: [printCardById('fishBones')],
   });
 }
 
 export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards(cards.ActionCards.exchangeGoods, 3),
-      ...printDuplicateCards(cards.ActionCards.expressShipping, 2),
-      ...printDuplicateCards(cards.ConsumableCards.energyDrink, 2),
-      ...printDuplicateCards(cards.ItemCards.basketball, 3),
-      ...printDuplicateCards(cards.ItemCards.garbageBag, 2),
-      ...printDuplicateCards(cards.ItemCards.portableFurnace, 2),
-      ...printDuplicateCards(cards.NPCCards.baker, 1),
-      ...printDuplicateCards(cards.NPCCards.businessPerson, 1),
-      ...printDuplicateCards(cards.NPCCards.dietician, 1),
-      ...printDuplicateCards(cards.NPCCards.postalWorker, 2),
+      ...printDuplicateCards('exchangeGoods', 3),
+      ...printDuplicateCards('expressShipping', 2),
+      ...printDuplicateCards('basketball', 3),
+      ...printDuplicateCards('garbageBag', 2),
+      ...printDuplicateCards('portableFurnace', 2),
+      ...printDuplicateCards('baker', 1),
+      ...printDuplicateCards('businessPerson', 1),
+      ...printDuplicateCards('postalWorker', 2),
     ]),
   });
 }
 
 export function generateAlwaysAvailableDeck(): CardStackModelType {
   return CardStack.create({
-    cards: [
-      printCard(cards.MoneyCards.gem),
-      printCard(cards.ItemCards.shoppingBasket),
-    ],
+    cards: [printCardById('gem'), printCardById('shoppingBasket')],
   });
 }
 
@@ -134,10 +118,8 @@ export function generateCardDescription(
             case CardEffectCategory.GainAttack:
               return `+${value} Attack`;
             case CardEffectCategory.GainCardToDiscardPile:
-              // TODO: Map card id to card name once the JSON card library is done
               return `Gain ${value} ${gainedCard && gainedCard.name}`;
             case CardEffectCategory.GainCardToHand:
-              // TODO: Map card id to card name once the JSON card library is done
               return `Add ${value} ${gainedCard &&
                 gainedCard.name} to your hand`;
             case CardEffectCategory.GainMoney:

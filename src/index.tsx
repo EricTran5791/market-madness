@@ -15,7 +15,7 @@ import { CardLibrary } from './models/CardLibrary';
 import AppBar from './components/AppBar';
 import cardLibrary from './utils/cardLibrary.json';
 import { CardLibraryRecord } from './types/cardTypes';
-import { printCardByIdNew } from './utils/cardGenerator';
+import { printCardById } from './utils/cardGenerator';
 
 const library = cardLibrary as CardLibraryRecord;
 
@@ -23,7 +23,7 @@ ReactDOM.render(
   <Provider
     cardLibrary={CardLibrary.create({
       cards: Object.keys(library).map(id => {
-        return printCardByIdNew(id);
+        return printCardById(id);
       }),
     })}
   >

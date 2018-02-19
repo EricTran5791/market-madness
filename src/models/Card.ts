@@ -6,7 +6,6 @@ import {
   CardSubcategory,
   CardCostKind,
 } from '../types/cardTypes';
-import { generateCardDescription } from '../utils/cardGenerator';
 import { List } from 'immutable';
 
 export const Card = types
@@ -66,16 +65,6 @@ export const Card = types
     },
   }))
   .actions(self => ({
-    afterCreate() {
-      if (self.description.length > 0 || self.effects.length === 0) {
-        return;
-      }
-      // TODO: No need to call this once we read cards from the JSON library
-      self.description = generateCardDescription(
-        self.category as CardCategory,
-        List<CardEffect>(self.effects)
-      );
-    },
     /** Reset a card's isPlayed status every time it is detached from its direct parent. */
     beforeDetach() {
       self.isPlayed = false;
