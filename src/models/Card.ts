@@ -94,11 +94,6 @@ export const CardStack = types
     get totalCards(): number {
       return self.cards.length;
     },
-    get totalMoney() {
-      return self.cards
-        .map(card => card.totalMoneyValue)
-        .reduce((sum, currentValue) => sum + currentValue, 0);
-    },
     get unplayedCards() {
       return self.cards.filter(card => !card.isPlayed);
     },

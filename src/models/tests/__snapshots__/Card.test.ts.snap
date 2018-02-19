@@ -1,139 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`adds a card to the CardStack 1`] = `
+exports[`Card and CardStack Model adds a card to the CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "category": "Groceries",
+      "category": "Neutral",
       "cost": Object {
         "kind": "Money",
-        "value": 1,
+        "value": 0,
       },
-      "description": "Heal 1, Trash this card",
-      "effects": Array [
-        Object {
-          "category": "Heal",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 1,
-        },
-        Object {
-          "category": "Trash Self",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 0,
-        },
-      ],
-      "id": "apple",
+      "description": "",
+      "effects": Array [],
+      "id": "",
       "isPlayed": false,
-      "name": "Apple",
-      "subcategories": Array [
-        "Food",
-      ],
-      "uniqid": "mock-id",
+      "name": "Mock Card 0",
+      "subcategories": Array [],
+      "uniqid": "mock-id-0",
     },
     Object {
-      "category": "Groceries",
+      "category": "Neutral",
       "cost": Object {
         "kind": "Money",
-        "value": 2,
+        "value": 0,
       },
-      "description": "Heal 2, Trash this card",
-      "effects": Array [
-        Object {
-          "category": "Heal",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 2,
-        },
-        Object {
-          "category": "Trash Self",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 0,
-        },
-      ],
-      "id": "bread",
+      "description": "",
+      "effects": Array [],
+      "id": "",
       "isPlayed": false,
-      "name": "Bread",
-      "subcategories": Array [
-        "Food",
-      ],
-      "uniqid": "mock-id-2",
+      "name": "Mock Card 1",
+      "subcategories": Array [],
+      "uniqid": "mock-id-1",
     },
   ],
 }
 `;
 
-exports[`creates a Card 1`] = `
+exports[`Card and CardStack Model creates a Card 1`] = `
 Object {
-  "category": "Groceries",
+  "category": "Neutral",
   "cost": Object {
     "kind": "Money",
-    "value": 1,
+    "value": 0,
   },
-  "description": "Heal 1, Trash this card",
-  "effects": Array [
-    Object {
-      "category": "Heal",
-      "gainedCard": null,
-      "kind": "Basic",
-      "value": 1,
-    },
-    Object {
-      "category": "Trash Self",
-      "gainedCard": null,
-      "kind": "Basic",
-      "value": 0,
-    },
-  ],
-  "id": "apple",
+  "description": "",
+  "effects": Array [],
+  "id": "",
   "isPlayed": false,
-  "name": "Apple",
-  "subcategories": Array [
-    "Food",
-  ],
-  "uniqid": "mock-id",
+  "name": "Mock Card 0",
+  "subcategories": Array [],
+  "uniqid": "mock-id-0",
 }
 `;
 
-exports[`creates a CardStack 1`] = `
+exports[`Card and CardStack Model creates a CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "category": "Groceries",
+      "category": "Neutral",
       "cost": Object {
         "kind": "Money",
-        "value": 1,
+        "value": 0,
       },
-      "description": "Heal 1, Trash this card",
-      "effects": Array [
-        Object {
-          "category": "Heal",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 1,
-        },
-        Object {
-          "category": "Trash Self",
-          "gainedCard": null,
-          "kind": "Basic",
-          "value": 0,
-        },
-      ],
-      "id": "apple",
+      "description": "",
+      "effects": Array [],
+      "id": "",
       "isPlayed": false,
-      "name": "Apple",
-      "subcategories": Array [
-        "Food",
-      ],
-      "uniqid": "mock-id",
+      "name": "Mock Card 0",
+      "subcategories": Array [],
+      "uniqid": "mock-id-0",
     },
   ],
 }
 `;
 
-exports[`removes a card from the CardStack 1`] = `
+exports[`Card and CardStack Model removes a card from the CardStack 1`] = `
 Object {
   "cards": Array [],
 }
