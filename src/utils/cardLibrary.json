@@ -13,25 +13,27 @@
       {
         "kind": "Basic",
         "category": "Gain Attack",
-        "value": 3
+        "value": 3,
+        "gainedCard": null
       }
     ]
   },
-  "coin": {
-    "id": "coin",
-    "name": "Coin",
-    "category": "Money",
+  "postalWorker": {
+    "id": "postalWorker",
+    "name": "Postal Worker",
+    "category": "NPC",
     "subcategories": [],
-    "description": "+1 Money",
+    "description": "Defeat: Draw 1 card",
     "cost": {
-      "kind": "Money",
-      "value": 1
+      "kind": "Health",
+      "value": 2
     },
     "effects": [
       {
         "kind": "Basic",
-        "category": "Gain Money",
-        "value": 1
+        "category": "Draw",
+        "value": 1,
+        "gainedCard": null
       }
     ]
   },
@@ -49,12 +51,228 @@
       {
         "kind": "Basic",
         "category": "Gain Attack",
-        "value": 1
+        "value": 1,
+        "gainedCard": null
       },
       {
         "kind": "Basic",
         "category": "Draw",
-        "value": 1
+        "value": 1,
+        "gainedCard": null
+      }
+    ]
+  },
+  "shoppingBasket": {
+    "id": "shoppingBasket",
+    "name": "Shopping Basket",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "+2 Attack",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Attack",
+        "value": 2,
+        "gainedCard": null
+      }
+    ]
+  },
+  "gem": {
+    "id": "gem",
+    "name": "Gem",
+    "category": "Money",
+    "subcategories": [],
+    "description": "+2 Money",
+    "cost": {
+      "kind": "Money",
+      "value": 3
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Money",
+        "value": 2,
+        "gainedCard": null
+      }
+    ]
+  },
+  "coin": {
+    "id": "coin",
+    "name": "Coin",
+    "category": "Money",
+    "subcategories": [],
+    "description": "+1 Money",
+    "cost": {
+      "kind": "Money",
+      "value": 1
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Money",
+        "value": 1,
+        "gainedCard": null
+      }
+    ]
+  },
+  "exchangeGoods": {
+    "id": "exchangeGoods",
+    "name": "Exchange Goods",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "Draw 2 cards, Discard 2 cards",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Draw",
+        "value": 2,
+        "gainedCard": null
+      },
+      {
+        "kind": "Interactive",
+        "category": "Discard",
+        "numCardsToResolve": 2,
+        "resolveType": "Mandatory"
+      }
+    ]
+  },
+  "garbageBag": {
+    "id": "garbageBag",
+    "name": "Garbage Bag",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "Trash up to 2 cards, Trash this card",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Interactive",
+        "category": "Trash",
+        "numCardsToResolve": 2,
+        "resolveType": "Optional"
+      },
+      {
+        "kind": "Basic",
+        "category": "Trash Self",
+        "value": 0,
+        "gainedCard": null
+      }
+    ]
+  },
+  "businessPerson": {
+    "id": "businessPerson",
+    "name": "Business Person",
+    "category": "NPC",
+    "subcategories": [],
+    "description": "Defeat: +3 Money",
+    "cost": {
+      "kind": "Health",
+      "value": 4
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Money",
+        "value": 3,
+        "gainedCard": null
+      }
+    ]
+  },
+  "bread": {
+    "id": "bread",
+    "name": "Bread",
+    "category": "Groceries",
+    "subcategories": ["Food"],
+    "description": "Heal 2",
+    "cost": {
+      "kind": "Money",
+      "value": 2
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Heal",
+        "value": 2,
+        "gainedCard": null
+      }
+    ]
+  },
+  "baker": {
+    "id": "baker",
+    "name": "Baker",
+    "category": "NPC",
+    "subcategories": [],
+    "description": "Defeat: Add 1 Bread to your hand",
+    "cost": {
+      "kind": "Health",
+      "value": 3
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Gain Card to Hand",
+        "value": 1,
+        "gainedCard": {
+          "id": "bread",
+          "name": "Bread"
+        }
+      }
+    ]
+  },
+  "portableFurnace": {
+    "id": "portableFurnace",
+    "name": "Portable Furnace",
+    "category": "Hardware",
+    "subcategories": ["Tool"],
+    "description": "Trash 2 cards, Add 1 Gem to your hand",
+    "cost": {
+      "kind": "Money",
+      "value": 4
+    },
+    "effects": [
+      {
+        "kind": "Interactive",
+        "category": "Trash",
+        "numCardsToResolve": 2,
+        "resolveType": "Mandatory"
+      },
+      {
+        "kind": "Basic",
+        "category": "Gain Card to Hand",
+        "value": 1,
+        "gainedCard": {
+          "id": "gem",
+          "name": "Gem"
+        }
+      }
+    ]
+  },
+  "expressShipping": {
+    "id": "expressShipping",
+    "name": "Express Shipping",
+    "category": "Neutral",
+    "subcategories": [],
+    "description": "Draw 2 cards",
+    "cost": {
+      "kind": "Money",
+      "value": 3
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Draw",
+        "value": 2,
+        "gainedCard": null
       }
     ]
   }
