@@ -4,7 +4,7 @@ exports[`adds a card to the CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "category": "Consumable",
+      "category": "Groceries",
       "cost": Object {
         "kind": "Money",
         "value": 1,
@@ -33,7 +33,7 @@ Object {
       "uniqid": "mock-id",
     },
     Object {
-      "category": "Consumable",
+      "category": "Groceries",
       "cost": Object {
         "kind": "Money",
         "value": 2,
@@ -67,7 +67,7 @@ Object {
 
 exports[`creates a Card 1`] = `
 Object {
-  "category": "Consumable",
+  "category": "Groceries",
   "cost": Object {
     "kind": "Money",
     "value": 1,
@@ -101,7 +101,7 @@ exports[`creates a CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
-      "category": "Consumable",
+      "category": "Groceries",
       "cost": Object {
         "kind": "Money",
         "value": 1,

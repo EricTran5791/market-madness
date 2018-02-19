@@ -1,5 +1,5 @@
-import { Card, CardModelType, CardStack, CardStackModelType } from './Card';
-import * as cards from '../utils/cardLibrary';
+import { Card, CardModelType, CardStack, CardStackModelType } from '../Card';
+import * as cards from '../../utils/cardLibrary';
 import { getSnapshot } from 'mobx-state-tree';
 
 let mockCard: CardModelType;
