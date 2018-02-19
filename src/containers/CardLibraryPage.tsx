@@ -82,7 +82,7 @@ class CardLibraryView extends React.Component<Props, State> {
   displayCards() {
     return (
       this.props.cardLibrary &&
-      this.props.cardLibrary.cards.map(card => {
+      this.props.cardLibrary.sortedCards.map(card => {
         return (
           <Route
             key={card.uniqid}

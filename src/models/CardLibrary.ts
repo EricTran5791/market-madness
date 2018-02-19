@@ -27,9 +27,27 @@ type ValidateCardParams = {
   targetId: string;
 };
 
+enum CardSortMode {
+  AlphaASC = 'Alphabetical Ascending',
+  AlphaDESC = 'Alphabetical Descending',
+}
+
 export const CardLibrary = types
   .model('CardLibrary', {
     cards: types.optional(types.array(Card), []),
+    cardFilter: types.optional(
+      types.model('CardFilter', {
+        sortMode: types.optional(
+          types.enumeration(
+            'CardSortMode',
+            Object.keys(CardSortMode).map(key => CardSortMode[key])
+          ),
+          CardSortMode.AlphaASC
+        ),
+        filterText: types.optional(types.string, ''),
+      }),
+      { sortMode: CardSortMode.AlphaASC, filterText: '' }
+    ),
   })
   .views(self => ({
     /** Returns a map of the card library. Uses the card id as the key and the card view data as the value. */
@@ -42,6 +60,18 @@ export const CardLibrary = types
     },
     getCardById(id: string): CardModelType {
       return self.cards.find(_ => _.id === id);
+    },
+    get sortedCards() {
+      // TODO: Check sort type and filtering
+      return self.cards.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
     },
   }))
   .actions(self => {

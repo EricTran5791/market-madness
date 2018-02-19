@@ -9,6 +9,10 @@ Object {
 
 exports[`Card Library creates a Card Library 1`] = `
 Object {
+  "cardFilter": Object {
+    "filterText": "",
+    "sortMode": "Alphabetical Ascending",
+  },
   "cards": Array [
     Object {
       "category": "Neutral",
