@@ -312,7 +312,7 @@ class CardEditor extends React.Component<Props, State> {
                   this.addCard();
                 }
               }}
-              disabled={!this.state.store.containsNewChanges}
+              primaryDisabled={!this.state.store.containsNewChanges}
               split
               menuProps={{
                 items: [
