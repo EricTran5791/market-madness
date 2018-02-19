@@ -2,6 +2,7 @@ import { CardLibraryModelType, CardLibrary } from '../CardLibrary';
 import { getSnapshot } from 'mobx-state-tree';
 import { Card } from '../Card';
 import { initialCardState } from '../../types/cardTypes';
+import { initialBasicCardEffect } from '../../types/cardEffect.types';
 
 describe('Card Library', () => {
   let mockCardLibrary: CardLibraryModelType;
@@ -89,36 +90,52 @@ describe('Card Library', () => {
     expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
   });
 
+  it('fails to add a new card to the library when the new card id or name is empty', () => {
+    expect(
+      mockCardLibrary.addCard(
+        Card.create({
+          ...initialCardState,
+          uniqid: 'new',
+          id: '',
+          name: 'New Card',
+        })
+      )
+    ).toMatchSnapshot();
+    expect(
+      mockCardLibrary.addCard(
+        Card.create({
+          ...initialCardState,
+          uniqid: 'new',
+          id: 'new',
+          name: '',
+        })
+      )
+    ).toMatchSnapshot();
+  });
+
   it('deletes a card in the library', () => {
+    expect(mockCardLibrary.deleteCard('1')).toMatchSnapshot();
     expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
-    mockCardLibrary.deleteCard('1');
+  });
+
+  it('fails to delete an non-existent card in the library', () => {
+    expect(mockCardLibrary.deleteCard('undefined')).toMatchSnapshot();
+    expect(mockCardLibrary.getCardById('undefined')).toMatchSnapshot();
+  });
+
+  it('fails to delete a card that is being referenced by another card in the library', () => {
+    mockCardLibrary.addCard(
+      Card.create({
+        ...initialCardState,
+        uniqid: 'new',
+        id: 'new',
+        name: 'New Card that references Card 1',
+        effects: [
+          { ...initialBasicCardEffect, gainedCard: { id: '1', name: '1' } },
+        ],
+      })
+    );
+    expect(mockCardLibrary.deleteCard('1')).toMatchSnapshot();
     expect(mockCardLibrary.getCardById('1')).toMatchSnapshot();
-  });
-
-  it('validates a valid card', () => {
-    expect(
-      mockCardLibrary.validateCard({ card: mockCard, targetId: '' })
-    ).toMatchSnapshot();
-  });
-
-  it('invalidates a card where the target id is already present in the library', () => {
-    expect(
-      mockCardLibrary.validateCard({ card: mockCard, targetId: '2' })
-    ).toMatchSnapshot();
-  });
-
-  it('invalidates a card where the id or name is empty', () => {
-    expect(
-      mockCardLibrary.validateCard({
-        card: { ...initialCardState, id: '' },
-        targetId: '',
-      })
-    ).toMatchSnapshot();
-    expect(
-      mockCardLibrary.validateCard({
-        card: { ...initialCardState, id: 'new', name: '' },
-        targetId: '',
-      })
-    ).toMatchSnapshot();
   });
 });

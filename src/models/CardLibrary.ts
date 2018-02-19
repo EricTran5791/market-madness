@@ -1,6 +1,7 @@
 import { types, applySnapshot } from 'mobx-state-tree';
 import { Card, CardModelSnapshotType, CardModelType } from './Card';
 import { Map } from 'immutable';
+import { BasicCardEffect } from '../types/cardEffect.types';
 
 export enum CardLibraryOperationKind {
   Success = 'Success',
@@ -81,7 +82,7 @@ export const CardLibrary = types
     ): CardLibraryOperation {
       // Find the card to be updated
       const cardToUpdate = self.getCardById(id);
-      const cardValidationStatus = validateCard({
+      const validationStatus = validateCard({
         // Validate the snapshot
         card: snapshot,
         // If the id was changed in the snapshot, check that there isn't a card with the same id as the snapshot
@@ -90,7 +91,7 @@ export const CardLibrary = types
 
       if (
         cardToUpdate &&
-        cardValidationStatus.kind === CardValidationStatusKind.Valid
+        validationStatus.kind === CardValidationStatusKind.Valid
       ) {
         applySnapshot(cardToUpdate, snapshot);
         return {
@@ -102,14 +103,14 @@ export const CardLibrary = types
       } else {
         return {
           kind: CardLibraryOperationKind.Error,
-          text: cardValidationStatus.text,
+          text: validationStatus.text,
         };
       }
     }
 
     function addCard(card: CardModelType): CardLibraryOperation {
-      const cardValidationStatus = validateCard({ card, targetId: card.id });
-      if (cardValidationStatus.kind === CardValidationStatusKind.Valid) {
+      const validationStatus = validateCard({ card, targetId: card.id });
+      if (validationStatus.kind === CardValidationStatusKind.Valid) {
         self.cards.push(card);
         return {
           kind: CardLibraryOperationKind.Success,
@@ -118,15 +119,24 @@ export const CardLibrary = types
       } else {
         return {
           kind: CardLibraryOperationKind.Error,
-          text: cardValidationStatus.text,
+          text: validationStatus.text,
         };
       }
     }
 
-    function deleteCard(id: string) {
-      const deletedCard = self.cards.find(_ => _.id === id);
-      if (deletedCard) {
-        self.cards.remove(deletedCard);
+    function deleteCard(id: string): CardLibraryOperation {
+      const validationStatus = validateDeletedCard(id);
+      if (validationStatus.kind === CardValidationStatusKind.Valid) {
+        self.cards.remove(self.getCardById(id));
+        return {
+          kind: CardLibraryOperationKind.Success,
+          text: '',
+        };
+      } else {
+        return {
+          kind: CardLibraryOperationKind.Error,
+          text: validationStatus.text,
+        };
       }
     }
 
@@ -155,11 +165,50 @@ export const CardLibrary = types
       return { kind: CardValidationStatusKind.Valid, text: '' };
     }
 
+    /** Given a card id, validate whether or not we can delete the card. */
+    function validateDeletedCard(id: string): CardValidationStatus {
+      const deletedCard = self.cards.find(_ => _.id === id);
+      if (!deletedCard) {
+        return {
+          kind: CardValidationStatusKind.Invalid,
+          text:
+            'Error! Card deletion was unsuccessful because it does not exist in the card library.',
+        };
+      }
+
+      // Find if the deleted card is being referenced by another card's effects
+      const referencedCards = self.cards
+        .filter(
+          _ =>
+            !!_.effectsList.find(
+              (effect: BasicCardEffect) =>
+                (effect.gainedCard &&
+                  effect.gainedCard.id === deletedCard.id) ||
+                false
+            )
+        )
+        .map(_ => {
+          return _.name;
+        })
+        .join(', ');
+
+      if (referencedCards) {
+        return {
+          kind: CardValidationStatusKind.Invalid,
+          text: `Error! Unable to delete ${
+            deletedCard.name
+          }, it is still referenced by the following
+            card${referencedCards.length > 1 ? 's' : ''}: ${referencedCards}.`,
+        };
+      }
+
+      return { kind: CardValidationStatusKind.Valid, text: '' };
+    }
+
     return {
       updateCard,
       addCard,
       deleteCard,
-      validateCard,
     };
   });
 

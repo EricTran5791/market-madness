@@ -62,18 +62,8 @@ Object {
 
 exports[`Card Library deletes a card in the library 1`] = `
 Object {
-  "category": "Neutral",
-  "cost": Object {
-    "kind": "Money",
-    "value": 0,
-  },
-  "description": "",
-  "effects": Array [],
-  "id": "1",
-  "isPlayed": false,
-  "name": "Card 1",
-  "subcategories": Array [],
-  "uniqid": "1",
+  "kind": "Success",
+  "text": "",
 }
 `;
 
@@ -104,6 +94,54 @@ Object {
   "uniqid": "1",
 }
 `;
+
+exports[`Card Library fails to add a new card to the library when the new card id or name is empty 1`] = `
+Object {
+  "kind": "Error",
+  "text": "Error! The card id and name must not be empty. Please change the card name.",
+}
+`;
+
+exports[`Card Library fails to add a new card to the library when the new card id or name is empty 2`] = `
+Object {
+  "kind": "Error",
+  "text": "Error! The card id and name must not be empty. Please change the card name.",
+}
+`;
+
+exports[`Card Library fails to delete a card that is being referenced by another card in the library 1`] = `
+Object {
+  "kind": "Error",
+  "text": "Error! Unable to delete Card 1, it is still referenced by the following
+            cards: New Card that references Card 1.",
+}
+`;
+
+exports[`Card Library fails to delete a card that is being referenced by another card in the library 2`] = `
+Object {
+  "category": "Neutral",
+  "cost": Object {
+    "kind": "Money",
+    "value": 0,
+  },
+  "description": "",
+  "effects": Array [],
+  "id": "1",
+  "isPlayed": false,
+  "name": "Card 1",
+  "subcategories": Array [],
+  "uniqid": "1",
+}
+`;
+
+exports[`Card Library fails to delete an non-existent card in the library 1`] = `
+Object {
+  "kind": "Error",
+  "text": "Error! Card deletion was unsuccessful because it does not exist in the card library.",
+}
+`;
+
+exports[`Card Library fails to delete an non-existent card in the library 2`] = `undefined`;
 
 exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 1`] = `
 Object {
@@ -182,27 +220,6 @@ Object {
 
 exports[`Card Library gets a card by id from the library 3`] = `undefined`;
 
-exports[`Card Library invalidates a card where the id or name is empty 1`] = `
-Object {
-  "kind": "Invalid",
-  "text": "Error! The card id and name must not be empty. Please change the card name.",
-}
-`;
-
-exports[`Card Library invalidates a card where the id or name is empty 2`] = `
-Object {
-  "kind": "Invalid",
-  "text": "Error! The card id and name must not be empty. Please change the card name.",
-}
-`;
-
-exports[`Card Library invalidates a card where the target id is already present in the library 1`] = `
-Object {
-  "kind": "Invalid",
-  "text": "There is another card in the library with the same id. Please use another name.",
-}
-`;
-
 exports[`Card Library updates a card in the library 1`] = `
 Object {
   "kind": "Success",
@@ -224,12 +241,5 @@ Object {
   "name": "Card 1 New",
   "subcategories": Array [],
   "uniqid": "1",
-}
-`;
-
-exports[`Card Library validates a valid card 1`] = `
-Object {
-  "kind": "Valid",
-  "text": "",
 }
 `;

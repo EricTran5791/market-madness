@@ -291,8 +291,17 @@ class CardEditor extends React.Component<Props, State> {
   }
 
   deleteCard() {
-    this.props.cardLibrary!.deleteCard(this.state.store.initialCard.id);
-    this.props.history.replace('/card-library');
+    const operationStatus = this.props.cardLibrary!.deleteCard(
+      this.state.store.initialCard.id
+    );
+    if (operationStatus.kind === CardLibraryOperationKind.Success) {
+      this.props.history.replace('/card-library');
+    } else {
+      this.state.store.setMessageBar({
+        kind: MessageBarKind.Error,
+        text: operationStatus.text,
+      });
+    }
   }
 
   render() {
