@@ -13,9 +13,20 @@ import CardEditor from './containers/CardEditor';
 import CardLibraryPage from './containers/CardLibraryPage';
 import { CardLibrary } from './models/CardLibrary';
 import AppBar from './components/AppBar';
+import cardLibrary from './utils/cardLibrary.json';
+import { CardLibraryRecord } from './types/cardTypes';
+import { printCardByIdNew } from './utils/cardGenerator';
+
+const library = cardLibrary as CardLibraryRecord;
 
 ReactDOM.render(
-  <Provider cardLibrary={CardLibrary.create()}>
+  <Provider
+    cardLibrary={CardLibrary.create({
+      cards: Object.keys(library).map(id => {
+        return printCardByIdNew(id);
+      }),
+    })}
+  >
     <Router>
       <>
         <Route

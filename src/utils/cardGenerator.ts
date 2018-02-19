@@ -17,7 +17,7 @@ import { List } from 'immutable';
 import {
   Card as CardType,
   CardCategory,
-  CardLibrary,
+  CardLibraryRecord,
 } from '../types/cardTypes';
 
 import cardLibrary from './cardLibrary.json';
@@ -34,7 +34,7 @@ export function printCard(card: CardType): CardModelType {
 }
 
 export function printCardByIdNew(id: string): CardModelType {
-  const library: CardLibrary = cardLibrary;
+  const library: CardLibraryRecord = cardLibrary;
   const card = library[id];
   if (!card) {
     throw new Error(

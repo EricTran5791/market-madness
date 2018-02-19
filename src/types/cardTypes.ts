@@ -47,4 +47,4 @@ export const initialCardState: Card = {
   effects: [],
 };
 
-export type CardLibrary = Record<string, Card>;
+export type CardLibraryRecord = Record<string, Card>;

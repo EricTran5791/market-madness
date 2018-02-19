@@ -1,8 +1,5 @@
 import { types, applySnapshot } from 'mobx-state-tree';
 import { Card, CardModelSnapshotType, CardModelType } from './Card';
-import cardLibrary from '../utils/cardLibrary.json';
-import { CardLibrary as CardLibraryRecordType } from '../types/cardTypes';
-import { printCardByIdNew } from '../utils/cardGenerator';
 
 export enum CardLibraryOperationKind {
   Success = 'Success',
@@ -42,16 +39,6 @@ export const CardLibrary = types
     },
   }))
   .actions(self => {
-    function afterCreate() {
-      const library = cardLibrary as CardLibraryRecordType;
-      applySnapshot(
-        self.cards,
-        Object.keys(library).map(id => {
-          return printCardByIdNew(id);
-        })
-      );
-    }
-
     function updateCard(
       id: string,
       snapshot: CardModelSnapshotType
@@ -128,7 +115,6 @@ export const CardLibrary = types
     }
 
     return {
-      afterCreate,
       updateCard,
       addCard,
       deleteCard,
