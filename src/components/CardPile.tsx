@@ -37,7 +37,7 @@ class CardPile extends React.Component<Props, object> {
         const rotation = remainder3 === 0 ? 0 : remainder3 === 1 ? -5 : 4.5;
         const yPos = i % 2 === 0 ? 0 : 8;
         return (
-          <CardPileItem key={i} rotation={rotation} yPos={yPos}>
+          <CardPileItem key={card.uniqid} rotation={rotation} yPos={yPos}>
             <CardView model={card} />
           </CardPileItem>
         );

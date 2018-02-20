@@ -87,8 +87,8 @@ const GameLogGridArea = GridArea.extend`
 @observer
 class PlayingField extends React.Component<Props, object> {
   displayCards(cardStack: CardStackModelType) {
-    return cardStack.cards.map((card, i) => {
-      return <CardView key={i} model={card} />;
+    return cardStack.cards.map(card => {
+      return <CardView key={card.uniqid} model={card} />;
     });
   }
   render() {

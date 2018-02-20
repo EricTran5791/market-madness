@@ -85,7 +85,9 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
     },
   ];
 
-  componentWillMount() {
+  constructor(props: Props) {
+    super(props);
+
     const selection = new Selection({
       onSelectionChanged: () => {
         if (this.state.selection.getSelectedCount() === 0) {
@@ -102,10 +104,10 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
         }
       },
     });
-    this.setState({
+    this.state = {
       selection,
       selectedItem: undefined,
-    });
+    };
   }
 
   addCardEffect() {

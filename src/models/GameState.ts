@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import { Player } from './Player';
 import { ActiveCardEffectState } from './ActiveCardEffectState';
+import * as uniqid from 'uniqid';
 
 export enum GamePhase {
   GameOver = 'Game Over',
@@ -31,9 +32,11 @@ export type GameLogEntryParams = {
 };
 
 export const GameLogEntry = types.model('GameLogEntry', {
+  uniqid: types.string,
   playerId: types.string,
   category: types.string,
   message: types.string,
+  timestamp: types.Date,
 });
 
 export type GameLogEntryModelType = typeof GameLogEntry.Type;
@@ -120,9 +123,11 @@ export const GameState = types
 
       self.gameLog.push(
         GameLogEntry.create({
+          uniqid: uniqid(),
           playerId: self.currentPlayer.id,
           category,
           message,
+          timestamp: Date.now(),
         })
       );
     },

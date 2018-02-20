@@ -36,8 +36,8 @@ export class GameLog extends React.Component<Props, State> {
   displayEntries() {
     return this.state.gameLog
       .slice(Math.max(this.state.gameLog.length - 12, 0)) // Take the 12 most recent entries
-      .map((entry, index) => {
-        return <GameLogEntry key={index}>{entry.message}</GameLogEntry>;
+      .map(entry => {
+        return <GameLogEntry key={entry.uniqid}>{entry.message}</GameLogEntry>;
       });
   }
   render() {

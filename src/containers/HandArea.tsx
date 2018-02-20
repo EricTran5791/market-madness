@@ -96,7 +96,7 @@ class HandArea extends React.Component<Props, State> {
     return this.state.cardStack.cards.map((card, i) => {
       return (
         <CardView
-          key={i}
+          key={card.uniqid}
           model={card}
           cardPosition={{
             zIndex: (i + 1) * 10,

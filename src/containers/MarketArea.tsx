@@ -53,40 +53,36 @@ class MarketArea extends React.Component<Props, State> {
   }
   displayMarketCards() {
     // Show the 3 first market cards
-    const marketCards = this.state.cardStack.cards
-      .slice(0, 3)
-      .map((card, i) => {
-        return (
-          <CardView
-            key={i}
-            model={card}
-            onClick={
-              !this.props.store!.gameState.isCardEffectActive
-                ? () => this.onMarketCardClick(card)
-                : undefined
-            }
-          />
-        );
-      });
+    const marketCards = this.state.cardStack.cards.slice(0, 3).map(card => {
+      return (
+        <CardView
+          key={card.uniqid}
+          model={card}
+          onClick={
+            !this.props.store!.gameState.isCardEffectActive
+              ? () => this.onMarketCardClick(card)
+              : undefined
+          }
+        />
+      );
+    });
     return marketCards;
   }
   displayAlwaysAvailableCards() {
     // Show the 2 always available cards
-    const marketCards = this.state.alwaysAvailableCardStack.cards.map(
-      (card, i) => {
-        return (
-          <CardView
-            key={i}
-            model={card}
-            onClick={
-              !this.props.store!.gameState.isCardEffectActive
-                ? () => this.props.store!.buyCard(card, true)
-                : undefined
-            }
-          />
-        );
-      }
-    );
+    const marketCards = this.state.alwaysAvailableCardStack.cards.map(card => {
+      return (
+        <CardView
+          key={card.uniqid}
+          model={card}
+          onClick={
+            !this.props.store!.gameState.isCardEffectActive
+              ? () => this.props.store!.buyCard(card, true)
+              : undefined
+          }
+        />
+      );
+    });
     return marketCards;
   }
   onMarketCardClick(card: CardModelType) {
