@@ -128,6 +128,9 @@ export function generateCardDescription(
               return `Heal ${value}`;
             case CardEffectCategory.IncreaseMaxHealth:
               return `Increase max health by ${value}`;
+            case CardEffectCategory.ShuffleCardToDeck:
+              return `Shuffle ${value} ${gainedCard &&
+                gainedCard.name} into your deck`;
             case CardEffectCategory.TrashSelf:
               return `Trash this card`;
             default:

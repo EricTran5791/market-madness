@@ -7,6 +7,7 @@ import {
   CardCostKind,
 } from '../types/cardTypes';
 import { List } from 'immutable';
+import { shuffleCardStackModel } from '../utils/cardGenerator';
 
 export const Card = types
   .model({
@@ -90,13 +91,29 @@ export const CardStack = types
       return self.cards.filter(card => !card.isPlayed);
     },
   }))
-  .actions(self => ({
-    add(card: CardModelType) {
+  .actions(self => {
+    function add(card: CardModelType) {
       self.cards.push(card);
-    },
-    remove(card: CardModelType) {
+    }
+
+    function addAndShuffle(card: CardModelType) {
+      self.cards.push(card);
+      shuffleCards();
+    }
+
+    function shuffleCards() {
+      shuffleCardStackModel(self as CardStackModelType);
+    }
+
+    function remove(card: CardModelType) {
       self.cards.remove(card);
-    },
-  }));
+    }
+
+    return {
+      add,
+      addAndShuffle,
+      remove,
+    };
+  });
 
 export type CardStackModelType = typeof CardStack.Type;

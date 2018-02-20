@@ -169,6 +169,18 @@ export const Store = types
                 }
               );
               break;
+            case CardEffectCategory.ShuffleCardToDeck:
+              self.gameState.addGameLogEntry(
+                GameLogEntryCategory.ShuffleCardToDeck,
+                {
+                  gainedCardName: gainedCard.name,
+                  value: value,
+                }
+              );
+              self.currentPlayer.deck.addAndShuffle(
+                printCardById(gainedCard.id)
+              );
+              break;
             case CardEffectCategory.TrashSelf:
               self.trash.trashCard(card);
               self.gameState.addGameLogEntry(GameLogEntryCategory.Trash, {

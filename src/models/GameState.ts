@@ -21,6 +21,7 @@ export enum GameLogEntryCategory {
   GainMoney = 'Gain Money',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
+  ShuffleCardToDeck = 'Shuffle Card to Deck',
   Trash = 'Trash',
 }
 
@@ -111,6 +112,11 @@ export const GameState = types
           message = `${
             self.currentPlayer.id
           } increased their max health by ${value} with ${cardName}`;
+          break;
+        case GameLogEntryCategory.ShuffleCardToDeck:
+          message = `${
+            self.currentPlayer.id
+          } shuffled ${value} ${gainedCardName} to their deck`;
           break;
         case GameLogEntryCategory.Trash:
           message = `${self.currentPlayer.id} trashed ${targets!.join(

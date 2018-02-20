@@ -11,6 +11,7 @@ export enum CardEffectCategory {
   GainMoney = 'Gain Money',
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
+  ShuffleCardToDeck = 'Shuffle Card to Deck',
   TrashSelf = 'Trash Self',
 }
 
