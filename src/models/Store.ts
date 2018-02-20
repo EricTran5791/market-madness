@@ -1,4 +1,4 @@
-import { types, detach, flow, destroy, getSnapshot } from 'mobx-state-tree';
+import { types, detach, flow, destroy } from 'mobx-state-tree';
 import { GameState, GamePhase, GameLogEntryCategory } from './GameState';
 import { Player, PlayerId } from './Player';
 import { Market } from './Market';
@@ -11,7 +11,7 @@ import {
 import { CardModelType } from '../models/Card';
 import { reaction } from 'mobx';
 import { ActiveCardEffectStatus } from './ActiveCardEffectState';
-import { printCard, printCardById } from '../utils/cardGenerator';
+import { printCardById } from '../utils/cardGenerator';
 import {
   CardEffectKind,
   CardEffectCategory,
@@ -67,7 +67,7 @@ export const Store = types
         if (!shouldClone) {
           self.currentPlayer.discardPile.add(detach(card));
         } else {
-          self.currentPlayer.discardPile.add(printCard(getSnapshot(card)));
+          self.currentPlayer.discardPile.add(printCardById(card.id));
         }
       }
     }
