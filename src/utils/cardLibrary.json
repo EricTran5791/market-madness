@@ -244,8 +244,8 @@
   "portableFurnace": {
     "id": "portableFurnace",
     "name": "Portable Furnace",
-    "category": "Hardware",
-    "subcategories": ["Tool"],
+    "category": "Artisanal",
+    "subcategories": [],
     "description": "Trash 2 cards, Add 1 Gem to your hand",
     "cost": {
       "kind": "Money",

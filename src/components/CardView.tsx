@@ -62,8 +62,8 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     switch (category) {
       case CardCategory.Groceries:
         return '#03A93B';
-      case CardCategory.Hardware:
-        return '#F26210';
+      case CardCategory.Artisanal:
+        return '#f9f9f9';
       case CardCategory.Sports:
         return '#304DFF';
       case CardCategory.Money:
@@ -72,6 +72,14 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
         return '#212F3D';
       default:
         return '#222222';
+    }
+  }};
+  color: ${({ category }: StyledCardProps): string => {
+    switch (category) {
+      case CardCategory.Artisanal:
+        return '#222222';
+      default:
+        return 'white';
     }
   }};
   ${({ cardPosition }: StyledCardProps): string =>

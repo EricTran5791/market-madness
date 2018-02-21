@@ -4,15 +4,14 @@ export enum CardCategory {
   Neutral = 'Neutral',
   Money = 'Money',
   NPC = 'NPC',
+  Artisanal = 'Artisanal',
   Groceries = 'Groceries',
-  Hardware = 'Hardware',
   Sports = 'Sports',
 }
 
 export enum CardSubcategory {
   Food = 'Food',
   SportsEquipment = 'Sports Equipment',
-  Tool = 'Tool',
 }
 
 export enum CardCostKind {
