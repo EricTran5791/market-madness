@@ -11,7 +11,6 @@ import { PlayerId } from '../models/Player';
 import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 import { TurnButton } from '../components/TurnButton';
-import DeckInfo from '../components/DeckInfo';
 import ActiveCardEffectInfo from '../components/ActiveCardEffectInfo';
 
 interface Props {
@@ -21,13 +20,14 @@ interface Props {
 const StyledPlayingField = styled.div`
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 150px 1fr 3fr 1fr 150px;
+  grid-template-columns: 1fr 1fr 3fr 1fr;
+  grid-template-rows: 1fr 170px 170px 170px 1fr;
   grid-template-areas:
-    '. comp-portrait comp-portrait comp-portrait .'
-    'game-log comp-hand comp-hand comp-hand comp-deck-info'
-    'game-log trash market . game-info'
-    'game-log p1-hand p1-hand p1-hand p1-deck-info'
-    '. p1-portrait p1-portrait p1-portrait .';
+    'game-log comp-hand comp-hand comp-hand'
+    'game-log . . .'
+    'player-info trash market game-info'
+    '. . . .'
+    '. p1-hand p1-hand p1-hand';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
@@ -42,16 +42,16 @@ const GridArea = styled.div`
 
 const TrashGridArea = GridArea.extend`
   grid-area: trash;
+  justify-content: center;
 `;
 
 const MarketGridArea = GridArea.extend`
   grid-area: market;
+  justify-content: center;
 `;
 
 const GameInfoGridArea = GridArea.extend`
   grid-area: game-info;
-  display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -59,24 +59,14 @@ const P1HandGridArea = GridArea.extend`
   grid-area: p1-hand;
 `;
 
-const P1DeckInfoGridArea = GridArea.extend`
-  grid-area: p1-deck-info;
-`;
-
-const P1GridArea = GridArea.extend`
-  grid-area: p1-portrait;
+const PlayerInfoGridArea = GridArea.extend`
+  grid-area: player-info;
+  justify-content: center;
 `;
 
 const CompHandGridArea = GridArea.extend`
   grid-area: comp-hand;
-`;
-
-const CompDeckInfoGridArea = GridArea.extend`
-  grid-area: comp-deck-info;
-`;
-
-const CompGridArea = GridArea.extend`
-  grid-area: comp-portrait;
+  justify-content: center;
 `;
 
 const GameLogGridArea = GridArea.extend`
@@ -94,33 +84,20 @@ class PlayingField extends React.Component<Props, object> {
   render() {
     return (
       <StyledPlayingField>
-        <CompGridArea>
-          <PlayerInfo
-            playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
-          />
-        </CompGridArea>
-
         <CompHandGridArea>
           <HandArea
             playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
           />
         </CompHandGridArea>
 
-        <CompDeckInfoGridArea>
-          <DeckInfo
-            deckTotal={
-              this.props.store!.getPlayer(PlayerId.Player2).deck.totalCards
-            }
-            discardPileTotal={
-              this.props.store!.getPlayer(PlayerId.Player2).discardPile
-                .totalCards
-            }
+        <PlayerInfoGridArea>
+          <PlayerInfo
+            playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
           />
-        </CompDeckInfoGridArea>
-
-        <GameLogGridArea>
-          <GameLog />
-        </GameLogGridArea>
+          <PlayerInfo
+            playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
+          />
+        </PlayerInfoGridArea>
 
         <TrashGridArea>
           <TrashArea />
@@ -131,33 +108,19 @@ class PlayingField extends React.Component<Props, object> {
         </MarketGridArea>
 
         <GameInfoGridArea>
-          <ActiveCardEffectInfo />
           <TurnButton />
+          <ActiveCardEffectInfo />
         </GameInfoGridArea>
+
+        <GameLogGridArea>
+          <GameLog />
+        </GameLogGridArea>
 
         <P1HandGridArea>
           <HandArea
             playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
           />
         </P1HandGridArea>
-
-        <P1DeckInfoGridArea>
-          <DeckInfo
-            deckTotal={
-              this.props.store!.getPlayer(PlayerId.Player1).deck.totalCards
-            }
-            discardPileTotal={
-              this.props.store!.getPlayer(PlayerId.Player1).discardPile
-                .totalCards
-            }
-          />
-        </P1DeckInfoGridArea>
-
-        <P1GridArea>
-          <PlayerInfo
-            playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
-          />
-        </P1GridArea>
       </StyledPlayingField>
     );
   }

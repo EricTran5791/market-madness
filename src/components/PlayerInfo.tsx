@@ -32,14 +32,13 @@ const StyledPlayerInfo = withProps<PlayerInfoProps>()(styled.div)`
   padding: 8px 16px;
   min-width: 300px;
   border-radius: 2px;
-  background-color: whitesmoke;
-  outline: ${({ isCurrentTurn }: PlayerInfoProps) =>
-    isCurrentTurn ? '3px solid seagreen' : 'none'};
+  background-color: ${({ isCurrentTurn }: PlayerInfoProps) =>
+    isCurrentTurn ? 'lightgrey' : 'none'};
 `;
 
 const PlayerName = styled.div`
   font-family: 'Acme';
-  font-size: 32px;
+  font-size: 24px;
   text-align: center;
   margin-bottom: 8px;
 `;
@@ -54,7 +53,7 @@ const Stat = styled.div`
   display: flex;
   justify-content: center;
   font-family: 'Acme';
-  font-size: 24px;
+  font-size: 18px;
   margin: 0 8px;
 `;
 
@@ -79,6 +78,7 @@ const Hint = styled.div`
   font-family: 'Acme';
   font-size: 24px;
   animation: ${inAndOut} 1.2s infinite;
+  z-index: 100;
 `;
 
 interface PlayerHealthProps {

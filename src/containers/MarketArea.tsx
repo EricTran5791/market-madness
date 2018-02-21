@@ -22,16 +22,6 @@ const StyledMarketArea = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 200px;
-  border-radius: 2px;
-  padding: 8px;
-  background-color: whitesmoke;
-`;
-
-const Title = styled.div`
-  font-family: 'Acme';
-  font-size: 24px;
-  margin-bottom: 16px;
 `;
 
 const MarketCardRow = styled.div`
@@ -95,7 +85,6 @@ class MarketArea extends React.Component<Props, State> {
   render() {
     return (
       <StyledMarketArea>
-        <Title>The Market</Title>
         <MarketCardRow>
           <CardGrid columns={3}>{this.displayMarketCards()}</CardGrid>
           <CardGrid columns={2}>{this.displayAlwaysAvailableCards()}</CardGrid>

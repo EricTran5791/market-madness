@@ -17,7 +17,6 @@ const StyledCardGrid = withProps<StyledCardGridProps>()(styled.div)`
   grid-template-columns: repeat(${({ columns }: StyledCardGridProps) =>
     columns}, 1fr);
   grid-gap: 8px;
-  margin-bottom: 16px;
 `;
 
 class CardGrid extends React.Component<Props, object> {

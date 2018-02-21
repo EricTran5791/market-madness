@@ -21,7 +21,7 @@ const StyledGameLog = styled.div`
 
 const GameLogEntry = styled.div`
   font-size: 12px;
-  margin: 8px 0;
+  margin: 4px 0;
 `;
 
 @inject('store')
@@ -35,7 +35,7 @@ export class GameLog extends React.Component<Props, State> {
   }
   displayEntries() {
     return this.state.gameLog
-      .slice(Math.max(this.state.gameLog.length - 12, 0)) // Take the 12 most recent entries
+      .slice(Math.max(this.state.gameLog.length - 9, 0)) // Take the 9 most recent entries
       .map(entry => {
         return <GameLogEntry key={entry.uniqid}>{entry.message}</GameLogEntry>;
       });

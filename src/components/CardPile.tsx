@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { withProps } from '../types/withProps';
 import styled from 'styled-components';
 import { CardStackModelType } from '../models/Card';
 import CardView from './CardView';
@@ -10,21 +9,12 @@ interface Props {
 }
 
 const StyledCardPile = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-`;
-
-interface CardPileItemProps {
-  rotation: number;
-  yPos: number;
-}
-
-// Staggers cards by applying different rotations and translations
-const CardPileItem = withProps<CardPileItemProps>()(styled.div)`
-position: absolute;
-transform: rotate(${({ rotation }: CardPileItemProps) => rotation}deg)
- translate(0, ${({ yPos }: CardPileItemProps) => yPos}px);
+  height: 100%;
 `;
 
 @observer
@@ -34,12 +24,15 @@ class CardPile extends React.Component<Props, object> {
       .slice(Math.max(this.props.cardStack.cards.length - 6, 0)) // Take the 6 most recent cards
       .map((card, i) => {
         const remainder3 = i % 3;
-        const rotation = remainder3 === 0 ? 0 : remainder3 === 1 ? -5 : 4.5;
-        const yPos = i % 2 === 0 ? 0 : 8;
+        const rotation =
+          remainder3 === 0 ? 0 : remainder3 === 1 ? i * -1.75 : i * 1.2;
+        const yPos = remainder3 === 0 ? 0 : remainder3 === 1 ? i * 2 : 0;
         return (
-          <CardPileItem key={card.uniqid} rotation={rotation} yPos={yPos}>
-            <CardView model={card} />
-          </CardPileItem>
+          <CardView
+            key={card.uniqid}
+            model={card}
+            cardPosition={{ yPos, rotationDeg: rotation, position: 'absolute' }}
+          />
         );
       });
   }

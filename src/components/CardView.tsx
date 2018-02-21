@@ -9,6 +9,7 @@ type CardPosition = {
   xPos?: number;
   yPos?: number;
   rotationDeg?: number;
+  position?: string;
 };
 
 interface Props {
@@ -69,7 +70,11 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
         return '#222222';
     }
   }};
-  position: relative;
+  ${({ cardPosition }: StyledCardProps): string =>
+    cardPosition && cardPosition.position
+      ? `position: ${cardPosition.position}`
+      : 'position: relative'};
+  user-select: none;
   ${({ cardPosition }: StyledCardProps): string =>
     cardPosition && cardPosition.yPos ? `top: ${cardPosition.yPos}px` : ''};
   ${({ cardPosition }: StyledCardProps): string =>
@@ -98,6 +103,7 @@ const CardName = styled.div`
   font-family: 'Acme';
   font-size: 14px;
   text-align: center;
+  word-break: break-word;
 `;
 
 const CardFooter = styled.div`
