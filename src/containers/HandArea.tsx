@@ -23,7 +23,7 @@ const StyledHandArea = styled.div`
 const HandContainer = styled.div`
   position: absolute;
   display: flex;
-  /** Centers the hand on the screen. */
+  /** Centers the hand in the hand area. */
   transform: translateX(calc(-25% - 46px));
 `;
 

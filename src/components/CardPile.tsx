@@ -14,7 +14,7 @@ const StyledCardPile = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 120px;
 `;
 
 @observer
@@ -25,8 +25,8 @@ class CardPile extends React.Component<Props, object> {
       .map((card, i) => {
         const remainder3 = i % 3;
         const rotation =
-          remainder3 === 0 ? 0 : remainder3 === 1 ? i * -1.75 : i * 1.2;
-        const yPos = remainder3 === 0 ? 0 : remainder3 === 1 ? i * 2 : 0;
+          remainder3 === 0 ? 0 : remainder3 === 1 ? i * -1.6 : i * 1.2;
+        const yPos = remainder3 === 0 ? 0 : remainder3 === 1 ? i : 0;
         return (
           <CardView
             key={card.uniqid}

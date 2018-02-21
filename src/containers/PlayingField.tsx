@@ -12,6 +12,7 @@ import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 import { TurnButton } from '../components/TurnButton';
 import ActiveCardEffectInfo from '../components/ActiveCardEffectInfo';
+import CardPile from '../components/CardPile';
 
 interface Props {
   store?: StoreType;
@@ -23,11 +24,11 @@ const StyledPlayingField = styled.div`
   grid-template-columns: 1fr 1fr 3fr 1fr;
   grid-template-rows: 1fr 170px 170px 170px 1fr;
   grid-template-areas:
-    'game-log comp-hand comp-hand comp-hand'
+    'game-log p2-discard p2-hand p2-deck'
     'game-log . . .'
     'player-info trash market game-info'
     '. . . .'
-    '. p1-hand p1-hand p1-hand';
+    '. p1-discard p1-hand p1-deck';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
@@ -59,13 +60,33 @@ const P1HandGridArea = GridArea.extend`
   grid-area: p1-hand;
 `;
 
+const P1DiscardGridArea = GridArea.extend`
+  grid-area: p1-discard;
+  justify-content: center;
+`;
+
+const P1DeckGridArea = GridArea.extend`
+  grid-area: p1-deck;
+  justify-content: center;
+`;
+
 const PlayerInfoGridArea = GridArea.extend`
   grid-area: player-info;
   justify-content: center;
 `;
 
-const CompHandGridArea = GridArea.extend`
-  grid-area: comp-hand;
+const P2HandGridArea = GridArea.extend`
+  grid-area: p2-hand;
+  justify-content: center;
+`;
+
+const P2DiscardGridArea = GridArea.extend`
+  grid-area: p2-discard;
+  justify-content: center;
+`;
+
+const P2DeckGridArea = GridArea.extend`
+  grid-area: p2-deck;
   justify-content: center;
 `;
 
@@ -84,11 +105,24 @@ class PlayingField extends React.Component<Props, object> {
   render() {
     return (
       <StyledPlayingField>
-        <CompHandGridArea>
+        <P2DiscardGridArea>
+          <CardPile
+            cardStack={
+              this.props.store!.getPlayer(PlayerId.Player2).discardPile
+            }
+          />
+        </P2DiscardGridArea>
+
+        <P2HandGridArea>
           <HandArea
             playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
           />
-        </CompHandGridArea>
+        </P2HandGridArea>
+
+        <P2DeckGridArea>
+          {this.props.store!.getPlayer(PlayerId.Player2).deck.cards.length >
+            0 && <CardView />}
+        </P2DeckGridArea>
 
         <PlayerInfoGridArea>
           <PlayerInfo
@@ -116,11 +150,24 @@ class PlayingField extends React.Component<Props, object> {
           <GameLog />
         </GameLogGridArea>
 
+        <P1DiscardGridArea>
+          <CardPile
+            cardStack={
+              this.props.store!.getPlayer(PlayerId.Player1).discardPile
+            }
+          />
+        </P1DiscardGridArea>
+
         <P1HandGridArea>
           <HandArea
             playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
           />
         </P1HandGridArea>
+
+        <P1DeckGridArea>
+          {this.props.store!.getPlayer(PlayerId.Player1).deck.cards.length >
+            0 && <CardView />}
+        </P1DeckGridArea>
       </StyledPlayingField>
     );
   }

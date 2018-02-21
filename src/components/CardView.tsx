@@ -13,7 +13,7 @@ type CardPosition = {
 };
 
 interface Props {
-  model: CardModelType;
+  model?: CardModelType;
   cardPosition?: CardPosition;
   onClick?: () => void;
 }
@@ -25,7 +25,7 @@ interface StyledCardProps {
   isPlayed: boolean;
 }
 
-export const BasicCard = styled.div`
+const BasicCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,6 +36,10 @@ export const BasicCard = styled.div`
   padding: 8px;
   border-radius: 8px;
   border: 3px solid #111;
+`;
+
+const FaceDownCard = BasicCard.extend`
+  background-color: #222222;
 `;
 
 const hover = keyframes`
@@ -156,28 +160,34 @@ const CardDescription = styled.div`
 
 function CardView({ model, cardPosition, onClick }: Props) {
   return (
-    <StyledCard
-      onClick={onClick}
-      category={model.category}
-      cardPosition={cardPosition}
-      showHoverAnimation={onClick !== undefined}
-      isPlayed={model.isPlayed}
-    >
-      <CardName>{model.name}</CardName>
-      {model.category === CardCategory.Money ? (
-        <CardMoney>{model.totalMoneyValue}</CardMoney>
+    <>
+      {model ? (
+        <StyledCard
+          onClick={onClick}
+          category={model.category}
+          cardPosition={cardPosition}
+          showHoverAnimation={onClick !== undefined}
+          isPlayed={model.isPlayed}
+        >
+          <CardName>{model.name}</CardName>
+          {model.category === CardCategory.Money ? (
+            <CardMoney>{model.totalMoneyValue}</CardMoney>
+          ) : (
+            <CardDescription>{model.description}</CardDescription>
+          )}
+          <CardFooter>
+            {model.cost.kind === CardCostKind.Health ? (
+              <CardHealth>{model.cost.value}</CardHealth>
+            ) : (
+              <CardCost>{model.cost.value}</CardCost>
+            )}
+            {model.category}
+          </CardFooter>
+        </StyledCard>
       ) : (
-        <CardDescription>{model.description}</CardDescription>
+        <FaceDownCard />
       )}
-      <CardFooter>
-        {model.cost.kind === CardCostKind.Health ? (
-          <CardHealth>{model.cost.value}</CardHealth>
-        ) : (
-          <CardCost>{model.cost.value}</CardCost>
-        )}
-        {model.category}
-      </CardFooter>
-    </StyledCard>
+    </>
   );
 }
 
