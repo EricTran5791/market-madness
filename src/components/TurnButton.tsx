@@ -15,8 +15,8 @@ interface TurnButtonProps {
 
 const StyledTurnButton = withProps<TurnButtonProps>()(styled.button)`
   cursor: pointer;
-  width: 128px;
-  height: 64px;
+  width: 100%;
+  height: 48px;
   font-family: 'Acme';
   font-size: 18px;
 `;

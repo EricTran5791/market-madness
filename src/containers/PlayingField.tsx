@@ -10,9 +10,8 @@ import PlayerInfo from '../components/PlayerInfo';
 import { PlayerId } from '../models/Player';
 import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
-import { TurnButton } from '../components/TurnButton';
-import ActiveCardEffectInfo from '../components/ActiveCardEffectInfo';
 import CardPile from '../components/CardPile';
+import TurnControls from '../components/TurnControls';
 
 interface Props {
   store?: StoreType;
@@ -26,8 +25,8 @@ const StyledPlayingField = styled.div`
   grid-template-areas:
     'game-log p2-discard p2-hand p2-deck'
     'game-log . . .'
-    'player-info trash market game-info'
-    '. . . .'
+    'player-info trash market turn-controls'
+    '. . . turn-controls'
     '. p1-discard p1-hand p1-deck';
   background-color: #e4e4e4;
   min-height: 100vh;
@@ -51,8 +50,8 @@ const MarketGridArea = GridArea.extend`
   justify-content: center;
 `;
 
-const GameInfoGridArea = GridArea.extend`
-  grid-area: game-info;
+const TurnControlsGridArea = GridArea.extend`
+  grid-area: turn-controls;
   align-items: center;
 `;
 
@@ -141,10 +140,9 @@ class PlayingField extends React.Component<Props, object> {
           <MarketArea />
         </MarketGridArea>
 
-        <GameInfoGridArea>
-          <TurnButton />
-          <ActiveCardEffectInfo />
-        </GameInfoGridArea>
+        <TurnControlsGridArea>
+          <TurnControls />
+        </TurnControlsGridArea>
 
         <GameLogGridArea>
           <GameLog />

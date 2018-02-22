@@ -1,6 +1,7 @@
 import { types, getParent } from 'mobx-state-tree';
 import { CardStack, CardModelType } from './Card';
 import { StoreType } from './Store';
+import { CardCategory } from '../types/cardTypes';
 
 export const Hand = types
   .model('Hand', {
@@ -10,6 +11,13 @@ export const Hand = types
     availableAttack: types.optional(types.number, 0),
     spentAttack: types.optional(types.number, 0),
   })
+  .views(self => ({
+    get unplayedMoneyCards() {
+      return self.cardStack.cards.filter(
+        _ => !_.isPlayed && _.category === CardCategory.Money
+      );
+    },
+  }))
   .actions(self => ({
     addCard(card: CardModelType) {
       self.cardStack.add(card);
@@ -39,5 +47,9 @@ export const Hand = types
     trashCard(card: CardModelType) {
       const store: StoreType = getParent(getParent(getParent(self)));
       store.trash.trashCard(card);
+    },
+    playAllMoneyCards() {
+      const store: StoreType = getParent(getParent(getParent(self)));
+      self.unplayedMoneyCards.forEach(_ => store.playCard(_));
     },
   }));
