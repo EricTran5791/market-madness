@@ -17,7 +17,6 @@ interface State {
 }
 
 interface PlayerInfoProps {
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
   isCurrentTurn: boolean;
 }
 
@@ -26,59 +25,35 @@ const StyledPlayerInfo = withProps<PlayerInfoProps>()(styled.div)`
     isCurrentTurn ? 'default' : 'pointer'};
   user-select: none;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 16px;
-  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr fit-content(100%);
+  grid-gap: 16px;
+  width: 100%;
+  padding: 8px;
+  margin: 16px 0;
+  box-sizing: border-box;
   border-radius: 2px;
-  background-color: ${({ isCurrentTurn }: PlayerInfoProps) =>
-    isCurrentTurn ? 'lightgrey' : 'none'};
+  outline: ${({ isCurrentTurn }: PlayerInfoProps) =>
+    isCurrentTurn ? '3px solid seagreen' : 'none'};
 `;
 
 const PlayerName = styled.div`
+  display: flex;
+  align-items: center;
   font-family: 'Acme';
   font-size: 24px;
+  line-height: 24px;
   text-align: center;
-  margin-bottom: 8px;
-`;
-
-const StatsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  width: 100%;
 `;
 
 const Stat = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: 'Acme';
-  font-size: 18px;
+  font-size: 32px;
+  line-height: 32px;
   margin: 0 8px;
-`;
-
-const inAndOut = keyframes`
-  0% {
-    transform: translate(100%, 50%);
-  }
-  50% {
-    transform: translate(108%, 50%);
-  }
-  100% {
-    transform: translate(100%, 50%);
-  }
-`;
-
-const Hint = styled.div`
-  position: absolute;
-  right: 0;
-  transform: translate(100%, 50%);
-  display: flex;
-  padding-left: 16px;
-  font-family: 'Acme';
-  font-size: 24px;
-  animation: ${inAndOut} 1.2s infinite;
-  z-index: 100;
 `;
 
 interface PlayerHealthProps {
@@ -191,44 +166,27 @@ export class PlayerInfo extends React.Component<Props, State> {
   componentWillUnmount() {
     this.dispose();
   }
+
   getPlayer() {
     return this.props.store!.getPlayer(this.props.playerId);
   }
+
   /** Whether or not it's the current turn of the player represented by the PlayerInfo. */
   get isCurrentTurn() {
     return this.getPlayer().id === this.props.store!.currentPlayer.id;
   }
-  attackPlayer() {
-    if (!this.isCurrentTurn) {
-      this.props.store!.currentPlayer.attackOtherPlayer();
-    }
-  }
+
   render() {
     return (
-      <StyledPlayerInfo
-        onClick={(e: React.MouseEvent<HTMLElement>) => this.attackPlayer()}
-        isCurrentTurn={this.isCurrentTurn}
-      >
+      <StyledPlayerInfo isCurrentTurn={this.isCurrentTurn}>
         <PlayerName>{this.props.playerId}</PlayerName>
-        <StatsContainer>
-          <Stat title="Available money">
-            💵 {this.getPlayer().hand.availableMoney}
-          </Stat>
-          <PlayerHealth
-            title="Health"
-            health={this.getPlayer().health}
-            cssAnimation={this.state.cssAnimationHealth}
-          >
-            ❤️ {this.getPlayer().health}/{this.getPlayer().maxHealth}
-          </PlayerHealth>
-          <Stat title="Available attack">
-            👊 {this.getPlayer().hand.availableAttack}
-          </Stat>
-        </StatsContainer>
-        {!this.isCurrentTurn &&
-          this.props.store!.currentPlayer.hand.availableAttack > 0 && (
-            <Hint>⬅️ Click to attack!</Hint>
-          )}
+        <PlayerHealth
+          title="Health"
+          health={this.getPlayer().health}
+          cssAnimation={this.state.cssAnimationHealth}
+        >
+          ❤️ {this.getPlayer().health}/{this.getPlayer().maxHealth}
+        </PlayerHealth>
       </StyledPlayerInfo>
     );
   }
