@@ -2,7 +2,6 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import CardView from '../components/CardView';
-import TrashArea from './TrashArea';
 import MarketArea from './MarketArea';
 import { StoreType } from '../models/Store';
 import { CardStackModelType } from '../models/Card';
@@ -133,7 +132,7 @@ class PlayingField extends React.Component<Props, object> {
         </PlayerInfoGridArea>
 
         <TrashGridArea>
-          <TrashArea />
+          <CardPile cardStack={this.props.store!.trash.cardStack} />
         </TrashGridArea>
 
         <MarketGridArea>
