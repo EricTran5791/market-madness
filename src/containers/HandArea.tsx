@@ -15,16 +15,13 @@ interface State {
 }
 
 const StyledHandArea = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
   min-height: 160px;
 `;
 
 const HandContainer = styled.div`
-  position: absolute;
   display: flex;
   /** Centers the hand in the hand area. */
-  transform: translateX(calc(-25% - 46px));
+  transform: translateX(10.2%);
 `;
 
 @inject('store')
@@ -90,17 +87,20 @@ class HandArea extends React.Component<Props, State> {
     }
   }
 
-  displayCards() {
-    const isEven = this.state.cardStack.cards.length % 2 === 0;
-    const handMedian = this.state.cardStack.cards.length / 2;
-    return this.state.cardStack.cards.map((card, i) => {
+  displayUnplayedCards() {
+    const unplayedCards = this.state.cardStack.cards.filter(
+      card => !card.isPlayed
+    );
+    const isEven = unplayedCards.length % 2 === 0;
+    const handMedian = unplayedCards.length / 2;
+    return unplayedCards.map((card, i) => {
       return (
         <CardView
           key={card.uniqid}
           model={card}
           cardPosition={{
             zIndex: (i + 1) * 10,
-            xPos: -1 * i * 50,
+            xPos: -1 * i * 30,
             yPos: this.calculateCardYPos(i, isEven, handMedian),
             rotationDeg: this.calculateCardRotationDeg(i, isEven, handMedian),
           }}
@@ -109,13 +109,14 @@ class HandArea extends React.Component<Props, State> {
       );
     });
   }
+
   onClick(card: CardModelType) {
     this.props.store!.playCard(card);
   }
   render() {
     return (
       <StyledHandArea>
-        <HandContainer>{this.displayCards()}</HandContainer>
+        <HandContainer>{this.displayUnplayedCards()}</HandContainer>
       </StyledHandArea>
     );
   }
