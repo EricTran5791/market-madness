@@ -15,6 +15,7 @@ import {
   shuffleCardStackModel,
   generateTrashDeck,
   generateAlwaysAvailableDeck,
+  generateShopDeck,
 } from './cardGenerator';
 
 export function initializeStore(): StoreType {
@@ -26,6 +27,12 @@ export function initializeStore(): StoreType {
         cardStack: generateEmptyDeck(),
       },
       deck: generateStartingDeck(),
+      shopDeck: [
+        generateShopDeck(),
+        generateShopDeck(),
+        generateShopDeck(),
+        generateShopDeck(),
+      ],
     }),
     Player.create({
       id: PlayerId.Player2,
@@ -34,6 +41,12 @@ export function initializeStore(): StoreType {
         cardStack: generateEmptyDeck(),
       },
       deck: generateStartingDeck(),
+      shopDeck: [
+        generateShopDeck(),
+        generateShopDeck(),
+        generateShopDeck(),
+        generateShopDeck(),
+      ],
     }),
   ];
 

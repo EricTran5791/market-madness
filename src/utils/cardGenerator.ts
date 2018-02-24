@@ -65,14 +65,21 @@ export function generateTrashDeck(): CardStackModelType {
 export function generateMarketDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards('exchangeGoods', 3),
-      ...printDuplicateCards('expressShipping', 2),
-      ...printDuplicateCards('basketball', 3),
-      ...printDuplicateCards('garbageBag', 2),
-      ...printDuplicateCards('portableFurnace', 2),
-      ...printDuplicateCards('baker', 1),
+      ...printDuplicateCards('baker', 2),
       ...printDuplicateCards('businessPerson', 1),
-      ...printDuplicateCards('postalWorker', 2),
+      ...printDuplicateCards('postalWorker', 3),
+    ]),
+  });
+}
+
+export function generateShopDeck(): CardStackModelType {
+  return CardStack.create({
+    cards: shuffle([
+      ...printDuplicateCards('basketball', 2),
+      ...printDuplicateCards('garbageBag', 1),
+      ...printDuplicateCards('expressShipping', 1),
+      ...printDuplicateCards('exchangeGoods', 1),
+      ...printDuplicateCards('portableFurnace', 1),
     ]),
   });
 }

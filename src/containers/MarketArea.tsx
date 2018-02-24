@@ -26,7 +26,7 @@ const StyledMarketArea = styled.div`
 
 const MarketCardRow = styled.div`
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 2fr;
   grid-gap: 24px;
 `;
 
@@ -41,22 +41,20 @@ class MarketArea extends React.Component<Props, State> {
         .alwaysAvailableCardStack,
     };
   }
-  displayMarketCards() {
-    // Show the 3 first market cards
-    const marketCards = this.state.cardStack.cards.slice(0, 3).map(card => {
-      return (
+  displayMarketDeck() {
+    const marketDeck = this.state.cardStack;
+    return (
+      marketDeck.cards.length > 0 && (
         <CardView
-          key={card.uniqid}
-          model={card}
+          model={marketDeck.cards[0]}
           onClick={
             !this.props.store!.gameState.isCardEffectActive
-              ? () => this.onMarketCardClick(card)
+              ? () => this.onMarketCardClick(marketDeck.cards[0])
               : undefined
           }
         />
-      );
-    });
-    return marketCards;
+      )
+    );
   }
   displayAlwaysAvailableCards() {
     // Show the 2 always available cards
@@ -82,11 +80,12 @@ class MarketArea extends React.Component<Props, State> {
       this.props.store!.buyCard(card);
     }
   }
+
   render() {
     return (
       <StyledMarketArea>
         <MarketCardRow>
-          <CardGrid columns={3}>{this.displayMarketCards()}</CardGrid>
+          <CardGrid columns={1}>{this.displayMarketDeck()}</CardGrid>
           <CardGrid columns={2}>{this.displayAlwaysAvailableCards()}</CardGrid>
         </MarketCardRow>
       </StyledMarketArea>

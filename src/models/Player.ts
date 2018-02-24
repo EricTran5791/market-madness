@@ -18,6 +18,7 @@ export const Player = types
     discardPile: CardStack,
     hand: Hand,
     deck: CardStack,
+    shopDeck: types.array(CardStack),
   })
   .actions(self => ({
     heal(healValue: number): number {

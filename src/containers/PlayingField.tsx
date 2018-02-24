@@ -11,6 +11,7 @@ import { GameLog } from '../components/GameLog';
 import HandArea from './HandArea';
 import CardPile from '../components/CardPile';
 import TurnControls from '../components/TurnControls';
+import ShopArea from './ShopArea';
 
 interface Props {
   store?: StoreType;
@@ -23,9 +24,9 @@ const StyledPlayingField = styled.div`
   grid-template-rows: 1fr 170px 170px 170px 1fr;
   grid-template-areas:
     'game-log p2-discard p2-hand p2-deck'
-    'game-log . . .'
+    'game-log . p2-shop .'
     'player-info trash market turn-controls'
-    '. . . turn-controls'
+    '. . p1-shop turn-controls'
     '. p1-discard p1-hand p1-deck';
   background-color: #e4e4e4;
   min-height: 100vh;
@@ -54,6 +55,11 @@ const TurnControlsGridArea = GridArea.extend`
   align-items: center;
 `;
 
+const P1ShopGridArea = GridArea.extend`
+  grid-area: p1-shop;
+  justify-content: center;
+`;
+
 const P1HandGridArea = GridArea.extend`
   grid-area: p1-hand;
 `;
@@ -70,6 +76,11 @@ const P1DeckGridArea = GridArea.extend`
 
 const PlayerInfoGridArea = GridArea.extend`
   grid-area: player-info;
+  justify-content: center;
+`;
+
+const P2ShopGridArea = GridArea.extend`
+  grid-area: p2-shop;
   justify-content: center;
 `;
 
@@ -122,6 +133,12 @@ class PlayingField extends React.Component<Props, object> {
             0 && <CardView />}
         </P2DeckGridArea>
 
+        <P2ShopGridArea>
+          <ShopArea
+            playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
+          />
+        </P2ShopGridArea>
+
         <PlayerInfoGridArea>
           <PlayerInfo
             playerId={this.props.store!.getPlayer(PlayerId.Player2).id}
@@ -146,6 +163,12 @@ class PlayingField extends React.Component<Props, object> {
         <GameLogGridArea>
           <GameLog />
         </GameLogGridArea>
+
+        <P1ShopGridArea>
+          <ShopArea
+            playerId={this.props.store!.getPlayer(PlayerId.Player1).id}
+          />
+        </P1ShopGridArea>
 
         <P1DiscardGridArea>
           <CardPile
