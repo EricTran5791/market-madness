@@ -1,6 +1,6 @@
 import { types, applySnapshot } from 'mobx-state-tree';
 import { Card, CardModelSnapshotType, CardModelType } from './Card';
-import { Map, List } from 'immutable';
+import { Map } from 'immutable';
 import { BasicCardEffect, GainedCard } from '../types/cardEffect.types';
 import { generateCardDescription } from '../utils/cardGenerator';
 
@@ -236,10 +236,7 @@ export const CardLibrary = types
           updateCard(_.id, {
             ..._,
             effects: updatedEffects,
-            description: generateCardDescription(
-              _.category,
-              List(updatedEffects)
-            ),
+            description: generateCardDescription(_.category, updatedEffects),
           });
         });
     }

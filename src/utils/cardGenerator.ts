@@ -12,7 +12,6 @@ import {
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
 } from '../types/cardEffect.types';
-import { List } from 'immutable';
 import {
   Card as CardType,
   CardCategory,
@@ -111,10 +110,12 @@ export function shuffleCardStackModel(
 
 export function generateCardDescription(
   cardCategory: CardCategory,
-  effects: List<CardEffect>
+  effects: CardEffect[]
 ): string {
   return (
-    `${cardCategory === CardCategory.NPC ? 'Defeat: ' : ''}` +
+    `${
+      cardCategory === CardCategory.NPC && effects.length > 0 ? 'Defeat: ' : ''
+    }` +
     effects
       .map((effect: CardEffect) => {
         if (effect.kind === CardEffectKind.Basic) {
