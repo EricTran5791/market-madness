@@ -4,6 +4,7 @@ exports[`Card and CardStack Model adds a card to the CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -15,10 +16,10 @@ Object {
       "kind": "Normal",
       "name": "Card 1",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "1",
     },
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -30,7 +31,6 @@ Object {
       "kind": "Normal",
       "name": "Card 2",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "2",
     },
   ],
@@ -39,6 +39,7 @@ Object {
 
 exports[`Card and CardStack Model creates a Card 1`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -50,7 +51,6 @@ Object {
   "kind": "Normal",
   "name": "Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "1",
 }
 `;
@@ -59,6 +59,7 @@ exports[`Card and CardStack Model creates a CardStack 1`] = `
 Object {
   "cards": Array [
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -70,7 +71,6 @@ Object {
       "kind": "Normal",
       "name": "Card 1",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "1",
     },
   ],

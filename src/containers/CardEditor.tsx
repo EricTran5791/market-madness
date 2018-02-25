@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   Card,
   CardShop,
-  CardSubcategory,
+  CardCategory,
   CardCostKind,
   initialCardState,
   CardKind,
@@ -409,37 +409,37 @@ class CardEditor extends React.Component<Props, State> {
           </KindShopTypeContainer>
 
           <Dropdown
-            label="Subcategories"
+            label="Categories"
             multiSelect
-            selectedKeys={this.state.store.currentCard.subcategories.map(
-              subcategory => {
+            selectedKeys={this.state.store.currentCard.categories.map(
+              category => {
                 return (
-                  Object.keys(CardSubcategory).find(
-                    _ => CardSubcategory[_] === subcategory
+                  Object.keys(CardCategory).find(
+                    _ => CardCategory[_] === category
                   ) || ''
                 );
               }
             )}
-            options={Object.keys(CardSubcategory)
+            options={Object.keys(CardCategory)
               .map(key => {
                 return {
                   key,
-                  text: CardSubcategory[key],
+                  text: CardCategory[key],
                 };
               })
               .sort()}
             onChanged={({ key, selected }: IDropdownOption) => {
               if (selected) {
                 this.updateCurrentCard({
-                  subcategories: this.state.store.currentCard.subcategoriesList
-                    .push(CardSubcategory[key])
+                  categories: this.state.store.currentCard.categoriesList
+                    .push(CardCategory[key])
                     .sort()
                     .toArray(),
                 });
               } else {
                 this.updateCurrentCard({
-                  subcategories: this.state.store.currentCard.subcategoriesList
-                    .filter(_ => _ !== CardSubcategory[key])
+                  categories: this.state.store.currentCard.categoriesList
+                    .filter(_ => _ !== CardCategory[key])
                     .sort()
                     .toArray(),
                 });

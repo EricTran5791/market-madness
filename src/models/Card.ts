@@ -4,7 +4,7 @@ import { CardEffect, CardEffectCategory } from '../types/cardEffect.types';
 import {
   CardKind,
   CardShop,
-  CardSubcategory,
+  CardCategory,
   CardCostKind,
 } from '../types/cardTypes';
 import { List } from 'immutable';
@@ -30,11 +30,11 @@ export const Card = types
       ),
       CardShop.Neutral
     ),
-    subcategories: types.optional(
+    categories: types.optional(
       types.array(
         types.enumeration(
-          'Subcategory',
-          Object.keys(CardSubcategory).map(key => CardSubcategory[key])
+          'Category',
+          Object.keys(CardCategory).map(key => CardCategory[key])
         )
       ),
       []
@@ -64,8 +64,8 @@ export const Card = types
           .reduce((sum, currentValue) => sum + currentValue, 0)
       );
     },
-    get subcategoriesList() {
-      return List<CardSubcategory>(self.subcategories);
+    get categoriesList() {
+      return List<CardCategory>(self.categories);
     },
     get effectsList() {
       return List<CardEffect>(self.effects);

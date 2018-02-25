@@ -15,6 +15,7 @@ Object {
   },
   "cards": Array [
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -26,10 +27,10 @@ Object {
       "kind": "Normal",
       "name": "Card 1",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "1",
     },
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -41,10 +42,10 @@ Object {
       "kind": "Normal",
       "name": "Card 2",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "2",
     },
     Object {
+      "categories": Array [],
       "cost": Object {
         "kind": "Money",
         "value": 0,
@@ -56,7 +57,6 @@ Object {
       "kind": "Normal",
       "name": "Card 3",
       "shop": "Neutral",
-      "subcategories": Array [],
       "uniqid": "3",
     },
   ],
@@ -83,6 +83,7 @@ Object {
 exports[`Card Library fails to add a new card to the library when the new card id
     is already being used by another card in the library 2`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -94,7 +95,6 @@ Object {
   "kind": "Normal",
   "name": "Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "1",
 }
 `;
@@ -123,6 +123,7 @@ Object {
 
 exports[`Card Library fails to delete a card that is being referenced by another card in the library 2`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -134,7 +135,6 @@ Object {
   "kind": "Normal",
   "name": "Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "1",
 }
 `;
@@ -157,6 +157,7 @@ Object {
 
 exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 2`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -168,13 +169,13 @@ Object {
   "kind": "Normal",
   "name": "Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "1",
 }
 `;
 
 exports[`Card Library fails to update a card in the library when the snapshot id is being used by another card in the library 3`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -186,13 +187,13 @@ Object {
   "kind": "Normal",
   "name": "Card 2",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "2",
 }
 `;
 
 exports[`Card Library gets a card by id from the library 1`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -204,13 +205,13 @@ Object {
   "kind": "Normal",
   "name": "Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "1",
 }
 `;
 
 exports[`Card Library gets a card by id from the library 2`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -222,7 +223,6 @@ Object {
   "kind": "Normal",
   "name": "Card 2",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "2",
 }
 `;
@@ -249,6 +249,7 @@ exports[`Card Library updates a card's name and all other cards that reference t
 
 exports[`Card Library updates a card's name and all other cards that reference the card 3`] = `
 Object {
+  "categories": Array [],
   "cost": Object {
     "kind": "Money",
     "value": 0,
@@ -270,7 +271,6 @@ Object {
   "kind": "Normal",
   "name": "New Card that references Card 1",
   "shop": "Neutral",
-  "subcategories": Array [],
   "uniqid": "new",
 }
 `;

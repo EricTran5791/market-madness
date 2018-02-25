@@ -4,7 +4,7 @@
     "name": "Shopper's Frenzy",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "+1 Attack, Draw 1 card",
     "cost": {
       "kind": "Money",
@@ -30,7 +30,7 @@
     "name": "Basketball",
     "kind": "Normal",
     "shop": "Sports",
-    "subcategories": ["Sports Equipment"],
+    "categories": ["Sports Equipment"],
     "description": "+3 Attack",
     "cost": {
       "kind": "Money",
@@ -50,7 +50,7 @@
     "name": "Postal Worker",
     "kind": "NPC",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Defeat: Draw 1 card",
     "cost": {
       "kind": "Health",
@@ -70,7 +70,7 @@
     "name": "Shopping Basket",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "+2 Attack",
     "cost": {
       "kind": "Money",
@@ -90,7 +90,7 @@
     "name": "Gem",
     "kind": "Money",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "+2 Money",
     "cost": {
       "kind": "Money",
@@ -110,7 +110,7 @@
     "name": "Coin",
     "kind": "Money",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "+1 Money",
     "cost": {
       "kind": "Money",
@@ -130,7 +130,7 @@
     "name": "Exchange Goods",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Draw 2 cards, Discard 2 cards",
     "cost": {
       "kind": "Money",
@@ -156,7 +156,7 @@
     "name": "Garbage Bag",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Trash up to 2 cards, Trash this card",
     "cost": {
       "kind": "Money",
@@ -182,7 +182,7 @@
     "name": "Business Person",
     "kind": "NPC",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Defeat: +3 Money",
     "cost": {
       "kind": "Health",
@@ -202,7 +202,7 @@
     "name": "Fish Bones",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "",
     "cost": {
       "kind": "Money",
@@ -215,7 +215,7 @@
     "name": "Bread",
     "kind": "Normal",
     "shop": "Groceries",
-    "subcategories": ["Food"],
+    "categories": ["Food"],
     "description": "Heal 2",
     "cost": {
       "kind": "Money",
@@ -235,7 +235,7 @@
     "name": "Baker",
     "kind": "NPC",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Defeat: Add 1 Bread to your hand",
     "cost": {
       "kind": "Health",
@@ -258,7 +258,7 @@
     "name": "Portable Furnace",
     "kind": "Normal",
     "shop": "Artisanal",
-    "subcategories": [],
+    "categories": [],
     "description": "Trash 2 cards, Add 1 Gem to your hand",
     "cost": {
       "kind": "Money",
@@ -287,7 +287,7 @@
     "name": "Express Shipping",
     "kind": "Normal",
     "shop": "Neutral",
-    "subcategories": [],
+    "categories": [],
     "description": "Draw 2 cards",
     "cost": {
       "kind": "Money",
