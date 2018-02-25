@@ -6,6 +6,7 @@ import {
   CardSubcategory,
   CardCostKind,
   initialCardState,
+  CardKind,
 } from '../types/cardTypes';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
@@ -90,6 +91,13 @@ export const Label = styled.label`
 export const IdNameContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
+  grid-gap: 16px;
+  margin: 16px 0;
+`;
+
+export const KindShopTypeContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 16px;
   margin: 16px 0;
 `;
@@ -373,18 +381,32 @@ class CardEditor extends React.Component<Props, State> {
             />
           </IdNameContainer>
 
-          <Dropdown
-            label="Category"
-            selectedKey={Object.keys(CardCategory).find(
-              _ => this.state.store.currentCard.category === CardCategory[_]
-            )}
-            options={Object.keys(CardCategory).map(key => {
-              return { key, text: CardCategory[key] };
-            })}
-            onChanged={({ key }: IDropdownOption) => {
-              this.updateCurrentCard({ category: CardCategory[key] });
-            }}
-          />
+          <KindShopTypeContainer>
+            <Dropdown
+              label="Kind"
+              selectedKey={Object.keys(CardKind).find(
+                _ => this.state.store.currentCard.kind === CardKind[_]
+              )}
+              options={Object.keys(CardKind).map(key => {
+                return { key, text: CardKind[key] };
+              })}
+              onChanged={({ key }: IDropdownOption) => {
+                this.updateCurrentCard({ kind: CardKind[key] });
+              }}
+            />
+            <Dropdown
+              label="Category"
+              selectedKey={Object.keys(CardCategory).find(
+                _ => this.state.store.currentCard.category === CardCategory[_]
+              )}
+              options={Object.keys(CardCategory).map(key => {
+                return { key, text: CardCategory[key] };
+              })}
+              onChanged={({ key }: IDropdownOption) => {
+                this.updateCurrentCard({ category: CardCategory[key] });
+              }}
+            />
+          </KindShopTypeContainer>
 
           <Dropdown
             label="Subcategories"

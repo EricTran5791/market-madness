@@ -1,5 +1,12 @@
 import { CardEffect } from './cardEffect.types';
 
+export enum CardKind {
+  Normal = 'Normal',
+  Instant = 'Instant',
+  Money = 'Money',
+  NPC = 'NPC',
+}
+
 export enum CardCategory {
   Neutral = 'Neutral',
   Money = 'Money',
@@ -22,6 +29,7 @@ export enum CardCostKind {
 export type Card = {
   id: string;
   name: string;
+  kind: CardKind;
   category: CardCategory;
   subcategories: CardSubcategory[];
   description: string;
@@ -36,6 +44,7 @@ export type Card = {
 export const initialCardState: Card = {
   id: '',
   name: '',
+  kind: CardKind.Normal,
   category: CardCategory.Neutral,
   subcategories: [],
   description: '',

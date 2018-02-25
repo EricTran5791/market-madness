@@ -1,7 +1,7 @@
 import { types, getParent } from 'mobx-state-tree';
 import { CardStack, CardModelType } from './Card';
 import { StoreType } from './Store';
-import { CardCategory } from '../types/cardTypes';
+import { CardKind } from '../types/cardTypes';
 
 export const Hand = types
   .model('Hand', {
@@ -14,7 +14,7 @@ export const Hand = types
   .views(self => ({
     get unplayedMoneyCards() {
       return self.cardStack.cards.filter(
-        _ => !_.isPlayed && _.category === CardCategory.Money
+        _ => !_.isPlayed && _.kind === CardKind.Money
       );
     },
   }))

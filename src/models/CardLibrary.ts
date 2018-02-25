@@ -236,7 +236,7 @@ export const CardLibrary = types
           updateCard(_.id, {
             ..._,
             effects: updatedEffects,
-            description: generateCardDescription(_.category, updatedEffects),
+            description: generateCardDescription(_.kind, updatedEffects),
           });
         });
     }

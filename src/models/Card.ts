@@ -2,6 +2,7 @@ import { types } from 'mobx-state-tree';
 import { CardEffectUnion, BasicCardEffectSnapshotType } from './CardEffect';
 import { CardEffect, CardEffectCategory } from '../types/cardEffect.types';
 import {
+  CardKind,
   CardCategory,
   CardSubcategory,
   CardCostKind,
@@ -15,6 +16,13 @@ export const Card = types
     uniqid: types.identifier(types.string),
     id: types.string,
     name: types.string,
+    kind: types.optional(
+      types.enumeration(
+        'Kind',
+        Object.keys(CardKind).map(key => CardKind[key])
+      ),
+      CardKind.Normal
+    ),
     category: types.enumeration(
       'Category',
       Object.keys(CardCategory).map(key => CardCategory[key])

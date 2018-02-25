@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { StoreType } from '../models/Store';
 import CardView from '../components/CardView';
 import { CardModelType } from '../models/Card';
-import { CardCategory } from '../types/cardTypes';
+import { CardKind } from '../types/cardTypes';
 
 interface Props {
   playerId: string;
@@ -54,7 +54,7 @@ class ShopArea extends React.Component<Props, object> {
   }
 
   onCardClick(card: CardModelType) {
-    if (card.category === CardCategory.NPC) {
+    if (card.kind === CardKind.NPC) {
       this.props.store!.attackNPC(card);
     } else {
       this.props.store!.buyCard(card);

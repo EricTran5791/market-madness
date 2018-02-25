@@ -14,8 +14,8 @@ import {
 } from '../types/cardEffect.types';
 import {
   Card as CardType,
-  CardCategory,
   CardLibraryRecord,
+  CardKind,
 } from '../types/cardTypes';
 
 import cardLibrary from './cardLibrary.json';
@@ -109,13 +109,11 @@ export function shuffleCardStackModel(
 }
 
 export function generateCardDescription(
-  cardCategory: CardCategory,
+  cardKind: CardKind,
   effects: CardEffect[]
 ): string {
   return (
-    `${
-      cardCategory === CardCategory.NPC && effects.length > 0 ? 'Defeat: ' : ''
-    }` +
+    `${cardKind === CardKind.NPC && effects.length > 0 ? 'Defeat: ' : ''}` +
     effects
       .map((effect: CardEffect) => {
         if (effect.kind === CardEffectKind.Basic) {

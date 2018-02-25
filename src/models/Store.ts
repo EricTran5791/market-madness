@@ -18,7 +18,7 @@ import {
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
 } from '../types/cardEffect.types';
-import { CardCategory } from '../types/cardTypes';
+import { CardKind } from '../types/cardTypes';
 
 export const Store = types
   .model('Store', {
@@ -92,7 +92,7 @@ export const Store = types
         }
 
         processCardEffects(card, effects.slice(1)); // Process the rest of the effects
-      } else if (effects.length === 0 && card.category === CardCategory.NPC) {
+      } else if (effects.length === 0 && card.kind === CardKind.NPC) {
         // The NPC is defeated, we destroy the NPC card after processing its effects
         destroy(card);
       }
@@ -274,8 +274,8 @@ export const Store = types
 
       // If there isn't an active card effect, then we process the card as normal.
       if (!self.gameState.isCardEffectActive) {
-        switch (card.category) {
-          case CardCategory.Money:
+        switch (card.kind) {
+          case CardKind.Money:
             self.currentPlayer.hand.increaseMoney(card.totalMoneyValue);
             break;
           default:

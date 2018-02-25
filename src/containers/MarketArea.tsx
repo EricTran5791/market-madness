@@ -5,7 +5,7 @@ import { CardStackModelType, CardModelType } from '../models/Card';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { StoreType } from '../models/Store';
-import { CardCategory } from '../types/cardTypes';
+import { CardKind } from '../types/cardTypes';
 
 interface Props {
   store?: StoreType;
@@ -74,7 +74,7 @@ class MarketArea extends React.Component<Props, State> {
     return marketCards;
   }
   onMarketCardClick(card: CardModelType) {
-    if (card.category === CardCategory.NPC) {
+    if (card.kind === CardKind.NPC) {
       this.props.store!.attackNPC(card);
     } else {
       this.props.store!.buyCard(card);

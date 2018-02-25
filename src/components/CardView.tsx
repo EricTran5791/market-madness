@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { CardModelType } from '../models/Card';
 import { withProps } from '../types/withProps';
-import { CardCategory, CardCostKind } from '../types/cardTypes';
+import { CardCategory, CardCostKind, CardKind } from '../types/cardTypes';
 
 type CardPosition = {
   zIndex?: number;
@@ -19,6 +19,7 @@ interface Props {
 }
 
 interface StyledCardProps {
+  kind: string;
   category: string;
   cardPosition?: CardPosition;
   showHoverAnimation: boolean;
@@ -58,7 +59,7 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     cardPosition && cardPosition.zIndex
       ? `z-index: ${cardPosition.zIndex}`
       : ''};
-  background-color: ${({ category }: StyledCardProps): string => {
+  background-color: ${({ category, kind }: StyledCardProps): string => {
     switch (category) {
       case CardCategory.Groceries:
         return '#03A93B';
@@ -66,12 +67,10 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
         return '#f9f9f9';
       case CardCategory.Sports:
         return '#304DFF';
-      case CardCategory.Money:
-        return '#66514A';
-      case CardCategory.NPC:
-        return '#212F3D';
       default:
-        return '#222222';
+        return kind === CardKind.Money
+          ? '#66514A'
+          : kind === CardKind.NPC ? '#212F3D' : '#222222';
     }
   }};
   color: ${({ category }: StyledCardProps): string => {
@@ -172,6 +171,7 @@ function CardView({ model, cardPosition, onClick }: Props) {
       {model ? (
         <StyledCard
           onClick={onClick}
+          kind={model.kind}
           category={model.category}
           cardPosition={cardPosition}
           showHoverAnimation={onClick !== undefined}
@@ -189,7 +189,7 @@ function CardView({ model, cardPosition, onClick }: Props) {
             ) : (
               <CardCost>{model.cost.value}</CardCost>
             )}
-            {model.category}
+            {model.kind !== CardKind.Normal ? model.kind : ''}
           </CardFooter>
         </StyledCard>
       ) : (
