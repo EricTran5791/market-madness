@@ -3,7 +3,7 @@ import { CardEffectUnion, BasicCardEffectSnapshotType } from './CardEffect';
 import { CardEffect, CardEffectCategory } from '../types/cardEffect.types';
 import {
   CardKind,
-  CardCategory,
+  CardShop,
   CardSubcategory,
   CardCostKind,
 } from '../types/cardTypes';
@@ -23,9 +23,12 @@ export const Card = types
       ),
       CardKind.Normal
     ),
-    category: types.enumeration(
-      'Category',
-      Object.keys(CardCategory).map(key => CardCategory[key])
+    shop: types.optional(
+      types.enumeration(
+        'Shop',
+        Object.keys(CardShop).map(key => CardShop[key])
+      ),
+      CardShop.Neutral
     ),
     subcategories: types.optional(
       types.array(

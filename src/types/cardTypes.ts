@@ -7,10 +7,8 @@ export enum CardKind {
   NPC = 'NPC',
 }
 
-export enum CardCategory {
+export enum CardShop {
   Neutral = 'Neutral',
-  Money = 'Money',
-  NPC = 'NPC',
   Artisanal = 'Artisanal',
   Groceries = 'Groceries',
   Sports = 'Sports',
@@ -30,7 +28,7 @@ export type Card = {
   id: string;
   name: string;
   kind: CardKind;
-  category: CardCategory;
+  shop: CardShop;
   subcategories: CardSubcategory[];
   description: string;
   cost: {
@@ -45,7 +43,7 @@ export const initialCardState: Card = {
   id: '',
   name: '',
   kind: CardKind.Normal,
-  category: CardCategory.Neutral,
+  shop: CardShop.Neutral,
   subcategories: [],
   description: '',
   cost: {

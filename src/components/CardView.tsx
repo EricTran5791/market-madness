@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { CardModelType } from '../models/Card';
 import { withProps } from '../types/withProps';
-import { CardCategory, CardCostKind, CardKind } from '../types/cardTypes';
+import { CardShop, CardCostKind, CardKind } from '../types/cardTypes';
 
 type CardPosition = {
   zIndex?: number;
@@ -20,7 +20,7 @@ interface Props {
 
 interface StyledCardProps {
   kind: string;
-  category: string;
+  shop: string;
   cardPosition?: CardPosition;
   showHoverAnimation: boolean;
   isPlayed: boolean;
@@ -59,13 +59,13 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
     cardPosition && cardPosition.zIndex
       ? `z-index: ${cardPosition.zIndex}`
       : ''};
-  background-color: ${({ category, kind }: StyledCardProps): string => {
-    switch (category) {
-      case CardCategory.Groceries:
+  background-color: ${({ shop, kind }: StyledCardProps): string => {
+    switch (shop) {
+      case CardShop.Groceries:
         return '#03A93B';
-      case CardCategory.Artisanal:
+      case CardShop.Artisanal:
         return '#f9f9f9';
-      case CardCategory.Sports:
+      case CardShop.Sports:
         return '#304DFF';
       default:
         return kind === CardKind.Money
@@ -73,9 +73,9 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
           : kind === CardKind.NPC ? '#212F3D' : '#222222';
     }
   }};
-  color: ${({ category }: StyledCardProps): string => {
-    switch (category) {
-      case CardCategory.Artisanal:
+  color: ${({ shop }: StyledCardProps): string => {
+    switch (shop) {
+      case CardShop.Artisanal:
         return '#222222';
       default:
         return 'white';
@@ -172,13 +172,13 @@ function CardView({ model, cardPosition, onClick }: Props) {
         <StyledCard
           onClick={onClick}
           kind={model.kind}
-          category={model.category}
+          shop={model.shop}
           cardPosition={cardPosition}
           showHoverAnimation={onClick !== undefined}
           isPlayed={model.isPlayed}
         >
           <CardName>{model.name}</CardName>
-          {model.category === CardCategory.Money ? (
+          {model.kind === CardKind.Money ? (
             <CardMoney>{model.totalMoneyValue}</CardMoney>
           ) : (
             <CardDescription>{model.description}</CardDescription>

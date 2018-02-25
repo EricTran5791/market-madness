@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import {
   Card,
-  CardCategory,
+  CardShop,
   CardSubcategory,
   CardCostKind,
   initialCardState,
@@ -395,15 +395,15 @@ class CardEditor extends React.Component<Props, State> {
               }}
             />
             <Dropdown
-              label="Category"
-              selectedKey={Object.keys(CardCategory).find(
-                _ => this.state.store.currentCard.category === CardCategory[_]
+              label="Shop"
+              selectedKey={Object.keys(CardShop).find(
+                _ => this.state.store.currentCard.shop === CardShop[_]
               )}
-              options={Object.keys(CardCategory).map(key => {
-                return { key, text: CardCategory[key] };
+              options={Object.keys(CardShop).map(key => {
+                return { key, text: CardShop[key] };
               })}
               onChanged={({ key }: IDropdownOption) => {
-                this.updateCurrentCard({ category: CardCategory[key] });
+                this.updateCurrentCard({ shop: CardShop[key] });
               }}
             />
           </KindShopTypeContainer>
