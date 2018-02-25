@@ -22,6 +22,7 @@ export enum GameLogEntryCategory {
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
   ShuffleCardToDeck = 'Shuffle Card to Deck',
+  TopdeckCardToOpposingShopDecks = 'Topdeck Card to Opposing Shop Decks',
   Trash = 'Trash',
 }
 
@@ -117,6 +118,13 @@ export const GameState = types
           message = `${
             self.currentPlayer.id
           } shuffled ${value} ${gainedCardName} to their deck`;
+          break;
+        case GameLogEntryCategory.TopdeckCardToOpposingShopDecks:
+          message = `${
+            self.currentPlayer.id
+          } topdecked ${value} ${gainedCardName} to each of ${targets!.join(
+            ', '
+          )}'s shop decks with ${cardName}`;
           break;
         case GameLogEntryCategory.Trash:
           message = `${self.currentPlayer.id} trashed ${targets!.join(

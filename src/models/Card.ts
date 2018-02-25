@@ -107,6 +107,10 @@ export const CardStack = types
       self.cards.push(card);
     }
 
+    function addToFront(card: CardModelType) {
+      self.cards.unshift(card);
+    }
+
     function addAndShuffle(card: CardModelType) {
       self.cards.push(card);
       shuffleCards();
@@ -122,6 +126,7 @@ export const CardStack = types
 
     return {
       add,
+      addToFront,
       addAndShuffle,
       remove,
     };

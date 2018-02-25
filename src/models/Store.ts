@@ -18,7 +18,7 @@ import {
   InteractiveCardEffectCategory,
   InteractiveCardEffectResolveType,
 } from '../types/cardEffect.types';
-import { CardKind } from '../types/cardTypes';
+import { CardKind, CardCostKind } from '../types/cardTypes';
 
 export const Store = types
   .model('Store', {
@@ -92,9 +92,15 @@ export const Store = types
         }
 
         processCardEffects(card, effects.slice(1)); // Process the rest of the effects
-      } else if (effects.length === 0 && card.kind === CardKind.NPC) {
-        // The NPC is defeated, we destroy the NPC card after processing its effects
-        destroy(card);
+      } else if (effects.length === 0) {
+        switch (card.kind) {
+          case CardKind.Instant: // The instant is completed
+          case CardKind.NPC: // The NPC is defeated
+            destroy(card); // We destroy the card after processing its effects
+            return;
+          default:
+            return;
+        }
       }
     });
 
@@ -123,7 +129,7 @@ export const Store = types
                 GameLogEntryCategory.GainCardToDiscardPile,
                 {
                   gainedCardName: gainedCard.name,
-                  value: value,
+                  value,
                 }
               );
               self.currentPlayer.discardPile.add(printCardById(gainedCard.id));
@@ -133,7 +139,7 @@ export const Store = types
                 GameLogEntryCategory.GainCardToHand,
                 {
                   gainedCardName: gainedCard.name,
-                  value: value,
+                  value,
                 }
               );
               self.currentPlayer.hand.addCard(printCardById(gainedCard.id));
@@ -141,7 +147,7 @@ export const Store = types
             case CardEffectCategory.GainMoney:
               self.gameState.addGameLogEntry(GameLogEntryCategory.GainMoney, {
                 cardName: card.name,
-                value: value,
+                value,
               });
               self.currentPlayer.hand.increaseMoney(value);
               break;
@@ -165,7 +171,7 @@ export const Store = types
                 GameLogEntryCategory.IncreaseMaxHealth,
                 {
                   cardName: card.name,
-                  value: value,
+                  value,
                 }
               );
               break;
@@ -174,12 +180,27 @@ export const Store = types
                 GameLogEntryCategory.ShuffleCardToDeck,
                 {
                   gainedCardName: gainedCard.name,
-                  value: value,
+                  value,
                 }
               );
               self.currentPlayer.deck.addAndShuffle(
                 printCardById(gainedCard.id)
               );
+              break;
+            case CardEffectCategory.TopdeckCardToOpposingShopDecks:
+              self.gameState.addGameLogEntry(
+                GameLogEntryCategory.TopdeckCardToOpposingShopDecks,
+                {
+                  cardName: card.name,
+                  targets: [self.otherPlayer.id],
+                  value,
+                  gainedCardName: gainedCard.name,
+                }
+              );
+
+              self.otherPlayer.shopDeck.forEach(_ => {
+                _.addToFront(printCardById(gainedCard.id));
+              });
               break;
             case CardEffectCategory.TrashSelf:
               self.trash.trashCard(card);
@@ -321,11 +342,28 @@ export const Store = types
       }
     }
 
+    function playInstant(card: CardModelType) {
+      switch (card.cost.kind) {
+        case CardCostKind.Money:
+          if (self.currentPlayer.hand.spendMoney(card.cost.value)) {
+            processCardEffects(card, card.effects);
+          }
+          return;
+        case CardCostKind.Health:
+          self.currentPlayer.takeDamage(card.cost.value);
+          processCardEffects(card, card.effects);
+          return;
+        default:
+          return;
+      }
+    }
+
     return {
       changeCurrentPlayer,
       createNewGame,
       endTurn,
       buyCard,
+      playInstant,
       processCardEffects,
       processCardEffect,
       playCard,

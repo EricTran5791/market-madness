@@ -40,6 +40,7 @@ class ShopArea extends React.Component<Props, object> {
     const shopDeck = this.player.shopDeck[deckIndex];
     return shopDeck.cards.length > 0 ? (
       <CardView
+        key={shopDeck.cards[0].uniqid}
         model={shopDeck.cards[0]}
         onClick={
           this.props.store!.currentPlayer.id === this.props.playerId &&
@@ -54,10 +55,16 @@ class ShopArea extends React.Component<Props, object> {
   }
 
   onCardClick(card: CardModelType) {
-    if (card.kind === CardKind.NPC) {
-      this.props.store!.attackNPC(card);
-    } else {
-      this.props.store!.buyCard(card);
+    switch (card.kind) {
+      case CardKind.NPC:
+        this.props.store!.attackNPC(card);
+        return;
+      case CardKind.Instant:
+        this.props.store!.playInstant(card);
+        return;
+      default:
+        this.props.store!.buyCard(card);
+        return;
     }
   }
 

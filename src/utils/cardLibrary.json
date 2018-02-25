@@ -45,6 +45,29 @@
       }
     ]
   },
+  "indecisiveness": {
+    "id": "indecisiveness",
+    "name": "Indecisiveness",
+    "kind": "Instant",
+    "shop": "Groceries",
+    "categories": [],
+    "description": "Topdeck 1 Indecisive Shopper to each opposing shop deck",
+    "cost": {
+      "kind": "Money",
+      "value": 3
+    },
+    "effects": [
+      {
+        "kind": "Basic",
+        "category": "Topdeck Card to Opposing Shop Decks",
+        "value": 1,
+        "gainedCard": {
+          "id": "indecisiveShopper",
+          "name": "Indecisive Shopper"
+        }
+      }
+    ]
+  },
   "postalWorker": {
     "id": "postalWorker",
     "name": "Postal Worker",
@@ -196,6 +219,19 @@
         "gainedCard": null
       }
     ]
+  },
+  "indecisiveShopper": {
+    "id": "indecisiveShopper",
+    "name": "Indecisive Shopper",
+    "kind": "NPC",
+    "shop": "Groceries",
+    "categories": [],
+    "description": "",
+    "cost": {
+      "kind": "Health",
+      "value": 1
+    },
+    "effects": []
   },
   "fishBones": {
     "id": "fishBones",

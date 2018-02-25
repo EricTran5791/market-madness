@@ -12,6 +12,7 @@ export enum CardEffectCategory {
   Heal = 'Heal',
   IncreaseMaxHealth = 'Increase Max Health',
   ShuffleCardToDeck = 'Shuffle Card to Deck',
+  TopdeckCardToOpposingShopDecks = 'Topdeck Card to Opposing Shop Decks',
   TrashSelf = 'Trash Self',
 }
 

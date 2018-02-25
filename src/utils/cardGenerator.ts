@@ -74,7 +74,8 @@ export function generateMarketDeck(): CardStackModelType {
 export function generateShopDeck(): CardStackModelType {
   return CardStack.create({
     cards: shuffle([
-      ...printDuplicateCards('basketball', 2),
+      ...printDuplicateCards('basketball', 1),
+      ...printDuplicateCards('indecisiveness', 1),
       ...printDuplicateCards('garbageBag', 1),
       ...printDuplicateCards('expressShipping', 1),
       ...printDuplicateCards('exchangeGoods', 1),
@@ -137,6 +138,10 @@ export function generateCardDescription(
             case CardEffectCategory.ShuffleCardToDeck:
               return `Shuffle ${value} ${gainedCard &&
                 gainedCard.name} into your deck`;
+            case CardEffectCategory.TopdeckCardToOpposingShopDecks:
+              return `Topdeck ${value} ${gainedCard && gainedCard.name}${
+                value > 1 ? 's' : ''
+              } to each opposing shop deck`;
             case CardEffectCategory.TrashSelf:
               return `Trash this card`;
             default:
