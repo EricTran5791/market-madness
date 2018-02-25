@@ -169,7 +169,7 @@
       {
         "kind": "Interactive",
         "category": "Discard",
-        "numCardsToResolve": 2,
+        "numPlaysToResolve": 2,
         "resolveType": "Mandatory"
       }
     ]
@@ -189,7 +189,7 @@
       {
         "kind": "Interactive",
         "category": "Trash",
-        "numCardsToResolve": 2,
+        "numPlaysToResolve": 2,
         "resolveType": "Optional"
       },
       {
@@ -304,7 +304,7 @@
       {
         "kind": "Interactive",
         "category": "Trash",
-        "numCardsToResolve": 2,
+        "numPlaysToResolve": 2,
         "resolveType": "Mandatory"
       },
       {

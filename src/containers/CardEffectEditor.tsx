@@ -245,9 +245,9 @@ class CardEffectEditor extends React.Component<Props, State> {
         )}
         {this.state.cardEffect.kind === CardEffectKind.Interactive && (
           <ControlContainer>
-            <Label># of Cards to Resolve</Label>
+            <Label># of Plays to Resolve</Label>
             <Slider
-              value={this.state.cardEffect.numCardsToResolve}
+              value={this.state.cardEffect.numPlaysToResolve}
               min={0}
               max={10}
               step={1}
@@ -256,7 +256,7 @@ class CardEffectEditor extends React.Component<Props, State> {
                   this.setState({
                     cardEffect: {
                       ...this.state.cardEffect,
-                      numCardsToResolve: value,
+                      numPlaysToResolve: value,
                     },
                   });
                 }

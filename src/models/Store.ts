@@ -216,12 +216,12 @@ export const Store = types
         } else if (effect.kind === CardEffectKind.Interactive) {
           let {
             category,
-            numCardsToResolve,
+            numPlaysToResolve,
           }: InteractiveCardEffectSnapshotType = effect;
 
           // Don't process the interactive card effect if there are no unplayed cards in hand.
           if (
-            numCardsToResolve > 0 &&
+            numPlaysToResolve > 0 &&
             self.currentPlayer.hand.cardStack.unplayedCards.length === 0
           ) {
             resolve();
@@ -310,12 +310,12 @@ export const Store = types
             ) {
               const {
                 resolveType,
-                numCardsToResolve,
+                numPlaysToResolve,
               }: InteractiveCardEffectSnapshotType = card.effects[0];
               // If there aren't enough unplayed cards to fulfill the effect, then we don't process it
               if (
                 resolveType === InteractiveCardEffectResolveType.Mandatory &&
-                numCardsToResolve >
+                numPlaysToResolve >
                   self.currentPlayer.hand.cardStack.unplayedCards.length
               ) {
                 card.isPlayed = false;

@@ -151,16 +151,16 @@ export function generateCardDescription(
               return '';
           }
         } else if (effect.kind === CardEffectKind.Interactive) {
-          const { category, numCardsToResolve, resolveType } = effect;
+          const { category, numPlaysToResolve, resolveType } = effect;
           const optionalText =
             resolveType === InteractiveCardEffectResolveType.Optional
               ? 'up to '
               : '';
           switch (category) {
             case InteractiveCardEffectCategory.Discard:
-              return `Discard ${optionalText}${numCardsToResolve} cards`;
+              return `Discard ${optionalText}${numPlaysToResolve} cards`;
             case InteractiveCardEffectCategory.Trash:
-              return `Trash ${optionalText}${numCardsToResolve} cards`;
+              return `Trash ${optionalText}${numPlaysToResolve} cards`;
             default:
               console.error(
                 `Error: No description template available for interactive card effect category '${category}'.`

@@ -71,9 +71,9 @@ class CardEffectsDetailsList extends React.Component<Props, State> {
       maxWidth: 60,
     },
     {
-      key: 'numCardsToResolve',
-      name: '# Cards to Resolve',
-      fieldName: 'numCardsToResolve',
+      key: 'numPlaysToResolve',
+      name: '# Plays to Resolve',
+      fieldName: 'numPlaysToResolve',
       minWidth: 100,
       maxWidth: 100,
     },

@@ -30,9 +30,9 @@ export const ActiveCardEffectState = types
     ),
   })
   .views(self => ({
-    /** The number of cards required to resolve the effect. */
-    get numCardsToResolve() {
-      return (self.effect && self.effect.numCardsToResolve) || -1;
+    /** The number of card or shop deck selections required to resolve the effect. */
+    get numPlaysToResolve() {
+      return (self.effect && self.effect.numPlaysToResolve) || -1;
     },
     get resolveType() {
       return self.effect && self.effect.resolveType;
@@ -64,7 +64,7 @@ export const ActiveCardEffectState = types
       // Complete the effect once we reach the target number of cards to
       // resolve or when we no longer have any playable cards in hand.
       if (
-        self.cardsToResolve.length === self.numCardsToResolve ||
+        self.cardsToResolve.length === self.numPlaysToResolve ||
         store.currentPlayer.hand.cardStack.unplayedCards.length === 0
       ) {
         self.status = ActiveCardEffectStatus.Completed;

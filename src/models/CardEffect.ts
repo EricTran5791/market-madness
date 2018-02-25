@@ -48,8 +48,8 @@ export const InteractiveCardEffect = CardEffect.named(
     )
   ),
   kind: types.literal(CardEffectKind.Interactive),
-  /** The number of cards that should be played to resolve the card effect. */
-  numCardsToResolve: types.optional(types.number, 0),
+  /** The number of card or shop deck selections to resolve the card effect. */
+  numPlaysToResolve: types.optional(types.number, 0),
   resolveType: types.optional(
     types.enumeration(
       'InteractiveCardEffectCategory',
