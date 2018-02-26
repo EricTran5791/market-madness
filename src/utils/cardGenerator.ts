@@ -10,7 +10,7 @@ import {
   CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
+  InteractiveCardEffectResolveKind,
 } from '../types/cardEffect.types';
 import {
   Card as CardType,
@@ -151,16 +151,20 @@ export function generateCardDescription(
               return '';
           }
         } else if (effect.kind === CardEffectKind.Interactive) {
-          const { category, numPlaysToResolve, resolveType } = effect;
+          const { category, resolveCondition } = effect;
           const optionalText =
-            resolveType === InteractiveCardEffectResolveType.Optional
+            resolveCondition.kind === InteractiveCardEffectResolveKind.Optional
               ? 'up to '
               : '';
           switch (category) {
             case InteractiveCardEffectCategory.Discard:
-              return `Discard ${optionalText}${numPlaysToResolve} cards`;
+              return `Discard ${optionalText}${
+                resolveCondition.numPlaysToResolve
+              } cards`;
             case InteractiveCardEffectCategory.Trash:
-              return `Trash ${optionalText}${numPlaysToResolve} cards`;
+              return `Trash ${optionalText}${
+                resolveCondition.numPlaysToResolve
+              } cards`;
             default:
               console.error(
                 `Error: No description template available for interactive card effect category '${category}'.`

@@ -21,9 +21,14 @@ export enum InteractiveCardEffectCategory {
   Trash = 'Trash',
 }
 
-export enum InteractiveCardEffectResolveType {
+export enum InteractiveCardEffectResolveKind {
   Mandatory = 'Mandatory',
   Optional = 'Optional',
+}
+
+export enum InteractiveCardEffectResolveTarget {
+  CardsInHand = 'Cards in Hand',
+  OpposingShopDecks = 'Opposing Shop Decks',
 }
 
 export type GainedCard = {
@@ -41,8 +46,11 @@ export interface BasicCardEffect {
 export interface InteractiveCardEffect {
   kind: CardEffectKind.Interactive;
   category: InteractiveCardEffectCategory;
-  resolveType: InteractiveCardEffectResolveType;
-  numPlaysToResolve?: number;
+  resolveCondition: {
+    kind: InteractiveCardEffectResolveKind;
+    target: InteractiveCardEffectResolveTarget;
+    numPlaysToResolve: number;
+  };
 }
 
 export type CardEffect = BasicCardEffect | InteractiveCardEffect;
@@ -56,6 +64,9 @@ export const initialBasicCardEffect: BasicCardEffect = {
 export const initialInteractiveCardEffect: InteractiveCardEffect = {
   kind: CardEffectKind.Interactive,
   category: InteractiveCardEffectCategory.Discard,
-  resolveType: InteractiveCardEffectResolveType.Optional,
-  numPlaysToResolve: 0,
+  resolveCondition: {
+    kind: InteractiveCardEffectResolveKind.Optional,
+    target: InteractiveCardEffectResolveTarget.CardsInHand,
+    numPlaysToResolve: 0,
+  },
 };

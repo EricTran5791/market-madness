@@ -3,7 +3,8 @@ import {
   CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
+  InteractiveCardEffectResolveKind,
+  InteractiveCardEffectResolveTarget,
 } from '../types/cardEffect.types';
 
 export const CardEffect = types.model('CardEffect', {
@@ -41,24 +42,35 @@ export type BasicCardEffectSnapshotType = typeof BasicCardEffect.SnapshotType;
 export const InteractiveCardEffect = CardEffect.named(
   'InteractiveCardEffect'
 ).props({
+  kind: types.literal(CardEffectKind.Interactive),
   category: types.enumeration(
     'InteractiveCardEffectCategory',
     Object.keys(InteractiveCardEffectCategory).map(
       key => InteractiveCardEffectCategory[key]
     )
   ),
-  kind: types.literal(CardEffectKind.Interactive),
-  /** The number of card or shop deck selections to resolve the card effect. */
-  numPlaysToResolve: types.optional(types.number, 0),
-  resolveType: types.optional(
-    types.enumeration(
-      'InteractiveCardEffectCategory',
-      Object.keys(InteractiveCardEffectResolveType).map(
-        key => InteractiveCardEffectResolveType[key]
-      )
+  resolveCondition: types.model('ResolveCondition', {
+    kind: types.optional(
+      types.enumeration(
+        'InteractiveCardEffectResolveKind',
+        Object.keys(InteractiveCardEffectResolveKind).map(
+          key => InteractiveCardEffectResolveKind[key]
+        )
+      ),
+      InteractiveCardEffectResolveKind.Optional
     ),
-    InteractiveCardEffectResolveType.Optional
-  ),
+    target: types.optional(
+      types.enumeration(
+        'InteractiveCardEffectResolveTarget',
+        Object.keys(InteractiveCardEffectResolveTarget).map(
+          key => InteractiveCardEffectResolveTarget[key]
+        )
+      ),
+      InteractiveCardEffectResolveTarget.CardsInHand
+    ),
+    /** The number of card or shop deck selections to resolve the card effect. */
+    numPlaysToResolve: types.optional(types.number, 0),
+  }),
 });
 
 export type InteractiveCardEffectModelType = typeof InteractiveCardEffect.Type;

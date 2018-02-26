@@ -1,5 +1,5 @@
 import { types, destroy, clone, getParent } from 'mobx-state-tree';
-import { Card, CardModelType } from './Card';
+import { Card, CardModelType, CardStack } from './Card';
 import {
   InteractiveCardEffect,
   InteractiveCardEffectModelType,
@@ -19,6 +19,7 @@ export const ActiveCardEffectState = types
     effect: types.maybe(InteractiveCardEffect),
     /** An array of cards that will be resolved by the effect. */
     cardsToResolve: types.optional(types.array(types.reference(Card)), []),
+    decksToResolve: types.optional(types.array(types.reference(CardStack)), []),
     status: types.optional(
       types.enumeration(
         'Category',
@@ -32,10 +33,12 @@ export const ActiveCardEffectState = types
   .views(self => ({
     /** The number of card or shop deck selections required to resolve the effect. */
     get numPlaysToResolve() {
-      return (self.effect && self.effect.numPlaysToResolve) || -1;
+      return (
+        (self.effect && self.effect.resolveCondition.numPlaysToResolve) || -1
+      );
     },
     get resolveType() {
-      return self.effect && self.effect.resolveType;
+      return self.effect && self.effect.resolveCondition.kind;
     },
     get activeEffectCategory() {
       return (self.effect && self.effect.category) || '';

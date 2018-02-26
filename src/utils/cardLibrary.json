@@ -169,8 +169,11 @@
       {
         "kind": "Interactive",
         "category": "Discard",
-        "numPlaysToResolve": 2,
-        "resolveType": "Mandatory"
+        "resolveCondition": {
+          "kind": "Mandatory",
+          "target": "Cards in Hand",
+          "numPlaysToResolve": 2
+        }
       }
     ]
   },
@@ -189,8 +192,11 @@
       {
         "kind": "Interactive",
         "category": "Trash",
-        "numPlaysToResolve": 2,
-        "resolveType": "Optional"
+        "resolveCondition": {
+          "kind": "Optional",
+          "target": "Cards in Hand",
+          "numPlaysToResolve": 2
+        }
       },
       {
         "kind": "Basic",
@@ -304,8 +310,11 @@
       {
         "kind": "Interactive",
         "category": "Trash",
-        "numPlaysToResolve": 2,
-        "resolveType": "Mandatory"
+        "resolveCondition": {
+          "kind": "Mandatory",
+          "target": "Cards in Hand",
+          "numPlaysToResolve": 2
+        }
       },
       {
         "kind": "Basic",

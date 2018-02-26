@@ -520,6 +520,14 @@ class CardEditor extends React.Component<Props, State> {
                 .map((_: CardEffect) => {
                   return {
                     ..._,
+                    resolveKind:
+                      _.kind === CardEffectKind.Interactive
+                        ? _.resolveCondition.kind
+                        : '',
+                    numPlaysToResolve:
+                      _.kind === CardEffectKind.Interactive
+                        ? _.resolveCondition.numPlaysToResolve
+                        : '',
                     gainedCardName:
                       _.kind === CardEffectKind.Basic && _.gainedCard
                         ? _.gainedCard.name

@@ -6,8 +6,9 @@ import {
   CardEffectKind,
   CardEffectCategory,
   InteractiveCardEffectCategory,
-  InteractiveCardEffectResolveType,
+  InteractiveCardEffectResolveKind,
   initialInteractiveCardEffect,
+  InteractiveCardEffectResolveTarget,
 } from '../types/cardEffect.types';
 import { Title, ControlContainer, Label } from './CardEditor';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
@@ -99,7 +100,7 @@ class CardEffectEditor extends React.Component<Props, State> {
         <Dropdown
           label="Kind"
           selectedKey={Object.keys(CardEffectKind).find(
-            _ => _ === this.state.cardEffect.kind
+            _ => CardEffectKind[_] === this.state.cardEffect.kind
           )}
           options={Object.keys(CardEffectKind).map(key => {
             return { key, text: CardEffectKind[key] };
@@ -222,21 +223,54 @@ class CardEffectEditor extends React.Component<Props, State> {
         )}
         {this.state.cardEffect.kind === CardEffectKind.Interactive && (
           <Dropdown
-            label="Resolve Type"
-            selectedKey={Object.keys(InteractiveCardEffectResolveType).find(
+            label="Resolve Kind"
+            selectedKey={Object.keys(InteractiveCardEffectResolveKind).find(
               _ =>
                 this.state.cardEffect.kind === CardEffectKind.Interactive &&
-                _ === this.state.cardEffect.resolveType
+                InteractiveCardEffectResolveKind[_] ===
+                  this.state.cardEffect.resolveCondition.kind
             )}
-            options={Object.keys(InteractiveCardEffectResolveType).map(key => {
-              return { key, text: InteractiveCardEffectResolveType[key] };
+            options={Object.keys(InteractiveCardEffectResolveKind).map(key => {
+              return { key, text: InteractiveCardEffectResolveKind[key] };
             })}
             onChanged={({ key }: IDropdownOption) => {
               if (this.state.cardEffect.kind === CardEffectKind.Interactive) {
                 this.setState({
                   cardEffect: {
                     ...this.state.cardEffect,
-                    resolveType: InteractiveCardEffectResolveType[key],
+                    resolveCondition: {
+                      ...this.state.cardEffect.resolveCondition,
+                      kind: InteractiveCardEffectResolveKind[key],
+                    },
+                  },
+                });
+              }
+            }}
+          />
+        )}
+        {this.state.cardEffect.kind === CardEffectKind.Interactive && (
+          <Dropdown
+            label="Resolve Target"
+            selectedKey={Object.keys(InteractiveCardEffectResolveTarget).find(
+              _ =>
+                this.state.cardEffect.kind === CardEffectKind.Interactive &&
+                InteractiveCardEffectResolveTarget[_] ===
+                  this.state.cardEffect.resolveCondition.target
+            )}
+            options={Object.keys(InteractiveCardEffectResolveTarget).map(
+              key => {
+                return { key, text: InteractiveCardEffectResolveTarget[key] };
+              }
+            )}
+            onChanged={({ key }: IDropdownOption) => {
+              if (this.state.cardEffect.kind === CardEffectKind.Interactive) {
+                this.setState({
+                  cardEffect: {
+                    ...this.state.cardEffect,
+                    resolveCondition: {
+                      ...this.state.cardEffect.resolveCondition,
+                      target: InteractiveCardEffectResolveTarget[key],
+                    },
                   },
                 });
               }
@@ -247,7 +281,7 @@ class CardEffectEditor extends React.Component<Props, State> {
           <ControlContainer>
             <Label># of Plays to Resolve</Label>
             <Slider
-              value={this.state.cardEffect.numPlaysToResolve}
+              value={this.state.cardEffect.resolveCondition.numPlaysToResolve}
               min={0}
               max={10}
               step={1}
@@ -256,7 +290,10 @@ class CardEffectEditor extends React.Component<Props, State> {
                   this.setState({
                     cardEffect: {
                       ...this.state.cardEffect,
-                      numPlaysToResolve: value,
+                      resolveCondition: {
+                        ...this.state.cardEffect.resolveCondition,
+                        numPlaysToResolve: value,
+                      },
                     },
                   });
                 }

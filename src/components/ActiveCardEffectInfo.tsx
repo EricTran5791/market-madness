@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { StoreType } from '../models/Store';
 import { observer, inject } from 'mobx-react';
-import { InteractiveCardEffectResolveType } from '../types/cardEffect.types';
+import { InteractiveCardEffectResolveKind } from '../types/cardEffect.types';
 
 interface Props {
   store?: StoreType;
@@ -44,7 +44,7 @@ export class ActiveCardEffectInfo extends React.Component<Props, object> {
               }
             </Title>
             {this.props.store!.gameState.activeCardEffect.resolveType ===
-              InteractiveCardEffectResolveType.Optional && (
+              InteractiveCardEffectResolveKind.Optional && (
               <Button
                 onClick={() =>
                   this.props
