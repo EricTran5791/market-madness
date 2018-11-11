@@ -37,7 +37,13 @@ export class GameLog extends React.Component<Props, State> {
     return this.state.gameLog
       .slice(Math.max(this.state.gameLog.length - 9, 0)) // Take the 9 most recent entries
       .map(entry => {
-        return <GameLogEntry key={entry.uniqid}>{entry.message}</GameLogEntry>;
+        return (
+          <GameLogEntry key={entry.uniqid}>
+            {`[${entry.timestamp.getHours()}:${entry.timestamp.getMinutes()}:${entry.timestamp.getSeconds()}] ${
+              entry.message
+            }`}
+          </GameLogEntry>
+        );
       });
   }
   render() {

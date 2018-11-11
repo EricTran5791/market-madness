@@ -21,8 +21,6 @@ interface PlayerInfoProps {
 }
 
 const StyledPlayerInfo = withProps<PlayerInfoProps>()(styled.div)`
-  cursor: ${({ isCurrentTurn }: PlayerInfoProps) =>
-    isCurrentTurn ? 'default' : 'pointer'};
   user-select: none;
   position: relative;
   display: grid;

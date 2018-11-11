@@ -40,7 +40,18 @@ const BasicCard = styled.div`
 `;
 
 const FaceDownCard = BasicCard.extend`
-  background-color: #222222;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Acme';
+  font-size: 18px;
+  text-align: center;
+  background: radial-gradient(#555, #222);
+  user-select: none;
+`;
+
+const CardBackLogo = styled.div`
+  font-size: 22px;
 `;
 
 const hover = keyframes`
@@ -70,7 +81,9 @@ const StyledCard = withProps<StyledCardProps>()(BasicCard.extend)`
       default:
         return kind === CardKind.Money
           ? '#66514A'
-          : kind === CardKind.NPC ? '#212F3D' : '#222222';
+          : kind === CardKind.NPC
+          ? '#212F3D'
+          : '#222222';
     }
   }};
   color: ${({ shop }: StyledCardProps): string => {
@@ -193,7 +206,9 @@ function CardView({ model, cardPosition, onClick }: Props) {
           </CardFooter>
         </StyledCard>
       ) : (
-        <FaceDownCard />
+        <FaceDownCard>
+          <>Market</> <CardBackLogo>🛍️</CardBackLogo> <>Madness</>
+        </FaceDownCard>
       )}
     </>
   );
