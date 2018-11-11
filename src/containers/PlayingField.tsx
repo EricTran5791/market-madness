@@ -12,6 +12,7 @@ import HandArea from './HandArea';
 import CardPile from '../components/CardPile';
 import TurnControls from '../components/TurnControls';
 import ShopArea from './ShopArea';
+import OptionsButton from '../components/OptionsButton';
 
 interface Props {
   store?: StoreType;
@@ -27,7 +28,7 @@ const StyledPlayingField = styled.div`
     'game-log . p2-shop .'
     'player-info trash market turn-controls'
     '. . p1-shop turn-controls'
-    '. p1-discard p1-hand p1-deck';
+    'options p1-discard p1-hand p1-deck';
   background-color: #e4e4e4;
   min-height: 100vh;
   box-sizing: border-box;
@@ -103,6 +104,13 @@ const GameLogGridArea = GridArea.extend`
   grid-area: game-log;
 `;
 
+const OptionsArea = GridArea.extend`
+  grid-area: options;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+`;
+
 @inject('store')
 @observer
 class PlayingField extends React.Component<Props, object> {
@@ -163,6 +171,10 @@ class PlayingField extends React.Component<Props, object> {
         <GameLogGridArea>
           <GameLog />
         </GameLogGridArea>
+
+        <OptionsArea>
+          <OptionsButton />
+        </OptionsArea>
 
         <P1ShopGridArea>
           <ShopArea

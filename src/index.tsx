@@ -45,7 +45,10 @@ ReactDOM.render(
           path="/card-library"
           render={() => (
             <>
-              <AppBar title="Card Library" />
+              <AppBar
+                title="Card Library"
+                backNavItem={{ text: 'Play', link: '/' }}
+              />
               <CardLibraryPage />
             </>
           )}

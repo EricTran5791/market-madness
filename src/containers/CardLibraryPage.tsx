@@ -19,6 +19,7 @@ interface State {
 const StyledCardLibrary = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 16px 128px;
 `;
 
