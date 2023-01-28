@@ -1,6 +1,7 @@
 {
   "name": "market-madness",
   "version": "0.1.0",
+  "homepage": "https://EricTran5791.github.io/market-madness",
   "private": true,
   "dependencies": {
     "immutable": "^3.8.2",
@@ -16,6 +17,8 @@
     "uniqid": "^4.1.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
@@ -29,6 +32,7 @@
     "@types/react-dom": "^16.0.3",
     "@types/react-router-dom": "^4.2.3",
     "@types/uniqid": "^4.1.2",
+    "gh-pages": "^5.0.0",
     "mobx-react-devtools": "^4.2.15"
   }
 }
