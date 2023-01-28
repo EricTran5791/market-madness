@@ -12,4 +12,4 @@ I'm no longer continuing development. I only built this game to learn React.
 
 ## Demo
 
-https://market-madness-game.herokuapp.com/
+https://erictran5791.github.io/market-madness
